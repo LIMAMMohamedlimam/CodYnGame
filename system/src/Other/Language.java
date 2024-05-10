@@ -8,4 +8,12 @@ public class Language {
         this.name = name;
         this.defaultCode = defaultCode;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDefaultCode() {
+        return defaultCode;
+    }
 }
