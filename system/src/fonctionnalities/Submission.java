@@ -1,10 +1,6 @@
 package fonctionnalities;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import Other.Language;
 
 public class Submission {
@@ -14,6 +10,10 @@ public class Submission {
     private File file;
 
 
+    public Submission(Language language ,File file){
+        this.file = file ;
+        this.language =  language ;
+    }
 
     public Submission(int submissionId, int userId, Language language , File file) {
         this.submissionId = submissionId;
@@ -34,8 +34,20 @@ public class Submission {
         // Fetch submission details logic
     }
 
+
+
     public void runFile() {
-        Compiler.compile(this.language, this.file.getPath(), "submission"+this.submissionId+".out");
+        if(this.language.getName().toLowerCase() == "python")
+            Compiler.compile(this.language, this.file.getPath());
+        else if (this.language.getName().toLowerCase() == "c"){
+            Compiler.compile(this.language, this.file.getPath(),  "output.out");
+        }
+        else if(this.language.getName().toLowerCase() == "java"){
+            String classpath = this.file.getPath().replace( this.file.getName() , "") ;
+            String program = this.file.getName().replace(".java" , " ") ;
+
+            Compiler.compile(language, this.file.getPath(), "-classpath" + " " + classpath + " " + program );
+        }
     }
 
 }
