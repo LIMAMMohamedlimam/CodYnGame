@@ -38,7 +38,7 @@ public abstract class Compiler {
             if (runStatus == 0){
                 System.out.println("Output: "+ runOutput) ;
             }else{
-                System.out.println("runingError: " + runError) ;
+                System.out.println("runing" + runError) ;
             }
         
         } catch (InterruptedException | IOException e) {
@@ -57,7 +57,7 @@ public abstract class Compiler {
             if (runStatus == 0){
                 System.out.println("Output: "+ runOutput) ;
             }else{
-                System.out.println("Compilation Error :" + runError) ;
+                System.out.println("Compilation " + runError) ;
             }
         
         } catch (IOException | InterruptedException e) {
