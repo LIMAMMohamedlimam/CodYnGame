@@ -1,6 +1,6 @@
 package Problems;
 
-public class ProblemManager {
+public abstract class ProblemManager {
     public void getProblemList() {
         // Logic to get problem list
     }
