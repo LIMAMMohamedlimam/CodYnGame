@@ -1,4 +1,4 @@
-package src.main.java.main.appli;
+package main.appli;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
