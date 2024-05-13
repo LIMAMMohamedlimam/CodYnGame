@@ -1,9 +1,5 @@
 package main.appli;
 
-
-
-
-
 import javafx.application.Application;
 
 class Main {

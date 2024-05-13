@@ -1,6 +1,7 @@
 package main.appli;
 
 
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -15,6 +16,7 @@ public class PremiereScene extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         Scene selectionScene = createSelectionScene(primaryStage);
 
         primaryStage.setScene(selectionScene);
