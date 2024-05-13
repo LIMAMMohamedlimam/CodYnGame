@@ -1,7 +1,10 @@
+import Other.Language;
 import Problems.Problem;
 import Problems.ProblemManager;
 import database.DatabaseManager;
+import fonctionnalities.Submission;
 
+import java.io.File;
 import java.sql.*;
 import java.util.List;
 
@@ -13,9 +16,9 @@ public class Main {
 
     //    System.out.println("c\n");
 //
-    //    Language c = new Language("c", null);
-    //    Submission sub1 = new Submission( c, new File("/home/mohamed/Desktop/test/helloworld.c"));
-    //    sub1.runFile();
+        Language c = new Language("c", null);
+        Submission sub1 = new Submission( c, new File("/home/mohamed/Desktop/test/helloworld.c"));
+        sub1.runFile();
 //
     //    System.out.println("java\n");
     //
