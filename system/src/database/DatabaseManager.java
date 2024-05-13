@@ -1,6 +1,9 @@
 package database;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
 
 public class DatabaseManager  {
 
@@ -55,4 +58,28 @@ public class DatabaseManager  {
         }
         return null ;
     }
+
+
+    public <T> List<T> executeQuery(String query , Function<ResultSet , T> mapper)  {
+
+        if (query == null)
+            throw new NullPointerException();
+
+        List<T> res = new ArrayList<>();
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try(Statement stmt = this.connect().createStatement()){
+            resultSet = stmt.executeQuery(query);
+            System.out.println("hello debugging");
+
+            while(resultSet.next()){
+                res.add(mapper.apply(resultSet));
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res ;
+    }
+
 }
