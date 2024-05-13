@@ -1,4 +1,6 @@
-package src.main.java.main.appli;
+package main.appli;
+
+
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
