@@ -20,7 +20,7 @@ public class PremiereScene extends Application {
         Scene selectionScene = createSelectionScene(primaryStage);
 
         primaryStage.setScene(selectionScene);
-        primaryStage.setTitle("Exercise and Language Selector");
+        primaryStage.setTitle("Application");
         primaryStage.show();
     }
 
