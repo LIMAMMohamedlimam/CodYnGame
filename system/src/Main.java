@@ -1,6 +1,12 @@
+import Other.Language;
+import Problems.Problem;
+import Problems.ProblemManager;
 import database.DatabaseManager;
+import fonctionnalities.Submission;
 
+import java.io.File;
 import java.sql.*;
+import java.util.List;
 
 
 public class Main {
@@ -10,9 +16,9 @@ public class Main {
 
     //    System.out.println("c\n");
 //
-    //    Language c = new Language("c", null);
-    //    Submission sub1 = new Submission( c, new File("/home/mohamed/Desktop/test/helloworld.c"));
-    //    sub1.runFile();
+        Language c = new Language("c", null);
+        Submission sub1 = new Submission( c, new File("/home/mohamed/Desktop/test/helloworld.c"));
+        sub1.runFile();
 //
     //    System.out.println("java\n");
     //
@@ -29,15 +35,15 @@ public class Main {
 
 
 
-        String query = "select ID, TITLE, DESCRIPTION, solutionFile from Problem ";
-        DatabaseManager codyngamedb_manager = new DatabaseManager();
-        Connection connection = codyngamedb_manager.connect();
-        ResultSet Res = codyngamedb_manager.executeQuery(query);
-        try{
-            System.out.println(Res.next());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    //    String query = "select ID, TITLE, DESCRIPTION, solutionFile from Problem ";
+    //    DatabaseManager codyngamedb_manager = new DatabaseManager();
+    //    Connection connection = codyngamedb_manager.connect();
+    //    ResultSet Res = codyngamedb_manager.executeQuery(query);
+    //    try{
+    //        System.out.println(Res.next());
+    //    }catch (Exception e){
+    //        e.printStackTrace();
+    //    }
 
         //try{
         //    ResultSet Res = codyngamedb_manager.executeQuery(connection,query);
@@ -55,9 +61,18 @@ public class Main {
         //    e.printStackTrace();
         //}
 
-        codyngamedb_manager.disconnect(connection);
+        //codyngamedb_manager.disconnect(connection);
 
 
+
+        DatabaseManager codyngame_manager = new DatabaseManager();
+        List<Problem> problemList = ProblemManager.getProblemList(codyngame_manager);
+        for (Problem prob : problemList){
+            System.out.println(prob.getId());
+            System.out.println(prob.getTitle());
+            System.out.println(prob.getDescription());
+            System.out.println(prob.getDifficultyLevel());
+        }
 
 
 
