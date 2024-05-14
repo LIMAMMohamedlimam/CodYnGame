@@ -109,4 +109,22 @@ public class DatabaseManager {
         }
         return res;
     }
+
+    /**
+     *  méthode pour récuperer les titres de la base de données et utilisé dans PremiereScene.java
+     * @return
+     */
+
+    public static List<String> retrieveTitles() {
+        String query = "SELECT title FROM exercises";
+        DatabaseManager dbManager = new DatabaseManager();
+        return dbManager.executeQuery(query, resultSet -> {
+            try {
+                return resultSet.getString("title");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        });
+    }
 }

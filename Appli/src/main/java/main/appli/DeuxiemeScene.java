@@ -23,7 +23,7 @@ public class DeuxiemeScene {
         Button backButton = new Button("Retour");
         backButton.setOnAction(event -> {
             PremiereScene premiereScene = new PremiereScene();
-            Scene scene = premiereScene.createSelectionScene(primaryStage);
+            Scene scene = premiereScene.createSelectionScene(primaryStage,null);
             primaryStage.setScene(scene);
         });
 

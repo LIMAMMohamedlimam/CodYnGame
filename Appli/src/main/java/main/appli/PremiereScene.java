@@ -2,6 +2,7 @@ package main.appli;
 
 
 
+import database.DatabaseManager;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -11,38 +12,31 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.util.List;
+
 
 public class PremiereScene extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        List<String> titles = DatabaseManager.retrieveTitles();
 
-        Scene selectionScene = createSelectionScene(primaryStage);
+
+        Scene selectionScene = createSelectionScene(primaryStage, titles);
 
         primaryStage.setScene(selectionScene);
         primaryStage.setTitle("Application");
         primaryStage.show();
     }
 
-    public Scene createSelectionScene(Stage primaryStage) {
-        String[] exercises = {
-                "Exercise 1",
-                "Exercise 2",
-                "Exercise 3"
-        };
-
-        String[] languages = {
-                "Python",
-                "C",
-                "Java",
-                "PHP"
-        };
+    public Scene createSelectionScene(Stage primaryStage,List<String> titles) {
 
         ListView<String> exerciseListView = new ListView<>();
-        exerciseListView.getItems().addAll(exercises);
+        exerciseListView.getItems().addAll(titles);
+
 
         ListView<String> languageListView = new ListView<>();
-        languageListView.getItems().addAll(languages);
+        languageListView.getItems().addAll("Python", "C", "Java", "PHP");
 
 
 
