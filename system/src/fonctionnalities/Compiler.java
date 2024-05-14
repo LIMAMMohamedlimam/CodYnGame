@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import Other.Language;
 import constants.Commandes;
@@ -96,4 +97,50 @@ public abstract class Compiler {
         return output.toString();
     }
 
+
+    /**
+     * Exécute une liste de commandes shell de manière enchaînée en fonction du système d'exploitation.
+     * Sous Windows, les commandes sont exécutées séquentiellement en utilisant '&&'.
+     * Sous les systèmes Unix (Linux, macOS), les commandes sont chaînées par '|'.
+     *
+     * @param commands Une liste de commandes shell à exécuter. Cette liste ne doit ni être null ni vide.
+     *                 Chaque chaîne dans la liste devrait être une commande valide de ligne de commande.
+     * @return void Cette méthode ne retourne aucune valeur. Les sorties sont directement imprimées sur la sortie standard.
+     */
+    public static void executeCommands(List<String> commands) {
+        if (commands == null || commands.isEmpty()) {
+            System.out.println("Aucune commande fournie.");
+            return;
+        }
+
+        String os = System.getProperty("os.name").toLowerCase();
+        ProcessBuilder builder;
+
+        if (os.contains("win")) {
+            builder = new ProcessBuilder("cmd.exe", "/c", String.join(" && ", commands));
+        } else {
+            builder = new ProcessBuilder("/bin/sh", "-c", String.join(" | ", commands));
+        }
+
+        try {
+            Process process = builder.start();
+
+            // Lecture de la sortie et des erreurs du processus
+            String output = readProcessOutput(process.getInputStream());
+            String errors = readProcessOutput(process.getErrorStream());
+            int status = process.waitFor();
+
+            // Affichage de la sortie ou des erreurs en fonction du statut d'exécution
+            if (status == 0) {
+                System.out.println("Sortie : " + output);
+            } else {
+                System.out.println("Erreur : " + errors);
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+
+
