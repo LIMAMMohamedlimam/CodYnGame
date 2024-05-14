@@ -2,6 +2,7 @@ import Other.Language;
 import Problems.Problem;
 import Problems.ProblemManager;
 import database.DatabaseManager;
+import fonctionnalities.Compiler;
 import fonctionnalities.Submission;
 
 import java.io.File;
@@ -16,9 +17,9 @@ public class Main {
 
     //    System.out.println("c\n");
 //
-        Language c = new Language("c", null);
-        Submission sub1 = new Submission( c, new File("/home/mohamed/Desktop/test/helloworld.c"));
-        sub1.runFile();
+    //    Language c = new Language("c", null);
+    //    Submission sub1 = new Submission( c, new File("/home/mohamed/Desktop/test/helloworld.c"));
+    //    sub1.runFile();
 //
     //    System.out.println("java\n");
     //
@@ -65,14 +66,22 @@ public class Main {
 
 
 
-        DatabaseManager codyngame_manager = new DatabaseManager();
-        List<Problem> problemList = ProblemManager.getProblemList(codyngame_manager);
-        for (Problem prob : problemList){
-            System.out.println(prob.getId());
-            System.out.println(prob.getTitle());
-            System.out.println(prob.getDescription());
-            System.out.println(prob.getDifficultyLevel());
-        }
+    //    DatabaseManager codyngame_manager = new DatabaseManager();
+    //    List<Problem> problemList = ProblemManager.getProblemList(codyngame_manager);
+    //    for (Problem prob : problemList){
+    //        System.out.println(prob.getId());
+    //        System.out.println(prob.getTitle());
+    //        System.out.println(prob.getDescription());
+    //        System.out.println(prob.getDifficultyLevel());
+    //    }
+
+    //  Compiler.executeCommands(commands) ;
+
+
+        List<String> commands = List.of("gcc -o /home/mohamed/Desktop/test/output /home/mohamed/Desktop/test/helloworld.c",
+                "cd /home/mohamed/Desktop/test",
+                "./output");
+        Compiler.executeCommands(commands);
 
 
 
