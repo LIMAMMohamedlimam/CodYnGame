@@ -32,14 +32,14 @@ public class PremiereScene extends Application {
         ListView<String> languageListView = new ListView<>();
         languageListView.getItems().addAll(languages);
 
-        CheckBox confirmCheckBox = new CheckBox("Confirmer");
+
 
         Button confirmButton = new Button("Valider");
         confirmButton.setOnAction(event -> {
             String selectedEnonce = enonceListView.getSelectionModel().getSelectedItem();
             String selectedLanguage = languageListView.getSelectionModel().getSelectedItem();
-            boolean confirmed = confirmCheckBox.isSelected();
-            if (selectedEnonce != null && selectedLanguage != null && confirmed) {
+
+            if (selectedEnonce != null && selectedLanguage != null ) {
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
                 Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedEnonce, selectedLanguage);
                 primaryStage.setScene(scene);
@@ -49,11 +49,10 @@ public class PremiereScene extends Application {
         });
 
         VBox root = new VBox(
-                new Label("Enonces"),
+                new Label("Titles"),
                 enonceListView,
                 new Label("Langages de programmation"),
                 languageListView,
-                confirmCheckBox,
                 confirmButton
         );
         root.setSpacing(10);
