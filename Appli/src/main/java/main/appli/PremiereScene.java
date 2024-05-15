@@ -5,7 +5,6 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
@@ -17,16 +16,16 @@ public class PremiereScene extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        List<String> enonces = DatabaseManager.retrieveTitles();
-        Scene selectionScene = createSelectionScene(primaryStage, enonces);
+        List<String> titles = DatabaseManager.retrieveTitles();
+        Scene selectionScene = createSelectionScene(primaryStage, titles);
         primaryStage.setScene(selectionScene);
         primaryStage.setTitle("Exercise and Language Selector");
         primaryStage.show();
     }
 
-    public Scene createSelectionScene(Stage primaryStage, List<String> enonces) {
+    public Scene createSelectionScene(Stage primaryStage, List<String> titles) {
         ListView<String> enonceListView = new ListView<>();
-        enonceListView.getItems().addAll(enonces);
+        enonceListView.getItems().addAll(titles);
 
         String[] languages = {"Python", "C", "Java", "PHP"};
         ListView<String> languageListView = new ListView<>();
