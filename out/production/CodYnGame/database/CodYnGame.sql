@@ -41,7 +41,7 @@ INSERT INTO Problem (title , description,solutionFile) values (
 
 	Input: nums = [3,3], target = 6
 	Output: [0,1]" ,
-	"/home/mohamed/Java_IHM/CodYnGame/solutionFiles/TwoSum.py" )
+	"/home/mohamed/Java_IHM/CodYnGame/solutionFiles/TwoSum.py" ) ;
 
 
 INSERT INTO Problem (title , description , solutionFile) values (
@@ -69,5 +69,11 @@ Output: 3
 Explanation: The answer is 'wke', with the length of 3.
 Notice that the answer must be a substring, 'pwke' is a subsequence and not a substring.",
 
+"/home/mohamed/Java_IHM/CodYnGame/solutionFiles/LongestSubstringWithoutRepeatingCharacters.py"
+) ;
 
-)
+
+INSERT Into Datatype (problemId , argNumber , dataType) values (1 , 1 , "List[int]") ;
+INSERT Into Datatype (problemId , argNumber , dataType) values (1 , 2 , "int") ;
+insert Into Datatype (problemId , argNumber , dataType) values (2 , 1 , "str") ;
+

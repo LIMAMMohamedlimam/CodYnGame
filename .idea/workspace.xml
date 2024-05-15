@@ -4,7 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dfe0d102-53f1-428a-a8cc-04100c9cd418" name="Changes" comment="" />
+    <list default="true" id="dfe0d102-53f1-428a-a8cc-04100c9cd418" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/javafx_swt1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/mysql_connector_j_8_4_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Appli/src/main/java/main/appli/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Appli/src/main/java/main/appli/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Appli/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/Appli/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CodYnGame.iml" beforeDir="false" afterPath="$PROJECT_DIR$/CodYnGame.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CodYnGame/Other/Language.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CodYnGame/Other/Language.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CodYnGame/Problems/Problem.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CodYnGame/Problems/Problem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CodYnGame/Problems/ProblemDifficulty.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CodYnGame/Problems/ProblemDifficulty.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CodYnGame/Problems/ProblemManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CodYnGame/Problems/ProblemManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CodYnGame/database/CodYnGame.sql" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CodYnGame/database/CodYnGame.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CodYnGame/database/DatabaseManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CodYnGame/database/DatabaseManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CodYnGame/fonctionnalities/Submission.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CodYnGame/fonctionnalities/Submission.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CodYnGame/main/appli/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CodYnGame/main/appli/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CodYnGame/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CodYnGame/module-info.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CodYnGame/utilisateur/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CodYnGame/utilisateur/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/CodYnGame/utilisateur/UserManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/CodYnGame/utilisateur/UserManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/system/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/src/database/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/system/src/database/DatabaseManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/src/utilisateur/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/system/src/utilisateur/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/system/src/utilisateur/UserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/system/src/utilisateur/UserManager.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,9 +44,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2gHVHpH4KPzcSylxdlRqiZxg7Rw" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -32,13 +55,43 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.Main.executor": "Run",
+    "Application.main.appli.Main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "Rayane",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/CYTech Student/IdeaProjects/CodYnGame"
+    "last_opened_file_path": "H:/Desktop/Nouveau dossier/mysql-connector-j-8.4.0/mysql-connector-j-8.4.0.jar",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="CodYnGame" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;H:\Desktop\openjfx-22.0.1_windows-x64_bin-sdk\javafx-sdk-22.0.1\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-22-openjdk-22-3183f394aec4-bad0321e" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
