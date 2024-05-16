@@ -1,45 +1,46 @@
 package main.appli;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class codeInterpreter {
     public static String executeCode(String language, String code) {
         try {
-            ProcessBuilder processBuilder;
             switch (language) {
                 case "Python":
-                    processBuilder = new ProcessBuilder("C:\\Users\\axelm\\OneDrive\\Documents\\GitHub\\CodYnGame\\venv\\Scripts\\python.exe", "-c", code);
+                    // Logique d'exécution pour Python
                     break;
                 case "C":
-                    // Ajoutez ici la logique de compilation et d'exécution pour le langage C
-                    return "Exécution pour C non implémentée.";
+                    // Écriture du code C dans un fichier temporaire
+                    File tempFile = File.createTempFile("code", ".c");
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+                        writer.write(code);
+                    }
+
+                    // Compilation du fichier source C avec GCC
+                    ProcessBuilder processBuilder = new ProcessBuilder("gcc", "-o", "output", tempFile.getAbsolutePath());
+                    processBuilder.directory(tempFile.getParentFile());
+                    Process compileProcess = processBuilder.start();
+                    int exitCode = compileProcess.waitFor();
+
+                    if (exitCode == 0) {
+                        return "Compilation réussie";
+                        // Si la compilation réussit, vous pouvez exécuter le programme généré, le cas échéant
+                    } else {
+                        return "Échec de la compilation";
+                        // Gestion des erreurs de compilation, affichage de messages à l'utilisateur, etc.
+                    }
                 case "Java":
-                    // Ajoutez ici la logique de compilation et d'exécution pour le langage Java
-                    return "Exécution pour Java non implémentée.";
+                    // Logique d'exécution pour Java
+                    break;
                 case "PHP":
-                    processBuilder = new ProcessBuilder("php", "-r", code);
+                    // Logique d'exécution pour PHP
                     break;
                 default:
                     return "Langage non pris en charge : " + language;
             }
-
-            processBuilder.redirectErrorStream(true);
-            Process process = processBuilder.start();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-            StringBuilder output = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line).append("\n");
-            }
-            process.waitFor();
-            return output.toString();
         } catch (IOException | InterruptedException e) {
             return "Erreur lors de l'exécution du code : " + e.getMessage();
         }
+        return "Code exécuté avec succès";
     }
 }
-
-
