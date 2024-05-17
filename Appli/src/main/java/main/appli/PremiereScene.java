@@ -29,7 +29,7 @@ public class PremiereScene extends Application {
         ListView<String> enonceListView = new ListView<>();
         enonceListView.getItems().addAll(titles);
 
-        String[] languages = {"Python", "C", "Java", "PHP"};
+        String[] languages = {"Python", "C", "Java", "PHP", "JavaScript"};
         ListView<String> languageListView = new ListView<>();
         languageListView.getItems().addAll(languages);
 

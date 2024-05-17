@@ -2,6 +2,8 @@ package main.appli;
 
 
 
+
+
 import java.io.*;
 
 public class codeInterpreter {
@@ -16,25 +18,27 @@ public class codeInterpreter {
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempPythonFile))) {
                         writer.write(code);
                     }
-                    processBuilder = new ProcessBuilder("python", tempPythonFile.getAbsolutePath());
+
+                    // Exécution du fichier Python
+                    processBuilder = new ProcessBuilder("C:\\Users\\axelm\\AppData\\Local\\Programs\\Python\\Python312\\python.exe", tempPythonFile.getAbsolutePath());
                     break;
                 case "C":
                     // Écriture du code C dans un fichier temporaire
-                    File tempFile = File.createTempFile("code", ".c");
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+                    File tempCFile = File.createTempFile("code", ".c");
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempCFile))) {
                         writer.write(code);
                     }
 
                     // Compilation du fichier source C avec GCC
-                    processBuilder = new ProcessBuilder("gcc", "-o", "output", tempFile.getAbsolutePath());
-                    processBuilder.directory(tempFile.getParentFile());
+                    processBuilder = new ProcessBuilder("gcc", "-o", "output", tempCFile.getAbsolutePath());
+                    processBuilder.directory(tempCFile.getParentFile());
                     Process compileProcess = processBuilder.start();
                     int exitCode = compileProcess.waitFor();
 
                     if (exitCode == 0) {
                         // Exécution du programme compilé
-                        ProcessBuilder runProcessBuilder = new ProcessBuilder(tempFile.getParentFile().getAbsolutePath() + "\\output");
-                        runProcessBuilder.directory(tempFile.getParentFile());
+                        ProcessBuilder runProcessBuilder = new ProcessBuilder(tempCFile.getParentFile().getAbsolutePath() + "\\output");
+                        runProcessBuilder.directory(tempCFile.getParentFile());
                         runProcessBuilder.redirectErrorStream(true);
                         Process runProcess = runProcessBuilder.start();
                         BufferedReader runReader = new BufferedReader(new InputStreamReader(runProcess.getInputStream()));
@@ -56,10 +60,51 @@ public class codeInterpreter {
                         return "Échec de la compilation:\n" + errorOutput.toString();
                     }
                 case "Java":
-                    // Logique d'exécution pour Java
-                    break;
+                    // Écriture du code Java dans un fichier temporaire
+                    File tempJavaFile = File.createTempFile("Main", ".java");
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempJavaFile))) {
+                        writer.write(code);
+                    }
+
+                    // Compilation du fichier source Java avec javac
+                    processBuilder = new ProcessBuilder("javac", tempJavaFile.getAbsolutePath());
+                    processBuilder.directory(tempJavaFile.getParentFile());
+                    Process compileJavaProcess = processBuilder.start();
+                    int javaExitCode = compileJavaProcess.waitFor();
+
+                    if (javaExitCode == 0) {
+                        // Exécution du programme compilé
+                        ProcessBuilder runJavaProcessBuilder = new ProcessBuilder("java", "Main");
+                        runJavaProcessBuilder.directory(tempJavaFile.getParentFile());
+                        runJavaProcessBuilder.redirectErrorStream(true);
+                        Process runJavaProcess = runJavaProcessBuilder.start();
+                        BufferedReader runJavaReader = new BufferedReader(new InputStreamReader(runJavaProcess.getInputStream()));
+                        StringBuilder runJavaOutput = new StringBuilder();
+                        String line;
+                        while ((line = runJavaReader.readLine()) != null) {
+                            runJavaOutput.append(line).append("\n");
+                        }
+                        runJavaProcess.waitFor();
+                        return runJavaOutput.toString();
+                    } else {
+                        // Lire la sortie de la compilation (erreurs éventuelles)
+                        BufferedReader errorReader = new BufferedReader(new InputStreamReader(compileJavaProcess.getErrorStream()));
+                        StringBuilder errorOutput = new StringBuilder();
+                        String line;
+                        while ((line = errorReader.readLine()) != null) {
+                            errorOutput.append(line).append("\n");
+                        }
+                        return "Échec de la compilation:\n" + errorOutput.toString();
+                    }
                 case "PHP":
-                    processBuilder = new ProcessBuilder("php", "-r", code);
+                    // Écriture du code PHP dans un fichier temporaire
+                    File tempPHPFile = File.createTempFile("code", ".php");
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempPHPFile))) {
+                        writer.write(code);
+                    }
+
+                    // Exécution du fichier PHP
+                    processBuilder = new ProcessBuilder("php", tempPHPFile.getAbsolutePath());
                     break;
                 default:
                     return "Langage non pris en charge : " + language;
@@ -74,7 +119,17 @@ public class codeInterpreter {
                 while ((line = reader.readLine()) != null) {
                     output.append(line).append("\n");
                 }
+
+                BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+                StringBuilder errorOutput = new StringBuilder();
+                while ((line = errorReader.readLine()) != null) {
+                    errorOutput.append(line).append("\n");
+                }
+
                 process.waitFor();
+                if (errorOutput.length() > 0) {
+                    return "Erreur:\n" + errorOutput.toString();
+                }
                 return output.toString();
             } else {
                 return "Aucune commande à exécuter.";
