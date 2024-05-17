@@ -1,4 +1,6 @@
+
 package main.appli;
+
 
 import database.DatabaseManager;
 import javafx.application.Application;
@@ -31,8 +33,6 @@ public class PremiereScene extends Application {
         ListView<String> languageListView = new ListView<>();
         languageListView.getItems().addAll(languages);
 
-
-
         Button confirmButton = new Button("Valider");
         confirmButton.setOnAction(event -> {
             String selectedEnonce = enonceListView.getSelectionModel().getSelectedItem();
@@ -43,12 +43,12 @@ public class PremiereScene extends Application {
                 Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedEnonce, selectedLanguage);
                 primaryStage.setScene(scene);
             } else {
-                System.out.println("Veuillez sélectionner un enonce, un langage et confirmer votre choix.");
+                System.out.println("Veuillez sélectionner un énoncé et un langage, puis confirmer votre choix.");
             }
         });
 
         VBox root = new VBox(
-                new Label("Titles"),
+                new Label("Énoncés"),
                 enonceListView,
                 new Label("Langages de programmation"),
                 languageListView,
