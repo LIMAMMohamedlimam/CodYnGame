@@ -1,9 +1,5 @@
 package main.appli;
 
-
-
-
-
 import java.io.*;
 
 public class codeInterpreter {
@@ -20,7 +16,7 @@ public class codeInterpreter {
                     }
 
                     // Exécution du fichier Python
-                    processBuilder = new ProcessBuilder("C:\\Users\\axelm\\AppData\\Local\\Programs\\Python\\Python312\\python.exe", tempPythonFile.getAbsolutePath());
+                    processBuilder = new ProcessBuilder("python", tempPythonFile.getAbsolutePath());
                     break;
                 case "C":
                     // Écriture du code C dans un fichier temporaire
@@ -61,7 +57,7 @@ public class codeInterpreter {
                     }
                 case "Java":
                     // Écriture du code Java dans un fichier temporaire
-                    File tempJavaFile = File.createTempFile("Main", ".java");
+                    File tempJavaFile = new File(System.getProperty("java.io.tmpdir"), "Main.java");
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempJavaFile))) {
                         writer.write(code);
                     }
@@ -74,18 +70,8 @@ public class codeInterpreter {
 
                     if (javaExitCode == 0) {
                         // Exécution du programme compilé
-                        ProcessBuilder runJavaProcessBuilder = new ProcessBuilder("java", "Main");
-                        runJavaProcessBuilder.directory(tempJavaFile.getParentFile());
-                        runJavaProcessBuilder.redirectErrorStream(true);
-                        Process runJavaProcess = runJavaProcessBuilder.start();
-                        BufferedReader runJavaReader = new BufferedReader(new InputStreamReader(runJavaProcess.getInputStream()));
-                        StringBuilder runJavaOutput = new StringBuilder();
-                        String line;
-                        while ((line = runJavaReader.readLine()) != null) {
-                            runJavaOutput.append(line).append("\n");
-                        }
-                        runJavaProcess.waitFor();
-                        return runJavaOutput.toString();
+                        processBuilder = new ProcessBuilder("java", "-cp", tempJavaFile.getParentFile().getAbsolutePath(), "Main");
+                        processBuilder.directory(tempJavaFile.getParentFile());
                     } else {
                         // Lire la sortie de la compilation (erreurs éventuelles)
                         BufferedReader errorReader = new BufferedReader(new InputStreamReader(compileJavaProcess.getErrorStream()));
@@ -96,6 +82,7 @@ public class codeInterpreter {
                         }
                         return "Échec de la compilation:\n" + errorOutput.toString();
                     }
+                    break;
                 case "PHP":
                     // Écriture du code PHP dans un fichier temporaire
                     File tempPHPFile = File.createTempFile("code", ".php");
@@ -106,6 +93,16 @@ public class codeInterpreter {
                     // Exécution du fichier PHP
                     processBuilder = new ProcessBuilder("php", tempPHPFile.getAbsolutePath());
                     break;
+                case "JavaScript":
+                    File tempJavaScriptFile = File.createTempFile("code",".js");
+                    try(BufferedWriter writer = new BufferedWriter(new FileWriter(tempJavaScriptFile))){
+                        writer.write(code);
+
+                    }
+
+                    processBuilder = new ProcessBuilder("node",tempJavaScriptFile.getAbsolutePath());
+                    break;
+
                 default:
                     return "Langage non pris en charge : " + language;
             }
