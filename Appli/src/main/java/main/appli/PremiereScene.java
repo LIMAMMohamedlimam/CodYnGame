@@ -1,46 +1,33 @@
 package main.appli;
 
-
-
+import database.DatabaseManager;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class PremiereScene extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
-        Scene selectionScene = createSelectionScene(primaryStage);
-
+        List<String> titles = DatabaseManager.retrieveTitles();
+        Scene selectionScene = createSelectionScene(primaryStage, titles);
         primaryStage.setScene(selectionScene);
-        primaryStage.setTitle("Application");
+        primaryStage.setTitle("Exercise and Language Selector");
         primaryStage.show();
     }
 
-    public Scene createSelectionScene(Stage primaryStage) {
-        String[] exercises = {
-                "Exercise 1",
-                "Exercise 2",
-                "Exercise 3"
-        };
+    public Scene createSelectionScene(Stage primaryStage, List<String> titles) {
+        ListView<String> enonceListView = new ListView<>();
+        enonceListView.getItems().addAll(titles);
 
-        String[] languages = {
-                "Python",
-                "C",
-                "Java",
-                "PHP"
-        };
-
-        ListView<String> exerciseListView = new ListView<>();
-        exerciseListView.getItems().addAll(exercises);
-
+        String[] languages = {"Python", "C", "Java", "PHP"};
         ListView<String> languageListView = new ListView<>();
         languageListView.getItems().addAll(languages);
 
@@ -48,21 +35,21 @@ public class PremiereScene extends Application {
 
         Button confirmButton = new Button("Valider");
         confirmButton.setOnAction(event -> {
-            String selectedExercise = exerciseListView.getSelectionModel().getSelectedItem();
+            String selectedEnonce = enonceListView.getSelectionModel().getSelectedItem();
             String selectedLanguage = languageListView.getSelectionModel().getSelectedItem();
 
-            if (selectedExercise != null && selectedLanguage != null ) {
+            if (selectedEnonce != null && selectedLanguage != null ) {
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
-                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedExercise, selectedLanguage);
+                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedEnonce, selectedLanguage);
                 primaryStage.setScene(scene);
             } else {
-                System.out.println("Veuillez sélectionner un exercice, un langage et confirmer votre choix.");
+                System.out.println("Veuillez sélectionner un enonce, un langage et confirmer votre choix.");
             }
         });
 
         VBox root = new VBox(
-                new Label("Exercices"),
-                exerciseListView,
+                new Label("Titles"),
+                enonceListView,
                 new Label("Langages de programmation"),
                 languageListView,
                 confirmButton
@@ -71,5 +58,9 @@ public class PremiereScene extends Application {
         root.setPadding(new Insets(10));
 
         return new Scene(root, 600, 700);
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
