@@ -84,7 +84,12 @@ public class Main {
         Compiler.executeCommands(commands);
 
 
-
+             // Paramètres de connexion
+              //  Random random = new Random();
+               // int id = random.nextInt(1000000);
+               // UserManager um = new UserManager();
+               // User user = new User(id,"rayane","saighi","rayane.saighi123@gmail.com");
+               // um.getUserDetails("rayane");
 
     }
 }
