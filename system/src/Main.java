@@ -4,13 +4,10 @@ import Problems.ProblemManager;
 import database.DatabaseManager;
 import fonctionnalities.Compiler;
 import fonctionnalities.Submission;
-import utilisateur.*;
 
 import java.io.File;
 import java.sql.*;
 import java.util.List;
-import java.util.UUID;
-import java.util.Random;
 
 
 public class Main {
@@ -81,16 +78,18 @@ public class Main {
     //  Compiler.executeCommands(commands) ;
 
 
-     //   List<String> commands = List.of("gcc -o /home/mohamed/Desktop/test/output /home/mohamed/Desktop/test/helloworld.c",
-       //         "cd /home/mohamed/Desktop/test",
-         //       "./output");
-      //  Compiler.executeCommands(commands);
+        List<String> commands = List.of("gcc -o /home/mohamed/Desktop/test/output /home/mohamed/Desktop/test/helloworld.c",
+                "cd /home/mohamed/Desktop/test",
+                "./output");
+        Compiler.executeCommands(commands);
 
-                // Paramètres de connexion
+
+             // Paramètres de connexion
               //  Random random = new Random();
                // int id = random.nextInt(1000000);
                // UserManager um = new UserManager();
                // User user = new User(id,"rayane","saighi","rayane.saighi123@gmail.com");
                // um.getUserDetails("rayane");
-        }
+
+    }
 }
