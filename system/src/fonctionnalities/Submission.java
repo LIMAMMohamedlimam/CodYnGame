@@ -68,7 +68,7 @@ public class Submission {
     public void runFile() {
         String languageName = this.language.getName().toLowerCase();
         if (languageName.equals("python")) {
-            Compiler.compile(this.language, this.file.getPath());
+            Compiler.Run(this.language, this.file.getPath());
         } else if (languageName.equals("c")) {
             Compiler.compile(this.language, this.file.getPath(), "output.out");
         } else if (languageName.equals("java")) {

@@ -66,23 +66,32 @@ public class Main {
 
 
 
-    //    DatabaseManager codyngame_manager = new DatabaseManager();
-    //    List<Problem> problemList = ProblemManager.getProblemList(codyngame_manager);
-    //    for (Problem prob : problemList){
-    //        System.out.println(prob.getId());
-    //        System.out.println(prob.getTitle());
-    //        System.out.println(prob.getDescription());
-    //        System.out.println(prob.getDifficultyLevel());
-    //    }
+        //DatabaseManager codyngame_manager = new DatabaseManager();
+        //List<Problem> problemList = ProblemManager.getProblemList(codyngame_manager);
+        //for (Problem prob : problemList){
+        //    System.out.println(prob.getId());
+        //    System.out.println(prob.getTitle());
+        //    System.out.println(prob.getDescription());
+        //    System.out.println(prob.getDifficultyLevel());
+        //}
 
     //  Compiler.executeCommands(commands) ;
 
 
-        List<String> commands = List.of("gcc -o /home/mohamed/Desktop/test/output /home/mohamed/Desktop/test/helloworld.c",
-                "cd /home/mohamed/Desktop/test",
-                "./output");
-        Compiler.executeCommands(commands);
+        //List<String> commands = List.of("gcc -o /home/mohamed/Desktop/test/output /home/mohamed/Desktop/test/helloworld.c",
+        //        "cd /home/mohamed/Desktop/test",
+        //        "./output");
+        //Compiler.executeCommands(commands);
 
+        System.out.println("test getProblem");
+        Problem prob = ProblemManager.getProblem("Two Sum") ;
+        if (prob != null){
+            System.out.println(prob.getId());
+            System.out.println(prob.getTitle());
+            System.out.println(prob.getDescription());
+            System.out.println(prob.getDifficultyLevel());
+        }else
+            System.out.println("non result");
 
 
 

@@ -57,12 +57,12 @@ public abstract class Compiler {
     }
 
     /**
-     * Compile un fichier source spécifié utilisant le compilateur par défaut du langage.
+     * execute un fichier source spécifié utilisant le compilateur par défaut du langage.
      *
      * @param language Le langage de programmation du fichier.
      * @param filePath Le chemin du fichier source à compiler.
      */
-    public static void compile(Language language, String filePath) {
+    public static String Run(Language language, String filePath) {
         String runCmd = Commandes.getCompileCommandtag(language) + " " + filePath;
         try {
             Process runProcess = Runtime.getRuntime().exec(runCmd);
@@ -71,14 +71,20 @@ public abstract class Compiler {
             int runStatus = runProcess.waitFor();
             if (runStatus == 0){
                 System.out.println("Sortie: " + runOutput);
+                return "Sortie: " + runOutput ;
             } else {
                 System.out.println("Erreur de compilation: " + runError);
+                return "Erreur de compilation: " + runError ;
+
             }
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
+            return e.getMessage() ;
         }
     }
+
+
 
     /**
      * Lit et retourne la sortie d'un processus.

@@ -6,7 +6,7 @@ import constants.Commandes;
 public class Language {
     private String name;
     private String defaultCode;
-    public Language(String name , Commandes cmd) {
+    public Language(String name) {
         this.name = name;
         this.defaultCode = "";
     }
