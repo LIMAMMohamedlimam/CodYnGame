@@ -1,13 +1,7 @@
-import Other.Language;
-import Problems.Problem;
-import Problems.ProblemManager;
-import database.DatabaseManager;
-import fonctionnalities.Compiler;
-import fonctionnalities.Submission;
+package Main;
 
-import java.io.File;
-import java.sql.*;
-import java.util.List;
+import javafx.application.Application;
+import ui.FirstScene;
 
 
 public class Main {
@@ -76,15 +70,15 @@ public class Main {
         //        "./output");
         //Compiler.executeCommands(commands);
 
-        System.out.println("test getProblem");
-        Problem prob = ProblemManager.getProblem("Two Sum") ;
-        if (prob != null){
-            System.out.println(prob.getId());
-            System.out.println(prob.getTitle());
-            System.out.println(prob.getDescription());
-            System.out.println(prob.getDifficultyLevel());
-        }else
-            System.out.println("non result");
+        //System.out.println("test getProblem");
+        //Problem prob = ProblemManager.getProblem("Two Sum") ;
+        //if (prob != null){
+        //    System.out.println(prob.getId());
+        //    System.out.println(prob.getTitle());
+        //    System.out.println(prob.getDescription());
+        //    System.out.println(prob.getDifficultyLevel());
+        //}else
+        //    System.out.println("non result");
 
              // Paramètres de connexion
               //  Random random = new Random();
@@ -92,6 +86,8 @@ public class Main {
                // UserManager um = new UserManager();
                // User user = new User(id,"rayane","saighi","rayane.saighi123@gmail.com");
                // um.getUserDetails("rayane");
+
+        Application.launch(FirstScene.class, args);
 
     }
 }

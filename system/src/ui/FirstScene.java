@@ -3,7 +3,7 @@ package ui;
 import Other.Language;
 import Problems.Problem;
 import Problems.ProblemManager;
-import database.DatabaseManager;
+import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,8 +16,9 @@ import java.util.List;
 
 import static javafx.application.Application.launch;
 
-public class FirstScene {
-    public void start(Stage primaryStage) {
+public class FirstScene extends Application {
+    @Override
+    public void start(Stage primaryStage) throws Exception {
         List<String> titles = ProblemManager.retrieveTitles();
         Scene selectionScene = createSelectionScene(primaryStage, titles);
         primaryStage.setScene(selectionScene);
@@ -59,11 +60,9 @@ public class FirstScene {
         root.setSpacing(10);
         root.setPadding(new Insets(10));
 
-        return new Scene(root, 600, 700);
+        return new Scene(root, 1600, 1700);
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+
 
 }
