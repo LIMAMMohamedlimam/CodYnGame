@@ -1,13 +1,18 @@
 package fonctionnalities;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import Other.Language;
+import constants.Commandes;
 
 /**
  * Représente une soumission dans un système de gestion de soumissions.
  */
 public class Submission {
-    private int submissionId;
+    private int subId ;
     private int userId;
     private Language language;
     private File file;
@@ -16,11 +21,12 @@ public class Submission {
      * Constructeur pour créer une soumission avec la langue et le fichier spécifiés.
      *
      * @param language La langue de programmation de la soumission.
-     * @param file Le fichier source de la soumission.
+     * @param code Le code source de la soumission.
      */
-    public Submission(Language language, File file) {
-        this.file = file;
+    public Submission(Language language, String code) {
         this.language = language;
+        this.file = fromCodeFile(code);
+
     }
 
     /**
@@ -30,13 +36,12 @@ public class Submission {
      * @param submissionId L'identifiant unique de la soumission.
      * @param userId L'identifiant de l'utilisateur qui soumet.
      * @param language La langue de programmation de la soumission.
-     * @param file Le fichier source de la soumission.
+     * @param code Le code source de la soumission.
      */
-    public Submission(int submissionId, int userId, Language language, File file) {
-        this.submissionId = submissionId;
+    public Submission(int submissionId, int userId, Language language, String code) {
         this.userId = userId;
         this.language = language;
-        this.file = file;
+        this.file = fromCodeFile(code);
     }
 
     /**
@@ -62,6 +67,14 @@ public class Submission {
         // Logique pour récupérer les détails de la soumission
     }
 
+    public File getFile() {
+        return file;
+    }
+
+    public Language getLanguage(){
+        return this.language ;
+    }
+
     /**
      * Exécute le fichier de la soumission selon la langue spécifiée.
      */
@@ -76,5 +89,34 @@ public class Submission {
             String program = this.file.getName().replace(".java", " ");
             Compiler.compile(this.language, this.file.getPath(), "-classpath" + " " + classpath + " " + program);
         }
+    }
+
+
+    public File fromCodeFile(String code){
+
+        String directoryPath = "CodYngame_exec";
+        String fileName = "" + this.language.getName() + Commandes.getFiletag(this.language);
+
+        File directory = new File(directoryPath);
+        if (!directory.exists()) {
+            if (directory.mkdirs()) {
+                System.out.println("Directory created successfully.");
+            } else {
+                System.out.println("Failed to create directory.");
+            }
+        }
+
+        // Create a new file object
+        File file = new File(directoryPath + File.separator + fileName);
+
+        // Create the file and write to it
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(code);
+            System.out.println("File created and text written successfully.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while creating/writing to the file.");
+            e.printStackTrace();
+        }
+        return file;
     }
 }

@@ -12,32 +12,22 @@ public class SecondView extends Application {
 
         @Override
         public void start(Stage primaryStage) {
+            Scene secondview = createSecondView(primaryStage);
+            primaryStage.setScene(secondview);
+            primaryStage.setScene(secondview);
+            primaryStage.setTitle("CodYnGame");
+            primaryStage.show();
+
+        }
+
+        public Scene createSecondView(Stage primaryStage) {
             SplitPane splitPane = new SplitPane();
-            splitPane.setPrefSize(1200, 900);
+            splitPane.setPrefSize(1000, 700);
+            splitPane.setMaxSize(1000,700);
             splitPane.setDividerPositions(0.5);
 
             AnchorPane leftPane = new AnchorPane();
-            TextArea problemDescriptionField = new TextArea("Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\n" +
-                    "\n" +
-                    "You may assume that each input would have exactly one solution, and you may not use the same element twice.\n" +
-                    "\n" +
-                    "You can return the answer in any order.\n" +
-                    "\n" +
-                    " \n" +
-                    "\n" +
-                    "Example 1:\n" +
-                    "\n" +
-                    "Input: nums = [2,7,11,15], target = 9\n" +
-                    "Output: [0,1]\n" +
-                    "Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].\n" +
-                    "Example 2:\n" +
-                    "\n" +
-                    "Input: nums = [3,2,4], target = 6\n" +
-                    "Output: [1,2]\n" +
-                    "Example 3:\n" +
-                    "\n" +
-                    "Input: nums = [3,3], target = 6\n" +
-                    "Output: [0,1]\n");
+            TextArea problemDescriptionField = new TextArea();
             problemDescriptionField.setLayoutY(22);
             problemDescriptionField.setPrefSize(596, 509) ;
             problemDescriptionField.setEditable(false);
@@ -88,9 +78,7 @@ public class SecondView extends Application {
             splitPane.getItems().addAll(leftPane, rightPane);
 
             Scene scene = new Scene(splitPane);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("CodYnGame");
-            primaryStage.show();
+            return scene ;
         }
 
         public static void main(String[] args) {
