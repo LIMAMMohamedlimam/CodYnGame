@@ -1,8 +1,6 @@
-
 package main.appli;
 
-
-import database.DatabaseManager;
+import Problems.ExerciseRetriever;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -18,7 +16,7 @@ public class PremiereScene extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        List<String> titles = DatabaseManager.retrieveTitles();
+        List<String> titles = ExerciseRetriever.retrieveTitles();
         Scene selectionScene = createSelectionScene(primaryStage, titles);
         primaryStage.setScene(selectionScene);
         primaryStage.setTitle("Exercise and Language Selector");
@@ -26,8 +24,8 @@ public class PremiereScene extends Application {
     }
 
     public Scene createSelectionScene(Stage primaryStage, List<String> titles) {
-        ListView<String> enonceListView = new ListView<>();
-        enonceListView.getItems().addAll(titles);
+        ListView<String> titleListView = new ListView<>();
+        titleListView.getItems().addAll(titles);
 
         String[] languages = {"Python", "C", "Java", "PHP", "JavaScript"};
         ListView<String> languageListView = new ListView<>();
@@ -35,12 +33,13 @@ public class PremiereScene extends Application {
 
         Button confirmButton = new Button("Valider");
         confirmButton.setOnAction(event -> {
-            String selectedEnonce = enonceListView.getSelectionModel().getSelectedItem();
+            String selectedTitle = titleListView.getSelectionModel().getSelectedItem();
             String selectedLanguage = languageListView.getSelectionModel().getSelectedItem();
 
-            if (selectedEnonce != null && selectedLanguage != null ) {
+            if (selectedTitle != null && selectedLanguage != null ) {
+                String description = ExerciseRetriever.retrieveDescription(selectedTitle); // Correction ici
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
-                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedEnonce, selectedLanguage);
+                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description); // Passer la description
                 primaryStage.setScene(scene);
             } else {
                 System.out.println("Veuillez sélectionner un énoncé et un langage, puis confirmer votre choix.");
@@ -49,7 +48,7 @@ public class PremiereScene extends Application {
 
         VBox root = new VBox(
                 new Label("Énoncés"),
-                enonceListView,
+                titleListView,
                 new Label("Langages de programmation"),
                 languageListView,
                 confirmButton

@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Consumer;
+
 
 /**
  * Gère la connexion et les interactions avec la base de données.
@@ -26,9 +28,9 @@ public class DatabaseManager {
     /**
      * Constructeur de DatabaseManager avec configuration de la connexion.
      *
-     * @param url       L'URL de la base de données
-     * @param username  Le nom d'utilisateur de la base de données
-     * @param password  Le mot de passe de la base de données
+     * @param url      L'URL de la base de données
+     * @param username Le nom d'utilisateur de la base de données
+     * @param password Le mot de passe de la base de données
      */
     public DatabaseManager(String url, String username, String password) {
         this.url = url;
@@ -75,7 +77,7 @@ public class DatabaseManager {
      * @param query La requête SQL à exécuter.
      * @return Le ResultSet obtenu après l'exécution de la requête.
      */
-    public ResultSet executeQuery(String query) {
+    public ResultSet executeQuery1(String query) {
         Connection con = this.connect();
         if (con == null || query == null)
             throw new NullPointerException();
@@ -91,16 +93,18 @@ public class DatabaseManager {
     /**
      * Exécute une requête SQL et transforme chaque entrée du ResultSet en utilisant une fonction mapper.
      *
-     * @param query La requête SQL à exécuter.
+     * @param query  La requête SQL à exécuter.
      * @param mapper Une fonction qui prend un ResultSet et retourne un objet de type T.
      * @return Une liste d'objets de type T, chaque objet correspondant à une entrée du ResultSet.
      */
-    public <T> List<T> executeQuery(String query, Function<ResultSet, T> mapper) {
+    public <T> List<T> executeQuery(String query, Consumer<PreparedStatement> parameterSetter, Function<ResultSet, T> mapper) {
         if (query == null)
             throw new NullPointerException();
         List<T> res = new ArrayList<>();
-        try (Statement stmt = this.connect().createStatement()) {
-            ResultSet resultSet = stmt.executeQuery(query);
+        try (Connection conn = this.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            parameterSetter.accept(stmt);
+            ResultSet resultSet = stmt.executeQuery();
             while (resultSet.next()) {
                 res.add(mapper.apply(resultSet));
             }
@@ -108,23 +112,5 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return res;
-    }
-
-    /**
-     *  méthode pour récuperer les titres de la base de données et utilisé dans PremiereScene.java
-     * @return
-     */
-
-    public static List<String> retrieveTitles() {
-        String query = "SELECT title FROM Problem";
-        DatabaseManager dbManager = new DatabaseManager();
-        return dbManager.executeQuery(query, resultSet -> {
-            try {
-                return resultSet.getString("title");
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return null;
-            }
-        });
     }
 }
