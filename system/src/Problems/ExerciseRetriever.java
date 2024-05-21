@@ -43,4 +43,31 @@ public class ExerciseRetriever {
             return null;
         }
     }
+    public static String retrieveDifficultyLevel(String title) throws SQLException {
+        String query = "SELECT difficultyLevel FROM exercises WHERE title = ?";
+        DatabaseManager dbManager = new DatabaseManager();
+
+        List<String> difficultyLevels = dbManager.executeQuery(query, stmt -> {
+            try {
+                stmt.setString(1, title);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }, resultSet -> {
+            try {
+                return resultSet.getString("difficultyLevel");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        });
+
+        if (difficultyLevels != null && !difficultyLevels.isEmpty()) {
+            return difficultyLevels.get(0); // Assuming titles are unique, return the first match.
+        } else {
+            throw new SQLException("Exercice non trouvé pour le titre donné : " + title);
+        }
+    }
 }
+
+
