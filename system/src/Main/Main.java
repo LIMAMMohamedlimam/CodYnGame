@@ -1,13 +1,7 @@
-import Other.Language;
-import Problems.Problem;
-import Problems.ProblemManager;
-import database.DatabaseManager;
-import fonctionnalities.Compiler;
-import fonctionnalities.Submission;
+package Main;
 
-import java.io.File;
-import java.sql.*;
-import java.util.List;
+import javafx.application.Application;
+import ui.FirstScene;
 
 
 public class Main {
@@ -66,25 +60,34 @@ public class Main {
 
 
 
-    //    DatabaseManager codyngame_manager = new DatabaseManager();
-    //    List<Problem> problemList = ProblemManager.getProblemList(codyngame_manager);
-    //    for (Problem prob : problemList){
-    //        System.out.println(prob.getId());
-    //        System.out.println(prob.getTitle());
-    //        System.out.println(prob.getDescription());
-    //        System.out.println(prob.getDifficultyLevel());
-    //    }
-
-    //  Compiler.executeCommands(commands) ;
-
-
-        List<String> commands = List.of("gcc -o /home/mohamed/Desktop/test/output /home/mohamed/Desktop/test/helloworld.c",
-                "cd /home/mohamed/Desktop/test",
-                "./output");
-        Compiler.executeCommands(commands);
 
 
 
+
+
+        //List<String> commands = List.of("gcc -o /home/mohamed/Desktop/test/output /home/mohamed/Desktop/test/helloworld.c",
+        //        "cd /home/mohamed/Desktop/test",
+        //        "./output");
+        //Compiler.executeCommands(commands);
+
+        //System.out.println("test getProblem");
+        //Problem prob = ProblemManager.getProblem("Two Sum") ;
+        //if (prob != null){
+        //    System.out.println(prob.getId());
+        //    System.out.println(prob.getTitle());
+        //    System.out.println(prob.getDescription());
+        //    System.out.println(prob.getDifficultyLevel());
+        //}else
+        //    System.out.println("non result");
+
+             // Paramètres de connexion
+              //  Random random = new Random();
+               // int id = random.nextInt(1000000);
+               // UserManager um = new UserManager();
+               // User user = new User(id,"rayane","saighi","rayane.saighi123@gmail.com");
+               // um.getUserDetails("rayane");
+
+        Application.launch(FirstScene.class, args);
 
     }
 }
