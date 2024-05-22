@@ -7,11 +7,16 @@ import java.sql.SQLException;
  * Classe représentant un problème avec ses détails.
  */
 public class Problem {
-    private final int id;
-    private final String title;
-    private final String description;
-    private final ProblemDifficulty difficultyLevel;
-    private final String solutionFile;
+    private  int id;
+    private  String title;
+    private  String description;
+    private  ProblemDifficulty difficultyLevel;
+    private  String solutionFile;
+
+
+    public Problem(String title){
+        this.title = title ;
+    }
 
     /**
      * Constructeur de la classe Problem.
@@ -74,7 +79,6 @@ public class Problem {
     public String getSolutionFile() {
         return solutionFile;
     }
-
 
     /**
      * Crée une instance de Problem à partir d'un ResultSet.
