@@ -1,6 +1,5 @@
 package main.appli;
 
-
 import Problems.ExerciseRetriever;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,6 +42,14 @@ public class DeuxiemeScene {
             PremiereScene premiereScene = new PremiereScene();
             Scene scene = premiereScene.createSelectionScene(primaryStage, ExerciseRetriever.retrieveTitles());
             primaryStage.setScene(scene);
+        });
+
+        // Ajouter un gestionnaire d'événements à la liste déroulante des langages pour réinitialiser la scène avec le nouveau langage
+        languageComboBox.setOnAction(event -> {
+            String newLanguage = languageComboBox.getValue();
+            DeuxiemeScene newScene = new DeuxiemeScene();
+            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description);
+            primaryStage.setScene(updatedScene);
         });
 
         VBox root = new VBox(
