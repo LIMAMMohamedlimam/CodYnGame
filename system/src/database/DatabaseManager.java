@@ -36,17 +36,19 @@ public class DatabaseManager {
         this.username = username;
     }
 
+
+
     /**
      * Établit une connexion avec la base de données.
      *
      * @return L'objet Connection pour interagir avec la base de données.
      */
     public Connection connect() {
-        System.out.println("connecting to database ...");
+        //System.out.println("connecting to database ...");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
-            System.out.println("connected");
+//            System.out.println("connected");
             return connection;
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,10 +62,10 @@ public class DatabaseManager {
      * @param db_connection L'objet Connection à fermer.
      */
     public void disconnect(Connection db_connection) {
-        System.out.println("disconnecting from the database ...");
+//        System.out.println("disconnecting from the database ...");
         try {
             db_connection.close();
-            System.out.println("disconnected from the database.");
+//            System.out.println("disconnected from the database.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -109,4 +111,5 @@ public class DatabaseManager {
         }
         return res;
     }
+
 }

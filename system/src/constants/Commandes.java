@@ -20,6 +20,19 @@ public abstract class Commandes {
         }
     }
 
+    public static String getFiletag(Language language) {
+        switch (language.getName().toLowerCase()) {
+            case "c":
+                return ".c" ;
+            case "java":
+                return ".java";
+            case "python":
+                return ".py";
+            default:
+                return null;
+        }
+    }
+
 
     public static String getCompileCommand(Language language , String filePath ,String outputFilePath) {
         if (language.getName().toLowerCase().equals("c"))
