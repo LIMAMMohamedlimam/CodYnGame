@@ -1,5 +1,6 @@
 package database;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +47,9 @@ public class DatabaseManager {
      */
     public Connection connect() {
 
-        //System.out.println("connecting to database ...");
         try {
+            // Load the MySQL JDBC driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-//            System.out.println("connected");
             return  DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,7 +80,12 @@ public class DatabaseManager {
      */
     public ResultSet executeQuery(String query) {
         Connection con = this.connect();
-        if (con == null || query == null)
+        if(con == null){
+            if(startMySQLServer()){
+                con = this.connect() ;
+            }
+        }
+        if (query == null)
             throw new NullPointerException();
         try (Statement stmt = con.createStatement()) {
             return stmt.executeQuery(query);
@@ -130,6 +135,26 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return res;
+    }
+
+    private static boolean startMySQLServer() {
+        String command;
+
+        // Adjust the command according to your OS
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            command = "net start MySQL";
+        } else {
+            command = "sudo service mysql start";
+        }
+
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+            return process.exitValue() == 0;
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

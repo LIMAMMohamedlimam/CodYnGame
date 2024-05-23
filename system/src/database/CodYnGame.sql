@@ -17,6 +17,14 @@ CREATE TABLE Datatype (
     FOREIGN KEY (problemId) REFERENCES Problem(id)
 );
 
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,       -- UUID for unique identifier
+    username VARCHAR(255) UNIQUE NOT NULL, -- Unique username
+    password VARCHAR(255) DEFAULT NULL,    -- Password can be NULL
+    email VARCHAR(255) DEFAULT NULL        -- Email can be NULL
+);
+
+
 
 INSERT INTO Problem (title , description,solutionFile) values (
 	"Two Sum" ,

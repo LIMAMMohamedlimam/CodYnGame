@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -48,6 +49,23 @@ public abstract class ProblemManager {
             }
         });
 
+    }
+
+    public static List<String> retrieveTitlesWithDifficulty() {
+        List<String> titles = ProblemManager.retrieveTitles();
+        List<String> titlesWithDifficulty = new ArrayList<>();
+
+        for (String title : titles) {
+            try {
+                String difficulty = ProblemManager.retrieveDifficultyLevel(title);
+                titlesWithDifficulty.add(title + " (" + difficulty + ")");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                titlesWithDifficulty.add(title + " (UNKNOWN)");
+            }
+        }
+
+        return titlesWithDifficulty;
     }
 
     public static @Nullable Problem getProblem(String title){
