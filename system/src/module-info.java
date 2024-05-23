@@ -4,7 +4,7 @@ module system {
     requires javafx.fxml;
     requires java.sql;
     requires org.jetbrains.annotations;
-
+    requires mysql.connector.j;
 
 
     opens ui ;

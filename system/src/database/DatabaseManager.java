@@ -3,6 +3,7 @@ package database;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -44,12 +45,12 @@ public class DatabaseManager {
      * @return L'objet Connection pour interagir avec la base de données.
      */
     public Connection connect() {
+
         //System.out.println("connecting to database ...");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(url, username, password);
 //            System.out.println("connected");
-            return connection;
+            return  DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,8 +83,8 @@ public class DatabaseManager {
         if (con == null || query == null)
             throw new NullPointerException();
         try (Statement stmt = con.createStatement()) {
-            ResultSet Res = stmt.executeQuery(query);
-            return Res;
+            return stmt.executeQuery(query);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -105,6 +106,25 @@ public class DatabaseManager {
             ResultSet resultSet = stmt.executeQuery(query);
             while (resultSet.next()) {
                 res.add(mapper.apply(resultSet));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+
+    public  <T> List<T> executeQuery(String query, Consumer<PreparedStatement> parameterSetter, Function<ResultSet, T> mapper) {
+        if (query == null)
+            throw new NullPointerException();
+        List<T> res = new ArrayList<>();
+        try (Connection conn = this.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            parameterSetter.accept(stmt);
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                while (resultSet.next()) {
+                    res.add(mapper.apply(resultSet));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

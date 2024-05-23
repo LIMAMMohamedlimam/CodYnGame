@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static Problems.Problem.fromResultSet;
 
 /**
  * Classe abstraite représentant le gestionnaire de problèmes.
@@ -34,7 +33,7 @@ public abstract class ProblemManager {
     /**
      * méthode pour récuperer les titres de la base de données et utilisé dans PremiereScene.java
      *
-     * @return
+     * @return les titres des different problem dans la base de données
      */
 
     public static List<String> retrieveTitles() {
@@ -67,5 +66,56 @@ public abstract class ProblemManager {
             return null;
         }
 
+    }
+
+    public static String retrieveDifficultyLevel(String title) throws SQLException {
+        String query = "SELECT difficulty FROM Problem WHERE title = ?";
+        DatabaseManager dbManager = new DatabaseManager();
+
+        List<String> difficultyLevels = dbManager.executeQuery(query, stmt -> {
+            try {
+                stmt.setString(1, title);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }, resultSet -> {
+            try {
+                return resultSet.getString("difficulty");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        });
+
+        if (difficultyLevels != null && !difficultyLevels.isEmpty()) {
+            return difficultyLevels.get(0); // Assuming titles are unique, return the first match.
+        } else {
+            throw new SQLException("Exercice non trouvé pour le titre donné : " + title);
+        }
+    }
+
+    public static String retrieveDescription(String title) {
+        String query = "SELECT description FROM Problem WHERE title = ?";
+        DatabaseManager dbManager = new DatabaseManager();
+        List<String> descriptions = dbManager.executeQuery(query, stmt -> {
+            try {
+                stmt.setString(1, title);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }, resultSet -> {
+            try {
+                return resultSet.getString("description");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        });
+
+        if (descriptions != null && !descriptions.isEmpty()) {
+            return descriptions.get(0); // Assuming titles are unique, return the first match.
+        } else {
+            return null;
+        }
     }
 }

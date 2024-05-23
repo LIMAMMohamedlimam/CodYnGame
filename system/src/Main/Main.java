@@ -1,7 +1,7 @@
 package Main;
 
 import javafx.application.Application;
-import ui.FirstScene;
+import ui.PremiereScene;
 
 
 public class Main {
@@ -87,7 +87,7 @@ public class Main {
                // User user = new User(id,"rayane","saighi","rayane.saighi123@gmail.com");
                // um.getUserDetails("rayane");
 
-        Application.launch(FirstScene.class, args);
+        Application.launch(PremiereScene.class, args);
 
     }
 }
