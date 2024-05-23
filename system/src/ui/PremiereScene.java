@@ -42,7 +42,7 @@ public class PremiereScene extends Application {
         titleListView.getItems().addAll(titles);
 
         String[] languages = {"Python", "C", "Java", "PHP", "JavaScript"};
-        ListView<String> languageListViytétgew = new ListView<>();
+        ListView<String> languageListView = new ListView<>();
         languageListView.getItems().addAll(languages);
         // hello
         String[] difficulties = {"ALL", "EASY", "MEDIUM", "HARD"};
