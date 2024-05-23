@@ -13,11 +13,11 @@ import java.util.function.Function;
 public class DatabaseManager {
 
     // URL de la base de données
-    private static String url = "jdbc:mysql://localhost:3306/codyngame";
+    private static String url = "jdbc:mysql://127.0.0.1:3306/codyngame";
     // Nom d'utilisateur pour se connecter à la base de données
-    private static String username = "java";
+    private static String username = "root";
     // Mot de passe pour se connecter à la base de données
-    private static String password = "12345678";
+    private static String password = "Galifore1317";
 
     /**
      * Constructeur par défaut de DatabaseManager.

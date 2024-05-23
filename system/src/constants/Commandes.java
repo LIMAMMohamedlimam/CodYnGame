@@ -5,7 +5,7 @@ import Other.Language;
 public abstract class Commandes {
     public static final String compileC = "gcc";
     public static final String compileJAVA = "javac";
-    public static final String compilePYTHON = "python3";
+    public static final String compilePYTHON = "python";
 
     public static String getCompileCommandtag(Language language) {
         switch (language.getName().toLowerCase()) {
