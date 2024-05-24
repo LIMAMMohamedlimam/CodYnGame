@@ -1,7 +1,7 @@
 package ui;
 
+import GetSolution.SolutionExecutor;
 import Problems.ProblemManager;
-import fonctionnalities.codeInterpreter;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,9 +11,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.Map;
+import java.util.HashMap;
+
 public class DeuxiemeScene {
 
-    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description, String generatorOutput) {
+    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description, String generatorOutput, String solutionOutput) {
         Label detailsLabel = new Label("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage + "\nDescription: " + description);
 
         // Initialisation de la liste déroulante avec les langages disponibles
@@ -34,7 +37,7 @@ public class DeuxiemeScene {
         Button executeButton = new Button("Valider");
         executeButton.setOnAction(event -> {
             String code = codeTextArea.getText();
-            String output = codeInterpreter.executeCode(selectedLanguage, code);
+            String output = executeCode(selectedLanguage, code);
             outputTextArea.setText(output);
         });
 
@@ -49,7 +52,7 @@ public class DeuxiemeScene {
         languageComboBox.setOnAction(event -> {
             String newLanguage = languageComboBox.getValue();
             DeuxiemeScene newScene = new DeuxiemeScene();
-            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description, generatorOutput);
+            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description, generatorOutput, solutionOutput);
             primaryStage.setScene(updatedScene);
         });
 
@@ -68,5 +71,18 @@ public class DeuxiemeScene {
         root.setPadding(new Insets(10));
 
         return new Scene(root, 600, 700);
+    }
+
+    private String executeCode(String selectedLanguage, String code) {
+        // Utiliser SolutionExecutor pour exécuter le code en fonction du langage sélectionné
+        // Nous n'avons pas encore de support pour les autres langages dans cette version
+        if (selectedLanguage.equals("Python")) {
+            // Exécuter le code Python avec SolutionExecutor
+            SolutionExecutor solutionExecutor = new SolutionExecutor();
+            Map<String, String> arguments = new HashMap<>(); // Vous devrez peut-être ajuster cela en fonction de votre implémentation
+            return solutionExecutor.executeSolution("solution_file_name.py", arguments);
+        } else {
+            return "Langage non pris en charge : " + selectedLanguage;
+        }
     }
 }

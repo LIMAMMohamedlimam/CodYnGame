@@ -1,5 +1,7 @@
 package ui;
 
+import GetGeneration.PythonGenerator;
+import GetSolution.SolutionExecutor;
 import Problems.ProblemManager;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -9,13 +11,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import GetGeneration.PythonGenerator;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PremiereScene extends Application {
@@ -76,10 +78,21 @@ public class PremiereScene extends Application {
 
                 // Générer et capturer la sortie du fichier Python
                 String generatorFilePath = PythonGenerator.getGeneratorFilePath(selectedTitle);
-                String generatorOutput = PythonGenerator.runPythonGenerator(generatorFilePath);
+                List<String> generatorOutputValues = PythonGenerator.runPythonGenerator(generatorFilePath);
+                String generatorOutput = String.join("\n", generatorOutputValues); // Convertir la liste en une seule chaîne de caractères
+
+                // Construction de la map d'arguments pour la solution
+                Map<String, String> arguments = new HashMap<>();
+                for (int i = 0; i < generatorOutputValues.size(); i++) {
+                    arguments.put("arg" + i, generatorOutputValues.get(i));
+                }
+
+                // Exécution de la solution avec SolutionExecutor
+                SolutionExecutor solutionExecutor = new SolutionExecutor(); // Créer une instance de SolutionExecutor
+                String output = solutionExecutor.executeSolution(selectedTitle, arguments); // Utiliser cette instance pour appeler executeSolution
 
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
-                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description, generatorOutput);
+                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description, generatorOutput, output);
                 primaryStage.setScene(scene);
             } else {
                 System.out.println("Veuillez sélectionner un énoncé et un langage, puis confirmer votre choix.");
