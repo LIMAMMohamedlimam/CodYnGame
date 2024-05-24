@@ -37,6 +37,23 @@ public class PremiereScene extends Application {
 
 
 
+    private List<String> retrieveTitlesWithDifficulty() {
+        List<String> titles = ProblemManager.retrieveTitles();
+        List<String> titlesWithDifficulty = new ArrayList<>();
+
+        for (String title : titles) {
+            try {
+                String difficulty = ProblemManager.retrieveDifficultyLevel(title);
+                titlesWithDifficulty.add(title + " (" + difficulty + ")");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                titlesWithDifficulty.add(title + " (UNKNOWN)");
+            }
+        }
+
+        return titlesWithDifficulty;
+    }
+
     public Scene createSelectionScene(Stage primaryStage, List<String> titles) {
         titleListView = new ListView<>();
         titleListView.getItems().addAll(titles);
@@ -55,18 +72,17 @@ public class PremiereScene extends Application {
         Button confirmButton = new Button("Valider");
         confirmButton.setOnAction(event -> {
             String selectedTitleWithDifficulty = titleListView.getSelectionModel().getSelectedItem();
-            Language selectedLanguage = new Language(languageListView.getSelectionModel().getSelectedItem() );
+            String selectedLanguage = languageListView.getSelectionModel().getSelectedItem();
 
-            if (selectedTitleWithDifficulty != null && selectedLanguage.getName() != null) {
+            if (selectedTitleWithDifficulty != null && selectedLanguage != null) {
                 String selectedTitle = selectedTitleWithDifficulty.split(" \\(")[0];
                 String description = ProblemManager.retrieveDescription(selectedTitle);
 
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
                 Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description);
                 primaryStage.setScene(scene);
-            } else if (selectedLanguage.getName() == null){
-                showPopup("Veuillez sélectionner un énoncé\net un langage, puis confirmer votre choix.");
-
+            } else {
+                System.out.println("Veuillez sélectionner un énoncé et un langage, puis confirmer votre choix.");
             }
         });
 
@@ -92,12 +108,13 @@ public class PremiereScene extends Application {
             filteredTitles = new ArrayList<>(allTitles);
         } else {
             filteredTitles = allTitles.stream()
-                    .filter(title -> title.toLowerCase().contains( selectedDifficulty.toLowerCase() ))
+                    .filter(title -> title.contains("(" + selectedDifficulty + ")"))
                     .collect(Collectors.toList());
         }
 
         titleListView.getItems().setAll(filteredTitles);
     }
+
 
     public static void showPopup(String arg) {
         Stage popupStage = new Stage();
