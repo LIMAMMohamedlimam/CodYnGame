@@ -1,6 +1,6 @@
 package ui ;
 
-
+import Problems.ProblemManager;
 import fonctionnalities.codeInterpreter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,7 +41,7 @@ public class DeuxiemeScene {
         Button backButton = new Button("Retour");
         backButton.setOnAction(event -> {
             PremiereScene premiereScene = new PremiereScene();
-            Scene scene = premiereScene.createSelectionScene(primaryStage, ExerciseRetriever.retrieveTitles());
+            Scene scene = premiereScene.createSelectionScene(primaryStage, ProblemManager.retrieveTitles());
             primaryStage.setScene(scene);
         });
 
