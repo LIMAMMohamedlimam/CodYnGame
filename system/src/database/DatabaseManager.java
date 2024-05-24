@@ -26,6 +26,13 @@ public class DatabaseManager {
     }
 
     /**
+     * should be used to set up the database from the CodYnGame.sql file
+     */
+    public static boolean setDataBase(String CodYngamedatabasefile){
+        return false ;
+    }
+
+    /**
      * Constructeur de DatabaseManager avec configuration de la connexion.
      *
      * @param url       L'URL de la base de données
@@ -78,7 +85,7 @@ public class DatabaseManager {
      * @param query La requête SQL à exécuter.
      * @return Le ResultSet obtenu après l'exécution de la requête.
      */
-    public ResultSet executeQuery(String query) {
+    public  ResultSet executeQuery(String query) {
         Connection con = this.connect();
         if(con == null){
             if(startMySQLServer()){

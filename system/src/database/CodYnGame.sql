@@ -24,11 +24,11 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `problem`
+-- Table structure for table `Problem`
 --
 
-DROP TABLE IF EXISTS `problem`;
-CREATE TABLE IF NOT EXISTS `problem` (
+DROP TABLE IF EXISTS `Problem`;
+CREATE TABLE IF NOT EXISTS `Problem` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` text NOT NULL,
   `description` text NOT NULL,
@@ -46,10 +46,10 @@ CREATE TABLE user (
 );
 
 --
--- Dumping data for table `problem`
+-- Dumping data for table `Problem`
 --
 
-INSERT INTO `problem` (`id`, `title`, `description`, `solutionFile`, `generationFile`) VALUES
+INSERT INTO `Problem` (`id`, `title`, `description`, `solutionFile`, `generationFile`) VALUES
 (1, 'Two Sum', 'Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.\r\n\r\n	You may assume that each input would have exactly one solution, and you may not use the same element twice.\r\n\r\n	You can return the answer in any order.\r\n\r\n	\r\n\r\n	Example 1:\r\n\r\n	Input: nums = [2,7,11,15], target = 9\r\n	Output: [0,1]\r\n	Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].\r\n	Example 2:\r\n\r\n	Input: nums = [3,2,4], target = 6\r\n	Output: [1,2]\r\n	Example 3:\r\n\r\n	Input: nums = [3,3], target = 6\r\n	Output: [0,1]', '/home/mohamed/Java_IHM/CodYnGame/solutionFiles/TwoSum.py', '/home/mohamed/Java_IHM/CodYnGame/DataGenFiles/TwoSumGen.py'),
 (2, 'Longest Substring Without Repeating Characters', 'Given a string s, find the length of the longest \r\n	substring\r\n without repeating characters.\r\n\r\n \r\n\r\nExample 1:\r\n\r\nInput: s = \'abcabcbb\'\r\nOutput: 3\r\nExplanation: The answer is \'abc\', with the length of 3.\r\nExample 2:\r\n\r\nInput: s = \'bbbbb\'\r\nOutput: 1\r\nExplanation: The answer is \'b\', with the length of 1.\r\nExample 3:\r\n\r\nInput: s = \'pwwkew\'\r\nOutput: 3\r\nExplanation: The answer is \'wke\', with the length of 3.\r\nNotice that the answer must be a substring, \'pwke\' is a subsequence and not a substring.', '/home/mohamed/Java_IHM/CodYnGame/solutionFiles/LongestSubstringWithoutRepeatingCharacters.py', '/home/mohamed/Java_IHM/CodYnGame/DataGenFiles/LongestSubstringWithoutRepeatingCharactersGen.py'),
 (3, 'Calculate the multiplication and sum of two numbers', 'Given two integer numbers, return their product only if the product is equal to or lower than 1000. Otherwise, return their sum.\r\n\r\nGiven 1:\r\n\r\nnumber1 = 20\r\nnumber2 = 30\r\nExpected Output:\r\n\r\nThe result is 600\r\nGiven 2:\r\n\r\nnumber1 = 40\r\nnumber2 = 30\r\nExpected Output:\r\n\r\nThe result is 70', '/home/mohamed/Java_IHM/CodYnGame/solutionFiles/CalculaTheMultiplicationAndSumOfTwoNumbers.py', '/home/mohamed/Java_IHM/CodYnGame/DataGenFiles/CalculaTheMultiplicationAndSumOfTwoNumbersGen.py'),

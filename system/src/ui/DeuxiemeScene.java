@@ -1,15 +1,13 @@
 package ui ;
 import Other.Language;
+import Problems.Problem;
 import Problems.ProblemManager;
 import fonctionnalities.Submission;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -17,9 +15,10 @@ import static fonctionnalities.Compiler.Run;
 
 public class DeuxiemeScene {
 
-    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, Language selectedLanguage, String description) {
-        Label detailsLabel = new Label("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage.getName() + "\nDescription: " + description);
-
+    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, Language selectedLanguage, Problem selectedProb) {
+        //Label detailsLabel = new Label("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage.getName() + "\nDescription: " + selectedProb.getDescription());
+        TextArea probDescription = new TextArea("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage.getName() + "\nDescription: " + selectedProb.getDescription()) ;
+        probDescription.setEditable(false);
         // Initialisation de la liste déroulante avec les langages disponibles
         ObservableList<String> languages = FXCollections.observableArrayList("Python", "C", "Java", "PHP", "JavaScript");
         ComboBox<String> languageComboBox = new ComboBox<>(languages);
@@ -27,7 +26,7 @@ public class DeuxiemeScene {
         // Sélectionner le langage par défaut
         languageComboBox.setValue(selectedLanguage.getName());
 
-        TextArea codeTextArea = new TextArea();
+        TextArea codeTextArea = new TextArea(selectedProb.getDefaultCode());
         codeTextArea.setPromptText("Saisissez votre code ici");
 
         TextArea outputTextArea = new TextArea();
@@ -38,6 +37,7 @@ public class DeuxiemeScene {
             String code = codeTextArea.getText() ;
             Submission submission = new Submission(selectedLanguage , code) ;
             String output = Run(submission.getLanguage(), submission.getFile().getPath());
+            ProblemManager.verifyCode(selectedProb, output);
             outputTextArea.setText(output);
         });
 
@@ -52,12 +52,12 @@ public class DeuxiemeScene {
         languageComboBox.setOnAction(event -> {
             Language newLanguage = new Language(languageComboBox.getValue());
             DeuxiemeScene newScene = new DeuxiemeScene();
-            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description);
+            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, selectedProb);
             primaryStage.setScene(updatedScene);
         });
 
         VBox root = new VBox(
-                detailsLabel,
+                probDescription,
                 languageComboBox,
                 codeTextArea,
                 executeButton,

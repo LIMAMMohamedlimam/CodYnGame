@@ -2,6 +2,7 @@ package ui ;
 
 
 import Other.Language;
+import Problems.Problem;
 import Problems.ProblemManager;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -19,6 +20,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static Problems.ProblemManager.getProblem;
 
 public class PremiereScene extends Application {
 
@@ -44,7 +47,7 @@ public class PremiereScene extends Application {
         String[] languages = {"Python", "C", "Java", "PHP", "JavaScript"};
         ListView<String> languageListView = new ListView<>();
         languageListView.getItems().addAll(languages);
-
+        // hello
         String[] difficulties = {"ALL", "EASY", "MEDIUM", "HARD"};
         difficultyComboBox = new ComboBox<>();
         difficultyComboBox.getItems().addAll(difficulties);
@@ -59,10 +62,11 @@ public class PremiereScene extends Application {
 
             if (selectedTitleWithDifficulty != null && selectedLanguage.getName() != null) {
                 String selectedTitle = selectedTitleWithDifficulty.split(" \\(")[0];
-                String description = ProblemManager.retrieveDescription(selectedTitle);
+                Problem selectedProb = getProblem(selectedTitle) ;
+                String description = selectedProb.getDescription();
 
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
-                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description);
+                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, selectedProb);
                 primaryStage.setScene(scene);
             } else if (selectedLanguage.getName() == null){
                 showPopup("Veuillez sélectionner un énoncé\net un langage, puis confirmer votre choix.");
