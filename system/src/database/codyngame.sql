@@ -37,6 +37,14 @@ CREATE TABLE IF NOT EXISTS `problem` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,       -- UUID for unique identifier
+    username VARCHAR(255) UNIQUE NOT NULL, -- Unique username
+    password VARCHAR(255) DEFAULT NULL,    -- Password can be NULL
+    email VARCHAR(255) DEFAULT NULL        -- Email can be NULL
+);
+
 --
 -- Dumping data for table `problem`
 --
