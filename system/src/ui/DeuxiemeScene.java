@@ -1,11 +1,7 @@
 package ui;
 
-
-
 import Problems.ProblemManager;
 import fonctionnalities.codeInterpreter;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,15 +10,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import GetSolutionFiles.DataStorage;
 
 public class DeuxiemeScene {
 
     public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description, String generatorOutput) {
         Label detailsLabel = new Label("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage + "\nDescription: " + description);
 
-        ObservableList<String> languages = FXCollections.observableArrayList("Python", "C", "Java", "PHP", "JavaScript");
-        ComboBox<String> languageComboBox = new ComboBox<>(languages);
+        // Initialisation de la liste déroulante avec les langages disponibles
+        ComboBox<String> languageComboBox = new ComboBox<>();
+        languageComboBox.getItems().addAll("Python", "C", "Java", "PHP", "JavaScript");
         languageComboBox.setValue(selectedLanguage);
 
         TextArea codeTextArea = new TextArea();
@@ -49,6 +45,7 @@ public class DeuxiemeScene {
             primaryStage.setScene(scene);
         });
 
+        // Ajouter un gestionnaire d'événements à la liste déroulante des langages pour réinitialiser la scène avec le nouveau langage
         languageComboBox.setOnAction(event -> {
             String newLanguage = languageComboBox.getValue();
             DeuxiemeScene newScene = new DeuxiemeScene();
@@ -59,12 +56,12 @@ public class DeuxiemeScene {
         VBox root = new VBox(
                 detailsLabel,
                 languageComboBox,
+                new Label("Données générées:"),
+                generatorOutputTextArea,
                 codeTextArea,
                 executeButton,
                 new Label("Output:"),
                 outputTextArea,
-                new Label("Données générées:"),
-                generatorOutputTextArea,
                 backButton
         );
         root.setSpacing(10);
@@ -72,5 +69,4 @@ public class DeuxiemeScene {
 
         return new Scene(root, 600, 700);
     }
-
 }
