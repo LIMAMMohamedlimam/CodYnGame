@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import GetSolutionFiles.DataStorage;
 import GetGeneration.PythonGenerator;
 
 import java.sql.SQLException;
@@ -74,9 +75,14 @@ public class PremiereScene extends Application {
                 String selectedTitle = selectedTitleWithDifficulty.split(" \\(")[0];
                 String description = ProblemManager.retrieveDescription(selectedTitle);
 
-                // Générer et capturer la sortie du fichier Python
                 String generatorFilePath = PythonGenerator.getGeneratorFilePath(selectedTitle);
                 String generatorOutput = PythonGenerator.runPythonGenerator(generatorFilePath);
+
+                // Vérifions si generatorOutput contient les données générées
+                System.out.println("Données générées pour " + selectedTitle + ": " + generatorOutput);
+
+                // Sauvegarder les données générées
+                DataStorage.saveGeneratedData(selectedTitle, generatorOutput);
 
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
                 Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description, generatorOutput);
