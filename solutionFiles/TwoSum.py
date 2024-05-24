@@ -1,24 +1,15 @@
-import sys
+def two_sum(nums, target):
+    num_to_index = {}  # Dictionnaire pour stocker les numéros et leurs indices
 
-def twoSum(nums: list[int], target: int) -> list[int]:
-    numMap = {}
-    n = len(nums)
-    for i in range(n):
-        complement = target - nums[i]
-        if complement in numMap:
-            return [numMap[complement], i]
-        numMap[nums[i]] = i
-    return []  # No solution found
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in num_to_index:
+            return [num_to_index[complement], i]
+        num_to_index[num] = i
 
-if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: python script.py [nums list] [target]")
-        sys.exit(1)
-    
-    # Convert input arguments
-    nums = list(map(int, sys.argv[1].strip('[]').split(',')))
-    target = int(sys.argv[2])
-    
-    result = twoSum(nums, target)
-    print(result)
+    return None  # Si aucune paire n'est trouvée
 
+# Exemple d'utilisation
+nums = [2, 7, 11, 15]
+target = 9
+print(two_sum(nums, target))  # Devrait renvoyer [0, 1] car nums[0] + nums[1] = 2 + 7 = 9
