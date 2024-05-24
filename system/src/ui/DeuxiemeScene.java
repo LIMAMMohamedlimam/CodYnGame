@@ -1,7 +1,7 @@
 package ui;
 
-import GetSolution.SolutionExecutor;
 import Problems.ProblemManager;
+import GetSolution.SolutionExecutor;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,15 +11,15 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class DeuxiemeScene {
 
-    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description, String generatorOutput, String solutionOutput) {
+    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description, String generatorOutput, String output) {
         Label detailsLabel = new Label("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage + "\nDescription: " + description);
 
-        // Initialisation de la liste déroulante avec les langages disponibles
+        // Initialisation des composants de la scène
         ComboBox<String> languageComboBox = new ComboBox<>();
         languageComboBox.getItems().addAll("Python", "C", "Java", "PHP", "JavaScript");
         languageComboBox.setValue(selectedLanguage);
@@ -32,13 +32,13 @@ public class DeuxiemeScene {
 
         TextArea generatorOutputTextArea = new TextArea();
         generatorOutputTextArea.setEditable(false);
-        generatorOutputTextArea.setText(generatorOutput); // Affichage des données générées
+        generatorOutputTextArea.setText(generatorOutput);
 
         Button executeButton = new Button("Valider");
         executeButton.setOnAction(event -> {
             String code = codeTextArea.getText();
-            String output = executeCode(selectedLanguage, code);
-            outputTextArea.setText(output);
+            String solutionOutput = executeSolution(selectedLanguage, code, selectedTitle, generatorOutput);
+            outputTextArea.setText(solutionOutput);
         });
 
         Button backButton = new Button("Retour");
@@ -48,14 +48,14 @@ public class DeuxiemeScene {
             primaryStage.setScene(scene);
         });
 
-        // Ajouter un gestionnaire d'événements à la liste déroulante des langages pour réinitialiser la scène avec le nouveau langage
+        // Gestionnaire d'événements pour la modification du langage sélectionné
         languageComboBox.setOnAction(event -> {
             String newLanguage = languageComboBox.getValue();
-            DeuxiemeScene newScene = new DeuxiemeScene();
-            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description, generatorOutput, solutionOutput);
+            Scene updatedScene = createDetailsScene(primaryStage, selectedTitle, newLanguage, description, generatorOutput, output);
             primaryStage.setScene(updatedScene);
         });
 
+        // Assemblage de la scène
         VBox root = new VBox(
                 detailsLabel,
                 languageComboBox,
@@ -73,16 +73,25 @@ public class DeuxiemeScene {
         return new Scene(root, 600, 700);
     }
 
-    private String executeCode(String selectedLanguage, String code) {
-        // Utiliser SolutionExecutor pour exécuter le code en fonction du langage sélectionné
-        // Nous n'avons pas encore de support pour les autres langages dans cette version
+    private String executeSolution(String selectedLanguage, String code, String selectedTitle, String generatorOutput) {
         if (selectedLanguage.equals("Python")) {
-            // Exécuter le code Python avec SolutionExecutor
+            // Exécuter la solution Python avec les arguments générés
+            Map<String, String> arguments = convertGeneratorOutput(generatorOutput);
             SolutionExecutor solutionExecutor = new SolutionExecutor();
-            Map<String, String> arguments = new HashMap<>(); // Vous devrez peut-être ajuster cela en fonction de votre implémentation
-            return solutionExecutor.executeSolution("solution_file_name.py", arguments);
+            return solutionExecutor.executeSolution(selectedTitle, arguments);
         } else {
             return "Langage non pris en charge : " + selectedLanguage;
         }
+    }
+
+    private Map<String, String> convertGeneratorOutput(String generatorOutput) {
+        // Vous devrez adapter cette méthode pour traiter correctement la sortie du générateur
+        // Pour le moment, nous supposons que la sortie est une chaîne de clés et de valeurs séparées par des sauts de ligne
+        Map<String, String> arguments = new HashMap<>();
+        String[] lines = generatorOutput.split("\n");
+        for (int i = 0; i < lines.length; i++) {
+            arguments.put("arg" + i, lines[i]);
+        }
+        return arguments;
     }
 }

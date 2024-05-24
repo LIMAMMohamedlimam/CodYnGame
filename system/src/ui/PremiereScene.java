@@ -11,6 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
@@ -78,21 +79,16 @@ public class PremiereScene extends Application {
 
                 // Générer et capturer la sortie du fichier Python
                 String generatorFilePath = PythonGenerator.getGeneratorFilePath(selectedTitle);
-                List<String> generatorOutputValues = PythonGenerator.runPythonGenerator(generatorFilePath);
-                String generatorOutput = String.join("\n", generatorOutputValues); // Convertir la liste en une seule chaîne de caractères
-
-                // Construction de la map d'arguments pour la solution
-                Map<String, String> arguments = new HashMap<>();
-                for (int i = 0; i < generatorOutputValues.size(); i++) {
-                    arguments.put("arg" + i, generatorOutputValues.get(i));
-                }
+                Map<String, String> generatorOutput = PythonGenerator.runPythonGenerator(generatorFilePath);
+                String generatorOutputString = convertMapToString(generatorOutput);
 
                 // Exécution de la solution avec SolutionExecutor
-                SolutionExecutor solutionExecutor = new SolutionExecutor(); // Créer une instance de SolutionExecutor
-                String output = solutionExecutor.executeSolution(selectedTitle, arguments); // Utiliser cette instance pour appeler executeSolution
+                SolutionExecutor solutionExecutor = new SolutionExecutor();
+                String output = solutionExecutor.executeSolution(selectedTitle, generatorOutput);
+
 
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
-                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description, generatorOutput, output);
+                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description, generatorOutputString, output);
                 primaryStage.setScene(scene);
             } else {
                 System.out.println("Veuillez sélectionner un énoncé et un langage, puis confirmer votre choix.");
@@ -126,6 +122,14 @@ public class PremiereScene extends Application {
         }
 
         titleListView.getItems().setAll(filteredTitles);
+    }
+
+    private String convertMapToString(Map<String, String> map) {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            sb.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+        }
+        return sb.toString();
     }
 
     public static void showPopup(String arg) {
