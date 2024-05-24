@@ -1,23 +1,22 @@
-
 package GetGeneration;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class PythonGenerator {
+public class DataGenerator {
 
     public String generateData(String title) {
         String generatorFilePath = getGeneratorFilePath(title);
         return runPythonGenerator(generatorFilePath);
     }
 
-    private String getGeneratorFilePath(String title) {
+    public static String getGeneratorFilePath(String title) {
         String fileName = title.replaceAll("\\s+", "") + "Gen.py";
         return "DataGenFiles/" + fileName;
     }
 
-    private String runPythonGenerator(String filePath) {
+    public static String runPythonGenerator(String filePath) {
         StringBuilder output = new StringBuilder();
         try {
             Process process = Runtime.getRuntime().exec("python " + filePath);

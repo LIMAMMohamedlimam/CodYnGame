@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataStorage {
-    private static final Map<String, String> generatedData = new HashMap<>();
+    private static final Map<String, String> solutionMap = new HashMap<>();
 
-    public static void saveGeneratedData(String exerciseTitle, String generatedValue) {
-        generatedData.put(exerciseTitle, generatedValue);
+    public static void saveGeneratedData(String exerciseTitle, String generatedData) {
+        solutionMap.put(exerciseTitle, generatedData);
     }
 
     public static String getGeneratedData(String exerciseTitle) {
-        return generatedData.get(exerciseTitle);
+        return solutionMap.get(exerciseTitle);
     }
 }

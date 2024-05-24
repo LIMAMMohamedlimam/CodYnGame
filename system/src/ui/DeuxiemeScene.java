@@ -1,7 +1,11 @@
 package ui;
 
-import Problems.ProblemManager;
+
+
 import fonctionnalities.codeInterpreter;
+import Problems.ProblemManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,15 +14,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import java.util.Map;
 
 public class DeuxiemeScene {
 
-    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description, String generatorOutput) {
+    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description, Map<String, String> generatorOutput) {
         Label detailsLabel = new Label("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage + "\nDescription: " + description);
 
         // Initialisation de la liste déroulante avec les langages disponibles
-        ComboBox<String> languageComboBox = new ComboBox<>();
-        languageComboBox.getItems().addAll("Python", "C", "Java", "PHP", "JavaScript");
+        ObservableList<String> languages = FXCollections.observableArrayList("Python", "C", "Java", "PHP", "JavaScript");
+        ComboBox<String> languageComboBox = new ComboBox<>(languages);
+
+        // Sélectionner le langage par défaut
         languageComboBox.setValue(selectedLanguage);
 
         TextArea codeTextArea = new TextArea();
@@ -29,7 +36,7 @@ public class DeuxiemeScene {
 
         TextArea generatorOutputTextArea = new TextArea();
         generatorOutputTextArea.setEditable(false);
-        generatorOutputTextArea.setText(generatorOutput); // Affichage des données générées
+        generatorOutputTextArea.setText(buildGeneratorOutputText(generatorOutput));
 
         Button executeButton = new Button("Valider");
         executeButton.setOnAction(event -> {
@@ -68,5 +75,13 @@ public class DeuxiemeScene {
         root.setPadding(new Insets(10));
 
         return new Scene(root, 600, 700);
+    }
+
+    private String buildGeneratorOutputText(Map<String, String> generatorOutput) {
+        StringBuilder outputText = new StringBuilder();
+        for (String key : generatorOutput.keySet()) {
+            outputText.append(key).append(": ").append(generatorOutput.get(key)).append("\n");
+        }
+        return outputText.toString();
     }
 }

@@ -1,6 +1,13 @@
+
 package ui;
 
+import GetGeneration.DataGenerator;
 import Problems.ProblemManager;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -11,13 +18,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import GetSolutionFiles.DataStorage;
-import GetGeneration.PythonGenerator;
+import java.util.Map;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class PremiereScene extends Application {
 
@@ -75,17 +77,11 @@ public class PremiereScene extends Application {
                 String selectedTitle = selectedTitleWithDifficulty.split(" \\(")[0];
                 String description = ProblemManager.retrieveDescription(selectedTitle);
 
-                String generatorFilePath = PythonGenerator.getGeneratorFilePath(selectedTitle);
-                String generatorOutput = PythonGenerator.runPythonGenerator(generatorFilePath);
-
-                // Vérifions si generatorOutput contient les données générées
-                System.out.println("Données générées pour " + selectedTitle + ": " + generatorOutput);
-
-                // Sauvegarder les données générées
-                DataStorage.saveGeneratedData(selectedTitle, generatorOutput);
+                DataGenerator dataGenerator = new DataGenerator();
+                Map<String, String> generatorOutputMap = dataGenerator.generateData(selectedTitle);
 
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
-                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description, generatorOutput);
+                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description, generatorOutputMap);
                 primaryStage.setScene(scene);
             } else {
                 System.out.println("Veuillez sélectionner un énoncé et un langage, puis confirmer votre choix.");
@@ -120,6 +116,9 @@ public class PremiereScene extends Application {
 
         titleListView.getItems().setAll(filteredTitles);
     }
+
+
+
 
     public static void showPopup(String arg) {
         Stage popupStage = new Stage();
