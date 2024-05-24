@@ -1,8 +1,10 @@
 package fonctionnalities;
 
+
+
 import java.io.*;
 
-class codeInterpreter {
+public class codeInterpreter {
     public static String executeCode(String language, String code) {
         ProcessBuilder processBuilder = null; // Déclarez processBuilder ici pour l'utiliser dans tout le bloc try
 
