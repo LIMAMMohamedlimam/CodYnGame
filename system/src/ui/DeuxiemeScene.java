@@ -1,10 +1,7 @@
 package ui;
 
-
 import Problems.ProblemManager;
 import fonctionnalities.codeInterpreter;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,10 +17,8 @@ public class DeuxiemeScene {
         Label detailsLabel = new Label("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage + "\nDescription: " + description);
 
         // Initialisation de la liste déroulante avec les langages disponibles
-        ObservableList<String> languages = FXCollections.observableArrayList("Python", "C", "Java", "PHP", "JavaScript");
-        ComboBox<String> languageComboBox = new ComboBox<>(languages);
-
-        // Sélectionner le langage par défaut
+        ComboBox<String> languageComboBox = new ComboBox<>();
+        languageComboBox.getItems().addAll("Python", "C", "Java", "PHP", "JavaScript");
         languageComboBox.setValue(selectedLanguage);
 
         TextArea codeTextArea = new TextArea();
@@ -34,7 +29,7 @@ public class DeuxiemeScene {
 
         TextArea generatorOutputTextArea = new TextArea();
         generatorOutputTextArea.setEditable(false);
-        generatorOutputTextArea.setText(generatorOutput);
+        generatorOutputTextArea.setText(generatorOutput); // Affichage des données générées
 
         Button executeButton = new Button("Valider");
         executeButton.setOnAction(event -> {
