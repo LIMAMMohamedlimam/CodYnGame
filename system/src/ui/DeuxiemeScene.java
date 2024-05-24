@@ -1,7 +1,7 @@
 package ui ;
-import Other.Language;
-import Problems.ProblemManager;
-import fonctionnalities.Submission;
+
+
+import fonctionnalities.CodeInterpreter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -13,19 +13,17 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import static fonctionnalities.Compiler.Run;
-
 public class DeuxiemeScene {
 
-    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, Language selectedLanguage, String description) {
-        Label detailsLabel = new Label("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage.getName() + "\nDescription: " + description);
+    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description) {
+        Label detailsLabel = new Label("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage + "\nDescription: " + description);
 
         // Initialisation de la liste déroulante avec les langages disponibles
         ObservableList<String> languages = FXCollections.observableArrayList("Python", "C", "Java", "PHP", "JavaScript");
         ComboBox<String> languageComboBox = new ComboBox<>(languages);
 
         // Sélectionner le langage par défaut
-        languageComboBox.setValue(selectedLanguage.getName());
+        languageComboBox.setValue(selectedLanguage);
 
         TextArea codeTextArea = new TextArea();
         codeTextArea.setPromptText("Saisissez votre code ici");
@@ -35,22 +33,21 @@ public class DeuxiemeScene {
 
         Button executeButton = new Button("Valider");
         executeButton.setOnAction(event -> {
-            String code = codeTextArea.getText() ;
-            Submission submission = new Submission(selectedLanguage , code) ;
-            String output = Run(submission.getLanguage(), submission.getFile().getPath());
+            String code = codeTextArea.getText();
+            String output = codeInterpreter.executeCode(selectedLanguage, code);
             outputTextArea.setText(output);
         });
 
         Button backButton = new Button("Retour");
         backButton.setOnAction(event -> {
             PremiereScene premiereScene = new PremiereScene();
-            Scene scene = premiereScene.createSelectionScene(primaryStage, ProblemManager.retrieveTitles());
+            Scene scene = premiereScene.createSelectionScene(primaryStage, ExerciseRetriever.retrieveTitles());
             primaryStage.setScene(scene);
         });
 
         // Ajouter un gestionnaire d'événements à la liste déroulante des langages pour réinitialiser la scène avec le nouveau langage
         languageComboBox.setOnAction(event -> {
-            Language newLanguage = new Language(languageComboBox.getValue());
+            String newLanguage = languageComboBox.getValue();
             DeuxiemeScene newScene = new DeuxiemeScene();
             Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description);
             primaryStage.setScene(updatedScene);
