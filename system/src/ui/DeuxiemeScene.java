@@ -1,4 +1,5 @@
-package ui ;
+package ui;
+
 
 import Problems.ProblemManager;
 import fonctionnalities.codeInterpreter;
@@ -15,7 +16,7 @@ import javafx.stage.Stage;
 
 public class DeuxiemeScene {
 
-    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description) {
+    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description, String generatorOutput) {
         Label detailsLabel = new Label("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage + "\nDescription: " + description);
 
         // Initialisation de la liste déroulante avec les langages disponibles
@@ -30,6 +31,10 @@ public class DeuxiemeScene {
 
         TextArea outputTextArea = new TextArea();
         outputTextArea.setEditable(false);
+
+        TextArea generatorOutputTextArea = new TextArea();
+        generatorOutputTextArea.setEditable(false);
+        generatorOutputTextArea.setText(generatorOutput);
 
         Button executeButton = new Button("Valider");
         executeButton.setOnAction(event -> {
@@ -49,13 +54,15 @@ public class DeuxiemeScene {
         languageComboBox.setOnAction(event -> {
             String newLanguage = languageComboBox.getValue();
             DeuxiemeScene newScene = new DeuxiemeScene();
-            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description);
+            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description, generatorOutput);
             primaryStage.setScene(updatedScene);
         });
 
         VBox root = new VBox(
                 detailsLabel,
                 languageComboBox,
+                new Label("Données générées:"),
+                generatorOutputTextArea,
                 codeTextArea,
                 executeButton,
                 new Label("Output:"),

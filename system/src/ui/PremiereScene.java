@@ -1,7 +1,5 @@
-package ui ;
+package ui;
 
-
-import Other.Language;
 import Problems.ProblemManager;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -13,7 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import utilisateur.User;
+import GetGeneration.PythonGenerator;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,8 +32,6 @@ public class PremiereScene extends Application {
         primaryStage.setTitle("CodYngame");
         primaryStage.show();
     }
-
-
 
     private List<String> retrieveTitlesWithDifficulty() {
         List<String> titles = ProblemManager.retrieveTitles();
@@ -78,8 +74,12 @@ public class PremiereScene extends Application {
                 String selectedTitle = selectedTitleWithDifficulty.split(" \\(")[0];
                 String description = ProblemManager.retrieveDescription(selectedTitle);
 
+                // Générer et capturer la sortie du fichier Python
+                String generatorFilePath = PythonGenerator.getGeneratorFilePath(selectedTitle);
+                String generatorOutput = PythonGenerator.runPythonGenerator(generatorFilePath);
+
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
-                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description);
+                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description, generatorOutput);
                 primaryStage.setScene(scene);
             } else {
                 System.out.println("Veuillez sélectionner un énoncé et un langage, puis confirmer votre choix.");
@@ -114,7 +114,6 @@ public class PremiereScene extends Application {
 
         titleListView.getItems().setAll(filteredTitles);
     }
-
 
     public static void showPopup(String arg) {
         Stage popupStage = new Stage();
