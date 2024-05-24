@@ -1,7 +1,13 @@
 package Problems;
 
+import Other.Language;
+import database.DatabaseManager;
+import fonctionnalities.Compiler;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Classe représentant un problème avec ses détails.
@@ -13,9 +19,22 @@ public class Problem {
     private  ProblemDifficulty difficultyLevel;
     private  String solutionFile;
 
+    private String data ;
+    private String defaultCode ;
+
+
+
 
     public Problem(String title){
         this.title = title ;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData() {
+        this.data = Compiler.Run(new Language("python") , this.solutionFile + " gen") ;
     }
 
     /**
@@ -26,13 +45,20 @@ public class Problem {
      * @param description La description du problème.
      * @param solutionFile Le chemin du fichier de la solution.
      * @param difficultyLevel Le niveau de difficulté du problème.
+     * @param defaultCode
      */
-    public Problem(int id, String title, String description, String solutionFile, ProblemDifficulty difficultyLevel) {
+    public Problem(int id, String title, String description, String solutionFile, ProblemDifficulty difficultyLevel , String defaultCode) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.solutionFile = solutionFile;
         this.difficultyLevel = difficultyLevel;
+        this.defaultCode = defaultCode ;
+        setData() ;
+    }
+
+    public String getDefaultCode(){
+        return this.defaultCode ;
     }
 
     /**
@@ -93,10 +119,13 @@ public class Problem {
             String description = resultSet.getString("description");
             String solutionFile = resultSet.getString("solutionFile");
             ProblemDifficulty difficultyLevel = ProblemDifficulty.fromString(resultSet.getString("difficulty"));
-            return new Problem(id, title, description, solutionFile, difficultyLevel);
+            String defaultCode = resultSet.getString("defaultCode") ;
+            return new Problem(id, title, description, solutionFile, difficultyLevel , defaultCode);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
+
+
 }

@@ -70,11 +70,11 @@ public abstract class Compiler {
             String runOutput = readProcessOutput(runProcess.getInputStream());
             int runStatus = runProcess.waitFor();
             if (runStatus == 0){
-                System.out.println("Sortie: " + runOutput);
-                return "Sortie: " + runOutput ;
+//                System.out.println("Sortie: " + runOutput);
+                return  runOutput ;
             } else {
-                System.out.println("Erreur de compilation: " + runError);
-                return "Erreur de compilation: " + runError ;
+//                System.out.println("Erreur de compilation: " + runError);
+                return  runError ;
 
             }
 
@@ -111,7 +111,7 @@ public abstract class Compiler {
      *
      * @param commands Une liste de commandes shell à exécuter. Cette liste ne doit ni être null ni vide.
      *                 Chaque chaîne dans la liste devrait être une commande valide de ligne de commande.
-     * @return void Cette méthode ne retourne aucune valeur. Les sorties sont directement imprimées sur la sortie standard.
+     * @return Void Cette méthode ne retourne aucune valeur. Les sorties sont directement imprimées sur la sortie standard.
      */
     public static void executeCommands(List<String> commands) {
         if (commands == null || commands.isEmpty()) {

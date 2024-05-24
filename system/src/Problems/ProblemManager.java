@@ -1,5 +1,7 @@
 package Problems;
+import Other.Language;
 import database.DatabaseManager;
+import fonctionnalities.Compiler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,7 +72,7 @@ public abstract class ProblemManager {
 
     public static @Nullable Problem getProblem(String title){
         DatabaseManager dbManager = new DatabaseManager();
-        String query = "select id, title, description, solutionFile, difficulty " +
+        String query = "select id, title, description, solutionFile, difficulty, defaultCode " +
                 "from Problem " +
                 "WHERE title = '" + title + "';" ;
         try {
@@ -136,4 +138,13 @@ public abstract class ProblemManager {
             return null;
         }
     }
+
+    public static boolean verifyCode(Problem selectedProb ,String userOutput){
+        String execFile = selectedProb.getSolutionFile()+" "+"verify"+ " "+selectedProb.getData() + " " +userOutput ;
+        String result = Compiler.Run(new Language("python") , execFile) ;
+        System.out.println(result);
+        return false ;
+    }
+
+
 }
