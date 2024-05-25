@@ -16,7 +16,6 @@ def main(generatedData):
     nums = generatedData["nums"]
     target = generatedData["target"]
     result = TwoSum(nums, target)
-    print(generatedData)
     print(result)
 
 if __name__ == "__main__":

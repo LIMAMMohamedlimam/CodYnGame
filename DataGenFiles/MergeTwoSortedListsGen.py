@@ -10,6 +10,6 @@ l1 = generate_list(length1)
 l2 = generate_list(length2)
 
 data = {"l1": l1, "l2": l2}
-
+print(data)
 with open("merge_two_sorted_lists_input.json", "w") as json_file:
     json.dump(data, json_file)

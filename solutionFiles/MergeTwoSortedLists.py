@@ -1,53 +1,39 @@
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+import json
 
-def merge_two_lists(l1, l2):
-    # Créer un nœud sentinelle pour le début de la liste fusionnée
-    dummy = ListNode()
-    current = dummy
+def merge_sorted_lists(list1, list2):
+    merged_list = []
+    i = 0
+    j = 0
 
-    # Parcourir les deux listes et fusionner les nœuds dans l'ordre croissant
-    while l1 and l2:
-        if l1.val < l2.val:
-            current.next = l1
-            l1 = l1.next
+    # Parcourir les deux listes jusqu'à ce qu'une d'elles soit entièrement parcourue
+    while i < len(list1) and j < len(list2):
+        # Comparer les éléments des deux listes et ajouter le plus petit à la liste fusionnée
+        if list1[i] < list2[j]:
+            merged_list.append(list1[i])
+            i += 1
         else:
-            current.next = l2
-            l2 = l2.next
-        current = current.next
+            merged_list.append(list2[j])
+            j += 1
 
-    # Ajouter les éléments restants s'il y en a
-    if l1:
-        current.next = l1
-    elif l2:
-        current.next = l2
+    # Ajouter les éléments restants de la première liste, s'il y en a
+    while i < len(list1):
+        merged_list.append(list1[i])
+        i += 1
 
-    return dummy.next
+    # Ajouter les éléments restants de la deuxième liste, s'il y en a
+    while j < len(list2):
+        merged_list.append(list2[j])
+        j += 1
 
-def print_list(node):
-    while node:
-        print(node.val, end=" -> ")
-        node = node.next
-    print("None")
-
-def main():
-    # Création de deux listes triées
-    l1 = ListNode(1)
-    l1.next = ListNode(3)
-    l1.next.next = ListNode(5)
-
-    l2 = ListNode(2)
-    l2.next = ListNode(4)
-    l2.next.next = ListNode(6)
-
-    # Fusionner les deux listes
-    merged_list = merge_two_lists(l1, l2)
-
-    # Afficher la liste fusionnée
-    print("Liste fusionnée :")
-    print_list(merged_list)
+    return merged_list
+def main(generatedData):
+    l1 = generatedData["l1"]
+    l2 = generatedData["l2"]
+    result = merge_sorted_lists(l1, l2)
+    print("la nouvelle liste triée est : {} ".format(result))
 
 if __name__ == "__main__":
-    main()
+    # Si le script est exécuté en tant que programme principal
+    with open("merge_two_sorted_lists_input.json") as json_file:
+        generatedData = json.load(json_file)
+    main(generatedData)
