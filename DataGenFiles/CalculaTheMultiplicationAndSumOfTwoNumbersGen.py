@@ -25,7 +25,6 @@ def generate_numbers():
     return number1, number2
 
 def verifysolution(jsondata, resultdata):
-    # Example implementation of verification logic
     try:
         with open(jsondata, 'r') as f:
             numbers = json.load(f)
@@ -40,7 +39,7 @@ def verifysolution(jsondata, resultdata):
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Error: No operation specified.")
-        print("Usage: python script.py gen OR python script.py verif <jsondata> <resultdata>")
+        print("Usage: python script.py gen OR python script.py verify <jsondata> <resultdata>")
     elif sys.argv[1] == "gen":
         number1, number2 = generate_numbers()
         data = {"number1": number1, "number2": number2}
@@ -54,4 +53,4 @@ if __name__ == "__main__":
             print("Solution is incorrect.")
     else:
         print("Error: Incorrect arguments or number of arguments.")
-        print("Usage: python script.py gen OR python script.py verif <jsondata> <resultdata>")
+        print("Usage: python script.py gen OR python script.py verify <jsondata> <resultdata>")
