@@ -1,75 +1,54 @@
 package GetSolution;
 
-
-
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Map;
+import java.io.InputStreamReader;
 
 public class PythonSolutionExecutor {
 
     /**
-     * Génère un fichier Python pour exécuter la solution avec les données générées.
+     * Génère le chemin du fichier Python de solution basé sur le titre de l'exercice.
      *
-     * @param title        Le titre de l'exercice.
-     * @param generatedData Les données générées sous forme de chaîne JSON.
+     * @param title Le titre de l'exercice.
+     * @return Le chemin du fichier Python de solution.
      */
-    public static void createPythonSolutionExecutionFile(String title, String generatedData) {
+    public static String getSolutionFilePath(String title) {
+        // Convertir le titre en nom de fichier
+        String fileName = title.replace(" ", "") + ".py";
+        // Chemin complet du fichier de solution
+        return "solutionFiles/" + fileName;
+    }
+
+    /**
+     * Exécute le script Python de solution avec les données générées.
+     *
+     * @param solutionFilePath Le chemin du fichier Python de solution.
+     * @param generatedData    Les données générées à passer au script Python.
+     * @return La sortie du script Python.
+     */
+    public static String executePythonSolution(String solutionFilePath, String generatedData) {
         try {
-            // Convertir les données JSON en Map
-            Map<String, Object> dataMap = parseJSON(generatedData);
-            String nums = stringifyArray((int[]) dataMap.get("nums"));
-            String target = dataMap.get("target").toString();
+            // Construction de la commande pour exécuter le script Python avec les données générées
+            String command = "python " + solutionFilePath + " " + generatedData;
 
-            // Créer le contenu du fichier Python
-            String solutionCode = """
-                    from solutionFiles.{} import {}
-                    
-                    # Données générées
-                    nums = {}
-                    target = {}
-                    
-                    # Exécution de la solution
-                    result = {}(nums, target)
-                    print(result)  # Affichage du résultat
-                    """.formatted(title.replace(" ", ""), title.replace(" ", ""), nums, target, title.replace(" ", ""));
+            // Exécution de la commande
+            Process process = Runtime.getRuntime().exec(command);
 
-            // Chemin du fichier généré
-            String solutionFilePath = "GeneratedSolutions/Execute" + title.replace(" ", "") + "Solution.py";
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(solutionFilePath))) {
-                writer.write(solutionCode);
+            // Récupération de la sortie du script Python
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            StringBuilder output = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
             }
 
-        } catch (IOException e) {
+            // Attente de la fin de l'exécution du processus Python
+            process.waitFor();
+
+            return output.toString();
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
+            return null;
         }
-    }
-
-    private static Map<String, Object> parseJSON(String json) throws IOException {
-        // Implémentez ici votre propre analyseur JSON ou utilisez une bibliothèque externe si nécessaire
-        // Pour cet exemple, nous supposons que vos données générées sont déjà dans un format de carte clé-valeur
-        throw new UnsupportedOperationException("Méthode non implémentée");
-    }
-
-    private static String stringifyArray(int[] array) {
-        StringBuilder builder = new StringBuilder("[");
-        for (int i = 0; i < array.length; i++) {
-            builder.append(array[i]);
-            if (i < array.length - 1) {
-                builder.append(", ");
-            }
-        }
-        builder.append("]");
-        return builder.toString();
-    }
-
-    public static void main(String[] args) {
-        String title = "Two Sum";
-        String generatedData = "{\"nums\": [846, -266, -602, -338, 320], \"target\": 1114}";  // Exemple de données générées
-        createPythonSolutionExecutionFile(title, generatedData);
     }
 }
-
-

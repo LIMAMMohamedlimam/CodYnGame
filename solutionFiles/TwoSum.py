@@ -1,3 +1,5 @@
+import json
+
 def TwoSum(nums, target):
     num_to_index = {}  # Dictionnaire pour stocker les numéros et leurs indices
 
@@ -9,7 +11,16 @@ def TwoSum(nums, target):
 
     return None  # Si aucune paire n'est trouvée
 
-# Exemple d'utilisation
-nums = [2, 7, 11, 15]
-target = 9
-print(TwoSum(nums, target))  # Devrait renvoyer [0, 1] car nums[0] + nums[1] = 2 + 7 = 9
+def main(generatedData):
+    # Utiliser les données pour exécuter la fonction TwoSum
+    nums = generatedData["nums"]
+    target = generatedData["target"]
+    result = TwoSum(nums, target)
+    print(generatedData)
+    print(result)
+
+if __name__ == "__main__":
+    # Si le script est exécuté en tant que programme principal
+    with open("twosum_input.json") as json_file:
+        generatedData = json.load(json_file)
+    main(generatedData)

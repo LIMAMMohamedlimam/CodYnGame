@@ -1,5 +1,7 @@
 package ui;
 
+
+import GetSolution.PythonSolutionExecutor;
 import Problems.ProblemManager;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -12,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import GetGeneration.PythonGenerator;
+import javafx.scene.control.TextArea;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -78,6 +81,17 @@ public class PremiereScene extends Application {
                 String generatorFilePath = PythonGenerator.getGeneratorFilePath(selectedTitle);
                 String generatorOutput = PythonGenerator.runPythonGenerator(generatorFilePath);
 
+                // Exécuter la solution Python avec les données générées
+                String solutionFilePath = PythonSolutionExecutor.getSolutionFilePath(selectedTitle);
+                String solutionOutput = PythonSolutionExecutor.executePythonSolution(solutionFilePath, generatorOutput);
+
+                // Afficher la fenêtre JSON avec la solution
+                showJsonWindow(generatorOutput);
+                showJsonWindow(solutionOutput);
+
+
+
+
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
                 Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description, generatorOutput);
                 primaryStage.setScene(scene);
@@ -129,6 +143,16 @@ public class PremiereScene extends Application {
         Scene popupScene = new Scene(popupLayout, 300, 100);
         popupStage.setScene(popupScene);
         popupStage.showAndWait();
+    }
+    private void showJsonWindow(String jsonContent) {
+        Stage jsonStage = new Stage();
+        jsonStage.setTitle("Solution JSON");
+
+        TextArea textArea = new TextArea(jsonContent);
+        textArea.setEditable(false);
+
+        jsonStage.setScene(new Scene(textArea, 400, 300));
+        jsonStage.show();
     }
 
     public static void main(String[] args) {
