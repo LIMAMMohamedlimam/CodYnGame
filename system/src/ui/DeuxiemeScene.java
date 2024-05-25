@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class DeuxiemeScene {
 
-    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description, String generatorOutput) {
+    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description, String generatorOutput, String solutionOutput) {
         Label detailsLabel = new Label("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage + "\nDescription: " + description);
 
         // Initialisation de la liste déroulante avec les langages disponibles
@@ -27,12 +27,21 @@ public class DeuxiemeScene {
         TextArea outputTextArea = new TextArea();
         outputTextArea.setEditable(false);
 
-
         Button executeButton = new Button("Valider");
         executeButton.setOnAction(event -> {
             String code = codeTextArea.getText();
-            String output = codeInterpreter.executeCode(selectedLanguage, code);
-            outputTextArea.setText(output);
+            String output = codeInterpreter.executeCode(selectedLanguage, code).trim();
+
+            // Comparer la solution output avec le résultat attendu
+            String comparisonResult;
+            if (output.equals(solutionOutput.trim())) {
+                comparisonResult = "Vrai";
+            } else {
+                comparisonResult = "Faux";
+            }
+
+            // Afficher le résultat dans la zone de texte
+            outputTextArea.setText("Résultat attendu : " + solutionOutput.trim() + "\nRésultat obtenu : " + output + "\nComparaison : " + comparisonResult);
         });
 
         Button backButton = new Button("Retour");
@@ -46,13 +55,14 @@ public class DeuxiemeScene {
         languageComboBox.setOnAction(event -> {
             String newLanguage = languageComboBox.getValue();
             DeuxiemeScene newScene = new DeuxiemeScene();
-            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description, generatorOutput);
+            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description, generatorOutput,solutionOutput);
             primaryStage.setScene(updatedScene);
         });
 
         VBox root = new VBox(
                 detailsLabel,
                 languageComboBox,
+                codeTextArea,
                 executeButton,
                 new Label("Output:"),
                 outputTextArea,

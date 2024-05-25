@@ -30,7 +30,7 @@ def main(generatedData):
     l1 = generatedData["l1"]
     l2 = generatedData["l2"]
     result = merge_sorted_lists(l1, l2)
-    print("la nouvelle liste triée est : {} ".format(result))
+    print(result)
 
 if __name__ == "__main__":
     # Si le script est exécuté en tant que programme principal

@@ -95,7 +95,7 @@ public class PremiereScene extends Application {
 
 
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
-                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description, generatorOutput);
+                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description, generatorOutput,solutionOutput);
                 primaryStage.setScene(scene);
             } else {
                 System.out.println("Veuillez sélectionner un énoncé et un langage, puis confirmer votre choix.");
