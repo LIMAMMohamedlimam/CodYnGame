@@ -6,6 +6,8 @@ public abstract class Commandes {
     public static final String compileC = "gcc";
     public static final String compileJAVA = "javac";
     public static final String compilePYTHON = "python3";
+    public static final String compileJAVASCRIPT = "node";
+    public static final String compilePHP = "php" ;
     public static final String commentTagC = "//";
     public static final String commentTagJAVA = "//";
     public static final String commentTagPYTHON = "#";
@@ -18,6 +20,10 @@ public abstract class Commandes {
                 return compileJAVA;
             case "python":
                 return compilePYTHON;
+            case "javascript" :
+                return compileJAVASCRIPT ;
+            case "php" :
+                return compilePHP ;
             default:
                 return null;
         }
@@ -51,9 +57,9 @@ public abstract class Commandes {
 
 
     public static String getCompileCommand(Language language , String filePath ,String outputFilePath) {
-        if (language.getName().toLowerCase().equals("c"))
+        if (language.getName().equalsIgnoreCase("c"))
             return compileC + " " + filePath + " -o " + outputFilePath;
-        else if (language.getName().toLowerCase().equals("java"))
+        else if (language.getName().equalsIgnoreCase("java"))
             return compileJAVA + " " + filePath ;
         return null;
     }
@@ -70,12 +76,10 @@ public abstract class Commandes {
 
 
     public static String getRunCommand(Language language , String FilePath) {
-        if (language.getName().toLowerCase().equals("c"))
+        if (language.getName().equalsIgnoreCase("c"))
             return "./" + FilePath;
-        if (language.getName().toLowerCase().equals("java"))
+        if (language.getName().equalsIgnoreCase("java"))
             return "java" + " " + FilePath;
-        if (language.getName().toLowerCase().equals("python"))
-            return "python3" + " " + FilePath;
         return null;
     }
 

@@ -38,9 +38,10 @@ public class DeuxiemeScene {
         Button executeButton = new Button("Valider");
         executeButton.setOnAction(event -> {
             String code = codeTextArea.getText() ;
-            Submission submission = new Submission(currentGame.getSelectedLanguage() , code) ;
-            String output = Run(submission.getLanguage(), submission.getFile().getPath());
-            ProblemManager.verifyCode(currentGame.getSelectedProblem(), output);
+            Submission submission = new Submission(currentGame , code) ;
+            String output = submission.run() ;
+            //String output = Run(submission.getLanguage(), submission.getFile().getPath());
+            //ProblemManager.verifyCode(currentGame.getSelectedProblem(), output);
             outputTextArea.setText(output);
         });
 
@@ -53,8 +54,10 @@ public class DeuxiemeScene {
 
         // Ajouter un gestionnaire d'événements à la liste déroulante des langages pour réinitialiser la scène avec le nouveau langage
         languageComboBox.setOnAction(event -> {
-            //Language newLanguage = new Language(languageComboBox.getValue());
+            Language newLanguage = new Language(languageComboBox.getValue());
             DeuxiemeScene newScene = new DeuxiemeScene();
+            currentGame.setSelectedLanguage(newLanguage);
+            currentGame.setDefaultCode() ;
             Scene updatedScene = newScene.createDetailsScene(primaryStage,currentGame);
             primaryStage.setScene(updatedScene);
         });
