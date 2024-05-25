@@ -27,9 +27,6 @@ public class DeuxiemeScene {
         TextArea outputTextArea = new TextArea();
         outputTextArea.setEditable(false);
 
-        TextArea generatorOutputTextArea = new TextArea();
-        generatorOutputTextArea.setEditable(false);
-        generatorOutputTextArea.setText(generatorOutput); // Affichage des données générées
 
         Button executeButton = new Button("Valider");
         executeButton.setOnAction(event -> {
@@ -56,9 +53,6 @@ public class DeuxiemeScene {
         VBox root = new VBox(
                 detailsLabel,
                 languageComboBox,
-                new Label("Données générées:"),
-                generatorOutputTextArea,
-                codeTextArea,
                 executeButton,
                 new Label("Output:"),
                 outputTextArea,
