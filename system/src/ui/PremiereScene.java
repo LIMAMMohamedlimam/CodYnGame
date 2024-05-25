@@ -57,6 +57,8 @@ public class PremiereScene extends Application {
         titleListView = new ListView<>();
         titleListView.getItems().addAll(titles);
 
+        allTitles = new ArrayList<>(titles);
+
         String[] languages = {"Python", "C", "Java", "PHP", "JavaScript"};
         ListView<String> languageListView = new ListView<>();
         languageListView.getItems().addAll(languages);
