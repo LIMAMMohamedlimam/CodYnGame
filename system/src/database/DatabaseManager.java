@@ -1,8 +1,10 @@
 package database;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -24,6 +26,13 @@ public class DatabaseManager {
     }
 
     /**
+     * should be used to set up the database from the CodYnGame.sql file
+     */
+    public static boolean setDataBase(String CodYngamedatabasefile){
+        return false ;
+    }
+
+    /**
      * Constructeur de DatabaseManager avec configuration de la connexion.
      *
      * @param url       L'URL de la base de données
@@ -36,18 +45,19 @@ public class DatabaseManager {
         this.username = username;
     }
 
+
+
     /**
      * Établit une connexion avec la base de données.
      *
      * @return L'objet Connection pour interagir avec la base de données.
      */
     public Connection connect() {
-        System.out.println("connecting to database ...");
+
         try {
+            // Load the MySQL JDBC driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(url, username, password);
-            System.out.println("connected");
-            return connection;
+            return  DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,10 +70,10 @@ public class DatabaseManager {
      * @param db_connection L'objet Connection à fermer.
      */
     public void disconnect(Connection db_connection) {
-        System.out.println("disconnecting from the database ...");
+//        System.out.println("disconnecting from the database ...");
         try {
             db_connection.close();
-            System.out.println("disconnected from the database.");
+//            System.out.println("disconnected from the database.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,13 +85,18 @@ public class DatabaseManager {
      * @param query La requête SQL à exécuter.
      * @return Le ResultSet obtenu après l'exécution de la requête.
      */
-    public ResultSet executeQuery(String query) {
+    public  ResultSet executeQuery(String query) {
         Connection con = this.connect();
-        if (con == null || query == null)
+        if(con == null){
+            if(startMySQLServer()){
+                con = this.connect() ;
+            }
+        }
+        if (query == null)
             throw new NullPointerException();
         try (Statement stmt = con.createStatement()) {
-            ResultSet Res = stmt.executeQuery(query);
-            return Res;
+            return stmt.executeQuery(query);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -109,4 +124,44 @@ public class DatabaseManager {
         }
         return res;
     }
+
+
+    public  <T> List<T> executeQuery(String query, Consumer<PreparedStatement> parameterSetter, Function<ResultSet, T> mapper) {
+        if (query == null)
+            throw new NullPointerException();
+        List<T> res = new ArrayList<>();
+        try (Connection conn = this.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            parameterSetter.accept(stmt);
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                while (resultSet.next()) {
+                    res.add(mapper.apply(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    private static boolean startMySQLServer() {
+        String command;
+
+        // Adjust the command according to your OS
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            command = "net start MySQL";
+        } else {
+            command = "sudo service mysql start";
+        }
+
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+            process.waitFor();
+            return process.exitValue() == 0;
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

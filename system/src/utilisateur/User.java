@@ -9,9 +9,14 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private int nbSubmission ;
+
     private DatabaseManager db = new DatabaseManager();
 
 
+    public User(String username) {
+        this.username = username;
+    }
     public User(int userId, String username, String password, String email) {
         this.userId = userId;
         this.username = username;

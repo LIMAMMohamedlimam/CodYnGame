@@ -57,12 +57,12 @@ public abstract class Compiler {
     }
 
     /**
-     * Compile un fichier source spécifié utilisant le compilateur par défaut du langage.
+     * execute un fichier source spécifié utilisant le compilateur par défaut du langage.
      *
      * @param language Le langage de programmation du fichier.
      * @param filePath Le chemin du fichier source à compiler.
      */
-    public static void compile(Language language, String filePath) {
+    public static String Run(Language language, String filePath) {
         String runCmd = Commandes.getCompileCommandtag(language) + " " + filePath;
         try {
             Process runProcess = Runtime.getRuntime().exec(runCmd);
@@ -70,15 +70,21 @@ public abstract class Compiler {
             String runOutput = readProcessOutput(runProcess.getInputStream());
             int runStatus = runProcess.waitFor();
             if (runStatus == 0){
-                System.out.println("Sortie: " + runOutput);
+//                System.out.println("Sortie: " + runOutput);
+                return  runOutput ;
             } else {
-                System.out.println("Erreur de compilation: " + runError);
+//                System.out.println("Erreur de compilation: " + runError);
+                return  runError ;
+
             }
 
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
+            return e.getMessage() ;
         }
     }
+
+
 
     /**
      * Lit et retourne la sortie d'un processus.
@@ -105,7 +111,7 @@ public abstract class Compiler {
      *
      * @param commands Une liste de commandes shell à exécuter. Cette liste ne doit ni être null ni vide.
      *                 Chaque chaîne dans la liste devrait être une commande valide de ligne de commande.
-     * @return void Cette méthode ne retourne aucune valeur. Les sorties sont directement imprimées sur la sortie standard.
+     * @return Void Cette méthode ne retourne aucune valeur. Les sorties sont directement imprimées sur la sortie standard.
      */
     public static void executeCommands(List<String> commands) {
         if (commands == null || commands.isEmpty()) {
