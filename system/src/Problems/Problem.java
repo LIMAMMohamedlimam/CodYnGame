@@ -20,7 +20,6 @@ public class Problem {
     private  String solutionFile;
 
     private String data ;
-    private String defaultCode ;
 
 
 
@@ -45,7 +44,6 @@ public class Problem {
      * @param description La description du problème.
      * @param solutionFile Le chemin du fichier de la solution.
      * @param difficultyLevel Le niveau de difficulté du problème.
-     * @param defaultCode
      */
     public Problem(int id, String title, String description, String solutionFile, ProblemDifficulty difficultyLevel , String defaultCode) {
         this.id = id;
@@ -53,13 +51,9 @@ public class Problem {
         this.description = description;
         this.solutionFile = solutionFile;
         this.difficultyLevel = difficultyLevel;
-        this.defaultCode = defaultCode ;
         setData() ;
     }
 
-    public String getDefaultCode(){
-        return this.defaultCode ;
-    }
 
     /**
      * Obtient l'identifiant du problème.
@@ -126,6 +120,8 @@ public class Problem {
         }
         return null;
     }
+
+
 
 
 }

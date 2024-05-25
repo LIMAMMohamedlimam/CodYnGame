@@ -6,6 +6,9 @@ public abstract class Commandes {
     public static final String compileC = "gcc";
     public static final String compileJAVA = "javac";
     public static final String compilePYTHON = "python3";
+    public static final String commentTagC = "//";
+    public static final String commentTagJAVA = "//";
+    public static final String commentTagPYTHON = "#";
 
     public static String getCompileCommandtag(Language language) {
         switch (language.getName().toLowerCase()) {
@@ -15,6 +18,19 @@ public abstract class Commandes {
                 return compileJAVA;
             case "python":
                 return compilePYTHON;
+            default:
+                return null;
+        }
+    }
+
+    public static String getCommentTag(Language language) {
+        switch (language.getName().toLowerCase()) {
+            case "c":
+                return commentTagC ;
+            case "java":
+                return commentTagJAVA;
+            case "python":
+                return commentTagPYTHON;
             default:
                 return null;
         }

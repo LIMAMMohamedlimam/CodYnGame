@@ -15,14 +15,20 @@ public class Language {
         return name;
     }
 
-
-
+    public String getCommentTag(){
+        if(this.getName().toLowerCase() == "python"){
+            return "#" ;
+        }
+        return "//" ;
+    }
 
 
 
     public String getDefaultCode() {
         return defaultCode;
     }
+
+
 }
 
 
