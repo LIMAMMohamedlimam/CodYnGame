@@ -3,20 +3,23 @@ package GetGeneration;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DataGenerator {
 
-    public String generateData(String title) {
+    public Map<String, String> generateData(String title) {
         String generatorFilePath = getGeneratorFilePath(title);
-        return runPythonGenerator(generatorFilePath);
+        String generatorOutput = runPythonGenerator(generatorFilePath);
+        return parseGeneratorOutput(generatorOutput);
     }
 
-    public static String getGeneratorFilePath(String title) {
+    private String getGeneratorFilePath(String title) {
         String fileName = title.replaceAll("\\s+", "") + "Gen.py";
         return "DataGenFiles/" + fileName;
     }
 
-    public static String runPythonGenerator(String filePath) {
+    private String runPythonGenerator(String filePath) {
         StringBuilder output = new StringBuilder();
         try {
             Process process = Runtime.getRuntime().exec("python " + filePath);
@@ -30,5 +33,11 @@ public class DataGenerator {
             e.printStackTrace();
         }
         return output.toString();
+    }
+
+    private Map<String, String> parseGeneratorOutput(String generatorOutput) {
+        Map<String, String> data = new HashMap<>();
+        // Votre logique d'analyse pour extraire les données du générateur de sortie
+        return data;
     }
 }

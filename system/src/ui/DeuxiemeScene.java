@@ -2,8 +2,9 @@ package ui;
 
 
 
-import fonctionnalities.codeInterpreter;
+
 import Problems.ProblemManager;
+import fonctionnalities.codeInterpreter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -14,11 +15,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
 import java.util.Map;
 
 public class DeuxiemeScene {
 
-    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description, Map<String, String> generatorOutput) {
+    public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description, Map<String, String> generatorOutput, String solutionOutput) {
         Label detailsLabel = new Label("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage + "\nDescription: " + description);
 
         // Initialisation de la liste déroulante avec les langages disponibles
@@ -56,7 +58,7 @@ public class DeuxiemeScene {
         languageComboBox.setOnAction(event -> {
             String newLanguage = languageComboBox.getValue();
             DeuxiemeScene newScene = new DeuxiemeScene();
-            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description, generatorOutput);
+            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description, generatorOutput, solutionOutput);
             primaryStage.setScene(updatedScene);
         });
 
@@ -67,8 +69,8 @@ public class DeuxiemeScene {
                 generatorOutputTextArea,
                 codeTextArea,
                 executeButton,
-                new Label("Output:"),
-                outputTextArea,
+                new Label("Sortie de la solution:"),
+                new Label(solutionOutput),
                 backButton
         );
         root.setSpacing(10);
