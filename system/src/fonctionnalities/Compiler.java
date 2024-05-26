@@ -1,14 +1,14 @@
 package fonctionnalities;
+import java.io.*;
 import java.lang.Runtime ;
 import static constants.Commandes.getCompileCommand;
 import static constants.Commandes.getRunCommand;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
+import java.nio.file.Files ;
 import Other.Language;
 import constants.Commandes;
 
@@ -25,16 +25,19 @@ public abstract class Compiler {
      * @param srcFilePath Le chemin vers le fichier source à compiler.
      * @param outFilename Le nom du fichier de sortie après la compilation.
      */
-    public static void compile(Language language, String srcFilePath, String outFilename){
+    public static String compile(Language language, String srcFilePath, String outFilename , String argv){
+        System.out.println("compiling ....");
         String compileCmd = getCompileCommand(language, srcFilePath, outFilename);
-        String runCmd = getRunCommand(language, outFilename);
+        String runCmd = getRunCommand(language, outFilename , argv);
 
         try {
             Process compileProcess = Runtime.getRuntime().exec(compileCmd);
             String compileError = readProcessOutput(compileProcess.getErrorStream());
             int compileStatus = compileProcess.waitFor();
             if (compileStatus != 0){
-                System.out.println("Erreur de compilation: " + compileError);
+                System.out.println("compiling error");
+                System.out.println(compileError);
+                return compileError ;
             }
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
@@ -46,14 +49,15 @@ public abstract class Compiler {
             String runOutput = readProcessOutput(runProcess.getInputStream());
             int runStatus = runProcess.waitFor();
             if (runStatus == 0){
-                System.out.println("Sortie: " + runOutput);
+                return runOutput ;
             } else {
-                System.out.println("Erreur d'exécution: " + runError);
+                return runError ;
             }
 
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
         }
+        return null ;
     }
 
     /**
@@ -63,17 +67,18 @@ public abstract class Compiler {
      * @param filePath Le chemin du fichier source à compiler.
      */
     public static String Run(Language language, String filePath) {
-        String runCmd = Commandes.getCompileCommandtag(language) + " " + filePath;
+        String runCmd = language.getRunTag()  + filePath;
+        System.out.println(runCmd);
+
         try {
             Process runProcess = Runtime.getRuntime().exec(runCmd);
             String runError = readProcessOutput(runProcess.getErrorStream());
             String runOutput = readProcessOutput(runProcess.getInputStream());
             int runStatus = runProcess.waitFor();
+            //deleteFile(filePath) ;
             if (runStatus == 0){
-//                System.out.println("Sortie: " + runOutput);
                 return  runOutput ;
             } else {
-//                System.out.println("Erreur de compilation: " + runError);
                 return  runError ;
 
             }
@@ -82,8 +87,14 @@ public abstract class Compiler {
             e.printStackTrace();
             return e.getMessage() ;
         }
+
+
     }
 
+
+    private static void deleteFile(String filePath) {
+            executeCommand("rm "+filePath);
+    }
 
 
     /**
@@ -98,9 +109,15 @@ public abstract class Compiler {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         String line;
         while ((line = reader.readLine()) != null) {
-            output.append(line).append("\n");
+            if(!line.contains("{"))
+                output.append(line).append("\n");
+            else{
+                output.append(line);
+            }
+
         }
         return output.toString();
+
     }
 
 
@@ -109,40 +126,22 @@ public abstract class Compiler {
      * Sous Windows, les commandes sont exécutées séquentiellement en utilisant '&&'.
      * Sous les systèmes Unix (Linux, macOS), les commandes sont chaînées par '|'.
      *
-     * @param commands Une liste de commandes shell à exécuter. Cette liste ne doit ni être null ni vide.
+     * @param command Une liste de commandes shell à exécuter. Cette liste ne doit ni être null ni vide.
      *                 Chaque chaîne dans la liste devrait être une commande valide de ligne de commande.
      * @return Void Cette méthode ne retourne aucune valeur. Les sorties sont directement imprimées sur la sortie standard.
      */
-    public static void executeCommands(List<String> commands) {
-        if (commands == null || commands.isEmpty()) {
-            System.out.println("Aucune commande fournie.");
-            return;
-        }
-
-        String os = System.getProperty("os.name").toLowerCase();
-        ProcessBuilder builder;
-
-        if (os.contains("win")) {
-            builder = new ProcessBuilder("cmd.exe", "/c", String.join(" && ", commands));
-        } else {
-            builder = new ProcessBuilder("/bin/sh", "-c", String.join(" | ", commands));
-        }
-
+    public static void executeCommand(String command) {
         try {
-            Process process = builder.start();
-
-            // Lecture de la sortie et des erreurs du processus
-            String output = readProcessOutput(process.getInputStream());
-            String errors = readProcessOutput(process.getErrorStream());
-            int status = process.waitFor();
-
-            // Affichage de la sortie ou des erreurs en fonction du statut d'exécution
-            if (status == 0) {
-                System.out.println("Sortie : " + output);
+            Process runProcess = Runtime.getRuntime().exec(command);
+            int runStatus = runProcess.waitFor();
+            if (runStatus == 0){
+                System.out.println(" success") ;
             } else {
-                System.out.println("Erreur : " + errors);
+                System.out.println("Error ");
             }
-        } catch (IOException | InterruptedException e) {
+        }
+
+         catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

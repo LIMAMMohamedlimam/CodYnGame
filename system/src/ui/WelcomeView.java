@@ -1,5 +1,6 @@
 package ui;
 
+import Game.Game;
 import Problems.ProblemManager;
 import javafx.application.Application;
 import javafx.geometry.HPos;
@@ -26,17 +27,23 @@ public class WelcomeView {
         userSelect.getItems().addAll("User 1", "User 2", "User 3");  // Add user options
         userSelect.setPromptText("Select User");
 
+        ComboBox<String> gameModeSelect = new ComboBox<>();
+        gameModeSelect.getItems().addAll("Mode Input Output", "Mode Include");  // Add user options
+        gameModeSelect.setPromptText("select Mode");
+
         // Create the Play button
         Button playButton = new Button("Play");
 
         playButton.setOnAction(event -> {
-            if (userSelect.getValue() != null) {
+            if (userSelect.getValue() != null && gameModeSelect.getValue() != null) {
+                Game currentGame = new Game(null , null , gameModeSelect.getValue() , new User(userSelect.getValue())) ;
+
                 List<String> allTitles = ProblemManager.retrieveTitlesWithDifficulty();
                 PremiereScene premierScene = new PremiereScene() ;
-                Scene selectionScene = premierScene.createSelectionScene(primaryStage, allTitles);
+                Scene selectionScene = premierScene.createSelectionScene(primaryStage, allTitles , currentGame);
                 primaryStage.setScene(selectionScene);
             } else {
-                PremiereScene.showPopup("veiller choisir un utilisateur ");
+                PremiereScene.showPopup("veiller choisir un utilisateur et le mode de jeux");
             }
         });
 
@@ -66,6 +73,8 @@ public class WelcomeView {
         // Adding the Play button to the grid
         gridPane.add(playButton, 1, 0); // Column 1, Row 0
         GridPane.setHalignment(playButton, HPos.CENTER);
+
+        gridPane.add(gameModeSelect ,0,1);
 
         // Setting up the scene and the stage
         Scene scene = new Scene(gridPane, 300, 150); // width and height of the window

@@ -40,16 +40,15 @@ def is_valid_sudoku(board):
 
 def verifysolution(jsondata, resultdata):
     try:
-        with open(jsondata, 'r') as f:
-            data = json.load(f)
-        with open(resultdata, 'r') as f:
-            result = json.load(f)
+        data = json.loads(jsondata)
+        result = json.loads(resultdata)
 
         board = data['board']
         expected_validity = result['is_valid']
 
         return is_valid_sudoku(board) == expected_validity
     except Exception as e:
+        print("Error:", e)
         return False
 
 if __name__ == "__main__":

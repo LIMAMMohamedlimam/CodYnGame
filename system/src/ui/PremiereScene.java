@@ -1,6 +1,7 @@
 package ui ;
 
 
+import Game.Game;
 import Other.Language;
 import Problems.Problem;
 import Problems.ProblemManager;
@@ -40,7 +41,7 @@ public class PremiereScene extends Application {
 
 
 
-    public Scene createSelectionScene(Stage primaryStage, List<String> titles) {
+    public Scene createSelectionScene(Stage primaryStage, List<String> titles , Game currentGame) {
         titleListView = new ListView<>();
         titleListView.getItems().addAll(titles);
 
@@ -63,10 +64,14 @@ public class PremiereScene extends Application {
             if (selectedTitleWithDifficulty != null && selectedLanguage.getName() != null) {
                 String selectedTitle = selectedTitleWithDifficulty.split(" \\(")[0];
                 Problem selectedProb = getProblem(selectedTitle) ;
-                String description = selectedProb.getDescription();
+                //String description = selectedProb.getDescription();
+
+                currentGame.setSelectedProblem(selectedProb);
+                currentGame.setSelectedLanguage(selectedLanguage);
+                currentGame.setDefaultCode();
 
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
-                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, selectedProb);
+                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, currentGame);
                 primaryStage.setScene(scene);
             } else if (selectedLanguage.getName() == null){
                 showPopup("Veuillez sélectionner un énoncé\net un langage, puis confirmer votre choix.");

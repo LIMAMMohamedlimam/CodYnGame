@@ -26,7 +26,7 @@ public class DatabaseManager {
     }
 
     /**
-     * should be used to set up the database from the CodYnGame.sql file
+     * should be used to set up the database from the codyngame.sql file
      */
     public static boolean setDataBase(String CodYngamedatabasefile){
         return false ;

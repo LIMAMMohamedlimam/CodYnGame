@@ -29,13 +29,13 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `Problem`;
 CREATE TABLE IF NOT EXISTS `Problem` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `title` text NOT NULL,
-  `description` text NOT NULL,
-  `solutionFile` text NOT NULL,
-  `generationFile` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    title TEXT NOT NULL,
+    description TEXT NOT NULL,
+    solutionFile TEXT NOT NULL,
+    difficulty VARCHAR(10) NOT NULL DEFAULT 'Medium',
+    defaultCode TEXT
+)ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 CREATE TABLE user (
@@ -62,6 +62,9 @@ INSERT INTO `Problem` (`id`, `title`, `description`, `solutionFile`, `generation
 (10, 'Longest Common Prefix\r\n', 'Write a function to find the longest common prefix string amongst an array of strings.\r\nExample Input:\r\nstrs = [\"flower\",\"flow\",\"flight\"]\r\n\r\nExample Output:\r\n\"fl\"', '/home/mohamed/Java_IHM/CodYnGame/solutionFiles/LongestCommonPrefix.py', '/home/mohamed/Java_IHM/CodYnGame/DataGenFiles/LongestCommonPrefixGen.py'),
 (11, 'Valid Sudoku', 'Determine if a 9x9 Sudoku board is valid.\r\n\r\nExample Input:\r\nboard = [\r\n  [\"5\",\"3\",\".\",\".\",\"7\",\".\",\".\",\".\",\".\"],\r\n  [\"6\",\".\",\".\",\"1\",\"9\",\"5\",\".\",\".\",\".\"],\r\n  [\".\",\"9\",\"8\",\".\",\".\",\".\",\".\",\"6\",\".\"],\r\n  [\"8\",\".\",\".\",\".\",\"6\",\".\",\".\",\".\",\"3\"],\r\n  [\"4\",\".\",\".\",\"8\",\".\",\"3\",\".\",\".\",\"1\"],\r\n  [\"7\",\".\",\".\",\".\",\"2\",\".\",\".\",\".\",\"6\"],\r\n  [\".\",\"6\",\".\",\".\",\".\",\".\",\"2\",\"8\",\".\"],\r\n  [\".\",\".\",\".\",\"4\",\"1\",\"9\",\".\",\".\",\"5\"],\r\n  [\".\",\".\",\".\",\".\",\"8\",\".\",\".\",\"7\",\"9\"]\r\n]\r\n\r\nExample Output:\r\nTrue', '/home/mohamed/Java_IHM/CodYnGame/solutionFiles/ValidSudoku.py', '/home/mohamed/Java_IHM/CodYnGame/DataGenFiles/ValidSudokuGen.py');
 COMMIT;
+
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

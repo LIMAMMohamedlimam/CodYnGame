@@ -4,7 +4,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 
+import Game.Game;
 import Other.Language;
 import constants.Commandes;
 
@@ -12,21 +14,24 @@ import constants.Commandes;
  * Représente une soumission dans un système de gestion de soumissions.
  */
 public class Submission {
-    private int subId ;
-    private int userId;
-    private Language language;
+    private Game currentGame;
+    private String userResult ;
     private File file;
 
     /**
      * Constructeur pour créer une soumission avec la langue et le fichier spécifiés.
      *
-     * @param language La langue de programmation de la soumission.
-     * @param code Le code source de la soumission.
+     * @param currentGame La langue de programmation de la soumission.
+     * @param code        Le code source de la soumission.
      */
-    public Submission(Language language, String code) {
-        this.language = language;
+    public Submission(Game currentGame, String code) {
+        this.currentGame = currentGame;
         this.file = fromCodeFile(code);
 
+    }
+
+    public void setUserResult() throws SQLException {
+        this.userResult = this.run().trim() ;
     }
 
     /**
@@ -38,11 +43,7 @@ public class Submission {
      * @param language La langue de programmation de la soumission.
      * @param code Le code source de la soumission.
      */
-    public Submission(int submissionId, int userId, Language language, String code) {
-        this.userId = userId;
-        this.language = language;
-        this.file = fromCodeFile(code);
-    }
+
 
     /**
      * Définit le fichier de cette soumission.
@@ -71,31 +72,28 @@ public class Submission {
         return file;
     }
 
-    public Language getLanguage(){
-        return this.language ;
-    }
 
     /**
      * Exécute le fichier de la soumission selon la langue spécifiée.
      */
     public void runFile() {
-        String languageName = this.language.getName().toLowerCase();
+        String languageName = this.currentGame.getSelectedLanguage().getName().toLowerCase();
         if (languageName.equals("python")) {
-            Compiler.Run(this.language, this.file.getPath());
+            Compiler.Run(this.currentGame.getSelectedLanguage(), this.file.getPath());
         } else if (languageName.equals("c")) {
-            Compiler.compile(this.language, this.file.getPath(), "output.out");
+            Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "output.out" , "");
         } else if (languageName.equals("java")) {
             String classpath = this.file.getPath().replace(this.file.getName(), "");
             String program = this.file.getName().replace(".java", " ");
-            Compiler.compile(this.language, this.file.getPath(), "-classpath" + " " + classpath + " " + program);
+            Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "-classpath" + " " + classpath + " " + program , "");
         }
     }
 
 
-    public File fromCodeFile(String code){
+    public File fromCodeFile(String code) {
 
-        String directoryPath = "CodYngame_exec";
-        String fileName = "" + this.language.getName() + Commandes.getFiletag(this.language);
+        String directoryPath = "modeInclude";
+        String fileName = this.currentGame.getSelectedUser().getUsername().replaceAll(" ", "") + Commandes.getFiletag(this.currentGame.getSelectedLanguage());
 
         File directory = new File(directoryPath);
         if (!directory.exists()) {
@@ -119,4 +117,68 @@ public class Submission {
         }
         return file;
     }
+
+    public String run() throws SQLException {
+        //if (currentGame.getSelectedMode().equals("Mode Include")) {
+        //    IncludeUserFunction(currentGame.getSelectedProblem().getModeIncludeFile(currentGame), this.file.getPath(), currentGame.getSelectedUser().getUsername());
+        //}
+        if (currentGame.getSelectedMode().equalsIgnoreCase("Mode Include")) {
+            if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("c")) {
+                return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "output.out" , "");
+            } else if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("java")) {
+                String classpath = this.file.getPath().replace(this.file.getName(), "");
+                String program = this.file.getName().replace(".java", " ");
+                return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "-classpath" + " " + classpath + " " + program ,"");
+            } else {
+
+                return Compiler.Run(this.currentGame.getSelectedLanguage(), this.file.getPath());
+            }
+        }else if(currentGame.getSelectedMode().equalsIgnoreCase("Mode Input Output")){
+            if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("c")) {
+                return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "output.out" , currentGame.getSelectedProblem().getData());
+            } else if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("java")) {
+                String classpath = this.file.getPath().replace(this.file.getName(), "");
+                String program = this.file.getName().replace(".java", " ");
+                return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "-classpath" + " " + classpath + " " + program , currentGame.getSelectedProblem().getData());
+            } else {
+
+                return Compiler.Run(this.currentGame.getSelectedLanguage(), this.file.getPath() + " "+
+                         currentGame.getSelectedProblem().getData().replaceAll(" ", "") );
+            }
+        }
+        return null ;
+    }
+
+
+    public String run(String filePath) {
+
+        if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("c")) {
+            return Compiler.compile(this.currentGame.getSelectedLanguage(), filePath, "output.out" , "");
+        } else if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("java")) {
+            String classpath = filePath.replace(this.file.getName(), "");
+            String program = this.file.getName().replace(".java", " ");
+            return Compiler.compile(this.currentGame.getSelectedLanguage(), filePath, "-classpath" + " " + classpath + " " + program , "");
+        } else {
+
+            return Compiler.Run(this.currentGame.getSelectedLanguage(), filePath);
+        }
+    }
+
+
+
+
+
+    public String verifySolution() throws SQLException {
+        System.out.println(currentGame.getSelectedProblem().getData());
+        this.setUserResult();
+        System.out.println("this is the usroutput" + userResult);
+        if(!this.userResult.contains("Traceback")) {
+            String output = Compiler.Run(new Language("python"), currentGame.getSelectedProblem().getSolutionFile()
+                    + " verify " +  currentGame.getSelectedProblem().getData().replaceAll(" " , "") + " "  + userResult.replaceAll(" " , ""));
+            return output;
+        }else{
+            return "Error" ;
+        }
+    }
 }
+

@@ -1,8 +1,12 @@
 package Main;
 
+import Game.Game;
+import Other.Language;
 import Problems.Problem;
+import fonctionnalities.Compiler;
 import javafx.application.Application;
 import ui.PremiereScene;
+import utilisateur.User;
 
 import static Problems.ProblemManager.getProblem;
 
@@ -94,10 +98,19 @@ public class Main {
 
 
         // testing the datageneration
-        Problem p = getProblem("Calculate the multiplication and sum of two numbers") ;
-        String data = p.getData() ;
-        System.out.println(data);
-        System.out.println(p.getDefaultCode());
+        //Problem p = getProblem("Calculate the multiplication and sum of two numbers") ;
+        //String data = p.getData() ;
+        //System.out.println(data);
+        //System.out.println(p.getDefaultCode());
+
+
+        //Game test=  new Game(getProblem("Two Sum") , new Language("c"),
+        //        "Mode Include" ,new User("")) ;
+        //System.out.println(test.getSelectedLanguage().getName());
+        //test.setDefaultCode() ;
+        //System.out.println(test.getDefaultCode() );
+
+        System.out.println(Compiler.Run(new Language("javascript") , "CodYngame_exec/User2.js") );
 
 
 

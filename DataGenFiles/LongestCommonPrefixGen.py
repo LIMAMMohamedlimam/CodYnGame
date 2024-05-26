@@ -20,27 +20,29 @@ def longest_common_prefix(strs):
 
 def verifysolution(jsondata, resultdata):
     try:
-        with open(jsondata, 'r') as f:
-            data = json.load(f)
-        with open(resultdata, 'r') as f:
-            result = json.load(f)
+        data = json.loads(jsondata)
+        result = json.loads(resultdata)
 
         strs = data['strs']
         expected_prefix = result['prefix']
 
         return longest_common_prefix(strs) == expected_prefix
     except Exception as e:
+        print("Error:", e)
         return False
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Error: No operation specified.")
         print("Usage: python script.py gen OR python script.py verify <jsondata> <resultdata>")
-    elif sys.argv[1] == "gen":
+        sys.exit(1)
+
+    if sys.argv[1] == "gen":
         length = random.randint(1, 10)
         strs = generate(length, random.randint(1, length))
         data = {"strs": strs}
         print(json.dumps(data))
+
     elif sys.argv[1] == "verify" and len(sys.argv) == 4:
         jsondata = sys.argv[2]
         resultdata = sys.argv[3]
