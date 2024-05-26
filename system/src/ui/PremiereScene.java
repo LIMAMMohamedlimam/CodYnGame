@@ -1,6 +1,5 @@
 package ui;
 
-
 import GetSolution.PythonSolutionExecutor;
 import Problems.ProblemManager;
 import javafx.application.Application;
@@ -70,7 +69,7 @@ public class PremiereScene extends Application {
 
         difficultyComboBox.setOnAction(event -> filterTitles());
 
-        Button confirmButton = new Button("Valider");
+        Button confirmButton = new Button("Validate");
         confirmButton.setOnAction(event -> {
             String selectedTitleWithDifficulty = titleListView.getSelectionModel().getSelectedItem();
             String selectedLanguage = languageListView.getSelectionModel().getSelectedItem();
@@ -79,34 +78,31 @@ public class PremiereScene extends Application {
                 String selectedTitle = selectedTitleWithDifficulty.split(" \\(")[0];
                 String description = ProblemManager.retrieveDescription(selectedTitle);
 
-                // Générer et capturer la sortie du fichier Python
+                // Generate and capture the output of the Python file
                 String generatorFilePath = PythonGenerator.getGeneratorFilePath(selectedTitle);
                 String generatorOutput = PythonGenerator.runPythonGenerator(generatorFilePath);
 
-                // Exécuter la solution Python avec les données générées
+                // Execute the Python solution with the generated data
                 String solutionFilePath = PythonSolutionExecutor.getSolutionFilePath(selectedTitle);
                 String solutionOutput = PythonSolutionExecutor.executePythonSolution(solutionFilePath, generatorOutput);
 
-                // Afficher la fenêtre JSON avec la solution
+                // Display the JSON window with the solution
                 showJsonWindow(generatorOutput);
                 showJsonWindow(solutionOutput);
 
-
-
-
                 DeuxiemeScene deuxiemeScene = new DeuxiemeScene();
-                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description, generatorOutput,solutionOutput);
+                Scene scene = deuxiemeScene.createDetailsScene(primaryStage, selectedTitle, selectedLanguage, description, generatorOutput, solutionOutput);
                 primaryStage.setScene(scene);
             } else {
-                System.out.println("Veuillez sélectionner un énoncé et un langage, puis confirmer votre choix.");
+                System.out.println("Please select a statement and a language, then confirm your choice.");
             }
         });
 
         VBox root = new VBox(
-                new Label("Énoncés"),
+                new Label("Statements"),
                 difficultyComboBox,
                 titleListView,
-                new Label("Langages de programmation"),
+                new Label("Programming Languages"),
                 languageListView,
                 confirmButton
         );
@@ -146,6 +142,7 @@ public class PremiereScene extends Application {
         popupStage.setScene(popupScene);
         popupStage.showAndWait();
     }
+
     private void showJsonWindow(String jsonContent) {
         Stage jsonStage = new Stage();
         jsonStage.setTitle("Solution JSON");

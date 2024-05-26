@@ -7,30 +7,32 @@ import java.io.InputStreamReader;
 public class PythonGenerator {
 
     /**
-     * Génère le chemin du fichier Python générateur basé sur le titre de l'exercice.
+     * Generates the path to the Python generator file based on the exercise title.
      *
-     * @param title Le titre de l'exercice.
-     * @return Le chemin du fichier Python générateur.
+     * @param title The title of the exercise.
+     * @return The path to the Python generator file.
      */
     public static String getGeneratorFilePath(String title) {
-        // Convertir le titre en nom de fichier
+        // Convert the title to a filename
         String fileName = title.replace(" ", "") + "Gen.py";
-        // Chemin complet du fichier générateur
+        // Full path to the generator file
         return "DataGenFiles/" + fileName;
     }
 
     /**
-     * Exécute le fichier Python générateur et capture sa sortie.
+     * Executes the Python generator file and captures its output.
      *
-     * @param filePath Le chemin du fichier Python à exécuter.
-     * @return La sortie du script Python.
+     * @param filePath The path to the Python file to execute.
+     * @return The output of the Python script.
      */
     public static String runPythonGenerator(String filePath) {
         StringBuilder output = new StringBuilder();
         try {
+            // Execute the Python script
             Process process = Runtime.getRuntime().exec("python " + filePath);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
+            // Read the output of the script line by line
             while ((line = reader.readLine()) != null) {
                 output.append(line).append("\n");
             }

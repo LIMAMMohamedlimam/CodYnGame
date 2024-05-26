@@ -10,33 +10,32 @@ import java.util.NoSuchElementException;
 
 
 /**
- * Classe abstraite représentant le gestionnaire de problèmes.
+ * Abstract class representing the problem manager.
  */
 public abstract class ProblemManager {
 
     /**
-     * Récupère la liste des problèmes depuis la base de données.
+     * Retrieves the list of problems from the database.
      *
-     * @param db_manager Le gestionnaire de la base de données utilisé pour exécuter les requêtes.
-     * @return Une liste des problèmes disponibles dans la base de données.
-     * @throws NullPointerException Si db_manager est null.
+     * @param db_manager The database manager used to execute queries.
+     * @return A list of problems available in the database.
+     * @throws NullPointerException If db_manager is null.
      */
     public static List<Problem> getProblemList(@NotNull DatabaseManager db_manager) {
-        // Définit la requête SQL pour sélectionner les problèmes.
+        // Define the SQL query to select problems.
         String query = "select id, title, description, solutionFile, difficulty from Problem";
 
-        // Exécute la requête et transforme le ResultSet en objets Problem.
+        // Execute the query and transform the ResultSet into Problem objects.
 
-        // Retourne la liste des problèmes obtenus.
+        // Return the obtained list of problems.
         return db_manager.executeQuery(query, Problem::fromResultSet);
     }
 
     /**
-     * méthode pour récuperer les titres de la base de données et utilisé dans PremiereScene.java
+     * Method to retrieve titles from the database and used in PremiereScene.java
      *
-     * @return les titres des different problem dans la base de données
+     * @return The titles of different problems in the database.
      */
-
     public static List<String> retrieveTitles() {
         String query = "SELECT title FROM Problem";
         DatabaseManager dbManager = new DatabaseManager();
@@ -48,7 +47,6 @@ public abstract class ProblemManager {
                 return null;
             }
         });
-
     }
 
     public static List<String> retrieveTitlesWithDifficulty() {
@@ -68,11 +66,11 @@ public abstract class ProblemManager {
         return titlesWithDifficulty;
     }
 
-    public static @Nullable Problem getProblem(String title){
+    public static @Nullable Problem getProblem(String title) {
         DatabaseManager dbManager = new DatabaseManager();
         String query = "select id, title, description, solutionFile, difficulty " +
                 "from Problem " +
-                "WHERE title = '" + title + "';" ;
+                "WHERE title = '" + title + "';";
         try {
             List<Problem> results = dbManager.executeQuery(query, Problem::fromResultSet);
             if (results.isEmpty()) {
@@ -83,7 +81,6 @@ public abstract class ProblemManager {
             e.printStackTrace();
             return null;
         }
-
     }
 
     public static String retrieveDifficultyLevel(String title) throws SQLException {
@@ -108,7 +105,7 @@ public abstract class ProblemManager {
         if (difficultyLevels != null && !difficultyLevels.isEmpty()) {
             return difficultyLevels.get(0); // Assuming titles are unique, return the first match.
         } else {
-            throw new SQLException("Exercice non trouvé pour le titre donné : " + title);
+            throw new SQLException("Exercise not found for the given title: " + title);
         }
     }
 

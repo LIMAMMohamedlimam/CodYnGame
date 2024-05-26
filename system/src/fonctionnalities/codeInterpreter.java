@@ -1,40 +1,38 @@
 package fonctionnalities;
 
-
-
 import java.io.*;
 
 public class codeInterpreter {
     public static String executeCode(String language, String code) {
-        ProcessBuilder processBuilder = null; // Déclarez processBuilder ici pour l'utiliser dans tout le bloc try
+        ProcessBuilder processBuilder = null; // Declare processBuilder here to use it throughout the try block
 
         try {
             switch (language) {
                 case "Python":
-                    // Écriture du code Python dans un fichier temporaire
+                    // Write the Python code to a temporary file
                     File tempPythonFile = File.createTempFile("code", ".py");
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempPythonFile))) {
                         writer.write(code);
                     }
 
-                    // Exécution du fichier Python
+                    // Execute the Python file
                     processBuilder = new ProcessBuilder("python", tempPythonFile.getAbsolutePath());
                     break;
                 case "C":
-                    // Écriture du code C dans un fichier temporaire
+                    // Write the C code to a temporary file
                     File tempCFile = File.createTempFile("code", ".c");
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempCFile))) {
                         writer.write(code);
                     }
 
-                    // Compilation du fichier source C avec GCC
+                    // Compile the C source file with GCC
                     processBuilder = new ProcessBuilder("gcc", "-o", "output", tempCFile.getAbsolutePath());
                     processBuilder.directory(tempCFile.getParentFile());
                     Process compileProcess = processBuilder.start();
                     int exitCode = compileProcess.waitFor();
 
                     if (exitCode == 0) {
-                        // Exécution du programme compilé
+                        // Execute the compiled program
                         ProcessBuilder runProcessBuilder = new ProcessBuilder(tempCFile.getParentFile().getAbsolutePath() + "\\output");
                         runProcessBuilder.directory(tempCFile.getParentFile());
                         runProcessBuilder.redirectErrorStream(true);
@@ -48,65 +46,65 @@ public class codeInterpreter {
                         runProcess.waitFor();
                         return runOutput.toString();
                     } else {
-                        // Lire la sortie de la compilation (erreurs éventuelles)
+                        // Read the compilation output (possible errors)
                         BufferedReader errorReader = new BufferedReader(new InputStreamReader(compileProcess.getErrorStream()));
                         StringBuilder errorOutput = new StringBuilder();
                         String line;
                         while ((line = errorReader.readLine()) != null) {
                             errorOutput.append(line).append("\n");
                         }
-                        return "Échec de la compilation:\n" + errorOutput.toString();
+                        return "Compilation failed:\n" + errorOutput.toString();
                     }
                 case "Java":
-                    // Écriture du code Java dans un fichier temporaire
+                    // Write the Java code to a temporary file
                     File tempJavaFile = new File(System.getProperty("java.io.tmpdir"), "Main.java");
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempJavaFile))) {
                         writer.write(code);
                     }
 
-                    // Compilation du fichier source Java avec javac
+                    // Compile the Java source file with javac
                     processBuilder = new ProcessBuilder("javac", tempJavaFile.getAbsolutePath());
                     processBuilder.directory(tempJavaFile.getParentFile());
                     Process compileJavaProcess = processBuilder.start();
                     int javaExitCode = compileJavaProcess.waitFor();
 
                     if (javaExitCode == 0) {
-                        // Exécution du programme compilé
+                        // Execute the compiled program
                         processBuilder = new ProcessBuilder("java", "-cp", tempJavaFile.getParentFile().getAbsolutePath(), "Main");
                         processBuilder.directory(tempJavaFile.getParentFile());
                     } else {
-                        // Lire la sortie de la compilation (erreurs éventuelles)
+                        // Read the compilation output (possible errors)
                         BufferedReader errorReader = new BufferedReader(new InputStreamReader(compileJavaProcess.getErrorStream()));
                         StringBuilder errorOutput = new StringBuilder();
                         String line;
                         while ((line = errorReader.readLine()) != null) {
                             errorOutput.append(line).append("\n");
                         }
-                        return "Échec de la compilation:\n" + errorOutput.toString();
+                        return "Compilation failed:\n" + errorOutput.toString();
                     }
                     break;
                 case "PHP":
-                    // Écriture du code PHP dans un fichier temporaire
+                    // Write the PHP code to a temporary file
                     File tempPHPFile = File.createTempFile("code", ".php");
                     try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempPHPFile))) {
                         writer.write(code);
                     }
 
-                    // Exécution du fichier PHP
+                    // Execute the PHP file
                     processBuilder = new ProcessBuilder("php", tempPHPFile.getAbsolutePath());
                     break;
                 case "JavaScript":
-                    File tempJavaScriptFile = File.createTempFile("code",".js");
-                    try(BufferedWriter writer = new BufferedWriter(new FileWriter(tempJavaScriptFile))){
+                    // Write the JavaScript code to a temporary file
+                    File tempJavaScriptFile = File.createTempFile("code", ".js");
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempJavaScriptFile))) {
                         writer.write(code);
-
                     }
 
-                    processBuilder = new ProcessBuilder("node",tempJavaScriptFile.getAbsolutePath());
+                    // Execute the JavaScript file
+                    processBuilder = new ProcessBuilder("node", tempJavaScriptFile.getAbsolutePath());
                     break;
-
                 default:
-                    return "Langage non pris en charge : " + language;
+                    return "Unsupported language: " + language;
             }
 
             if (processBuilder != null) {
@@ -127,15 +125,15 @@ public class codeInterpreter {
 
                 process.waitFor();
                 if (errorOutput.length() > 0) {
-                    return "Erreur:\n" + errorOutput.toString();
+                    return "Error:\n" + errorOutput.toString();
                 }
                 return output.toString();
             } else {
-                return "Aucune commande à exécuter.";
+                return "No command to execute.";
             }
 
         } catch (IOException | InterruptedException e) {
-            return "Erreur lors de l'exécution du code : " + e.getMessage();
+            return "Error executing code: " + e.getMessage();
         }
     }
 }

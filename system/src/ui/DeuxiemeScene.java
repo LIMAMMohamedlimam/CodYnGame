@@ -14,48 +14,48 @@ import javafx.stage.Stage;
 public class DeuxiemeScene {
 
     public Scene createDetailsScene(Stage primaryStage, String selectedTitle, String selectedLanguage, String description, String generatorOutput, String solutionOutput) {
-        Label detailsLabel = new Label("Exercice: " + selectedTitle + "\nLangage: " + selectedLanguage + "\nDescription: " + description);
+        Label detailsLabel = new Label("Exercise: " + selectedTitle + "\nLanguage: " + selectedLanguage + "\nDescription: " + description);
 
-        // Initialisation de la liste déroulante avec les langages disponibles
+        // Initialize the dropdown list with available languages
         ComboBox<String> languageComboBox = new ComboBox<>();
         languageComboBox.getItems().addAll("Python", "C", "Java", "PHP", "JavaScript");
         languageComboBox.setValue(selectedLanguage);
 
         TextArea codeTextArea = new TextArea();
-        codeTextArea.setPromptText("Saisissez votre code ici");
+        codeTextArea.setPromptText("Enter your code here");
 
         TextArea outputTextArea = new TextArea();
         outputTextArea.setEditable(false);
 
-        Button executeButton = new Button("Valider");
+        Button executeButton = new Button("Validate");
         executeButton.setOnAction(event -> {
             String code = codeTextArea.getText();
             String output = codeInterpreter.executeCode(selectedLanguage, code).trim();
 
-            // Comparer la solution output avec le résultat attendu
+            // Compare the solution output with the expected result
             String comparisonResult;
             if (output.equals(solutionOutput.trim())) {
-                comparisonResult = "Vrai";
+                comparisonResult = "True";
             } else {
-                comparisonResult = "Faux";
+                comparisonResult = "False";
             }
 
-            // Afficher le résultat dans la zone de texte
-            outputTextArea.setText("Résultat attendu : " + solutionOutput.trim() + "\nRésultat obtenu : " + output + "\nComparaison : " + comparisonResult);
+            // Display the result in the text area
+            outputTextArea.setText("Expected result: " + solutionOutput.trim() + "\nObtained result: " + output + "\nComparison: " + comparisonResult);
         });
 
-        Button backButton = new Button("Retour");
+        Button backButton = new Button("Back");
         backButton.setOnAction(event -> {
             PremiereScene premiereScene = new PremiereScene();
             Scene scene = premiereScene.createSelectionScene(primaryStage, ProblemManager.retrieveTitles());
             primaryStage.setScene(scene);
         });
 
-        // Ajouter un gestionnaire d'événements à la liste déroulante des langages pour réinitialiser la scène avec le nouveau langage
+        // Add an event handler to the language dropdown to reset the scene with the new language
         languageComboBox.setOnAction(event -> {
             String newLanguage = languageComboBox.getValue();
             DeuxiemeScene newScene = new DeuxiemeScene();
-            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description, generatorOutput,solutionOutput);
+            Scene updatedScene = newScene.createDetailsScene(primaryStage, selectedTitle, newLanguage, description, generatorOutput, solutionOutput);
             primaryStage.setScene(updatedScene);
         });
 

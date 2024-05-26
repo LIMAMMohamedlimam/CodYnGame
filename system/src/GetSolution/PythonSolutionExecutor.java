@@ -7,34 +7,34 @@ import java.io.InputStreamReader;
 public class PythonSolutionExecutor {
 
     /**
-     * Génère le chemin du fichier Python de solution basé sur le titre de l'exercice.
+     * Generates the path to the Python solution file based on the exercise title.
      *
-     * @param title Le titre de l'exercice.
-     * @return Le chemin du fichier Python de solution.
+     * @param title The title of the exercise.
+     * @return The path to the Python solution file.
      */
     public static String getSolutionFilePath(String title) {
-        // Convertir le titre en nom de fichier
+        // Convert the title to a filename
         String fileName = title.replace(" ", "") + ".py";
-        // Chemin complet du fichier de solution
+        // Full path to the solution file
         return "solutionFiles/" + fileName;
     }
 
     /**
-     * Exécute le script Python de solution avec les données générées.
+     * Executes the Python solution script with the generated data.
      *
-     * @param solutionFilePath Le chemin du fichier Python de solution.
-     * @param generatedData    Les données générées à passer au script Python.
-     * @return La sortie du script Python.
+     * @param solutionFilePath The path to the Python solution file.
+     * @param generatedData    The generated data to pass to the Python script.
+     * @return The output of the Python script.
      */
     public static String executePythonSolution(String solutionFilePath, String generatedData) {
         try {
-            // Construction de la commande pour exécuter le script Python avec les données générées
+            // Build the command to execute the Python script with the generated data
             String command = "python " + solutionFilePath + " " + generatedData;
 
-            // Exécution de la commande
+            // Execute the command
             Process process = Runtime.getRuntime().exec(command);
 
-            // Récupération de la sortie du script Python
+            // Capture the output of the Python script
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             StringBuilder output = new StringBuilder();
             String line;
@@ -42,7 +42,7 @@ public class PythonSolutionExecutor {
                 output.append(line).append("\n");
             }
 
-            // Attente de la fin de l'exécution du processus Python
+            // Wait for the Python process to complete
             process.waitFor();
 
             return output.toString();
