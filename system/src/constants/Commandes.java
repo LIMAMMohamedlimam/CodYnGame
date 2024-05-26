@@ -108,4 +108,12 @@ public abstract class Commandes {
         }
     }
 
+    public static String getverifFunc(Language lang , String filename) {
+        switch (lang.getName().toLowerCase()){
+            case "python" :
+                return "verifysolution(data,"+ filename +" )" ;
+            default:
+                return null ;
+        }
+    }
 }

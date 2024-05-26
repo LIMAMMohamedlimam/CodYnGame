@@ -52,7 +52,9 @@ public class Game {
         if (this.selectedMode.equals("Mode Include")) {
             this.defaultCode = this.selectedLanguage.getCommentTag() + " Create a function named '"
                     + this.selectedProblem.getTitle().replaceAll(" ", "").replaceAll("\n" , "")
-                    + "(args)' with arguments 'args'\n" + Commandes.getIncludeTag(selectedLanguage , getModeIncludeFileName()) ;
+                    + "(args)' with arguments 'args'\n" + Commandes.getIncludeTag(selectedLanguage , getModeIncludeFileName()) + "\n"+"\n"+
+                    Commandes.getverifFunc(selectedLanguage ,
+                            this.selectedProblem.getTitle().replaceAll(" ", "").replaceAll("\n" , "") );
         } else if (this.selectedMode.equals("Mode Input Output")) {
             this.defaultCode = selectedLanguage.getCommentTag() +" don't forget to print your Program result on output stream as a json " ;
         }
