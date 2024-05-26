@@ -35,22 +35,6 @@ public class PremiereScene extends Application {
         primaryStage.show();
     }
 
-    private List<String> retrieveTitlesWithDifficulty() {
-        List<String> titles = ProblemManager.retrieveTitles();
-        List<String> titlesWithDifficulty = new ArrayList<>();
-
-        for (String title : titles) {
-            try {
-                String difficulty = ProblemManager.retrieveDifficultyLevel(title);
-                titlesWithDifficulty.add(title + " (" + difficulty + ")");
-            } catch (SQLException e) {
-                e.printStackTrace();
-                titlesWithDifficulty.add(title + " (UNKNOWN)");
-            }
-        }
-
-        return titlesWithDifficulty;
-    }
 
     public Scene createSelectionScene(Stage primaryStage, List<String> titles) {
         titleListView = new ListView<>();
