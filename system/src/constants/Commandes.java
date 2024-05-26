@@ -81,11 +81,11 @@ public abstract class Commandes {
 
 
 
-    public static String getRunCommand(Language language , String FilePath) {
+    public static String getRunCommand(Language language , String FilePath , String argv) {
         if (language.getName().equalsIgnoreCase("c"))
-            return "./" + FilePath;
+            return "./" + FilePath + " "+argv;
         if (language.getName().equalsIgnoreCase("java"))
-            return "java" + " " + FilePath;
+            return "java" + " " + FilePath + argv;
         return null;
     }
 
@@ -108,12 +108,26 @@ public abstract class Commandes {
         }
     }
 
-    public static String getverifFunc(Language lang , String filename) {
-        switch (lang.getName().toLowerCase()){
-            case "python" :
-                return "verifysolution(data,"+ filename +" )" ;
+    public static String getverifFunc(Language lang) {
+        switch (lang.getName().toLowerCase()) {
+            case "python":
+                return "verifysolution(data, solution)";
+
+            case "c":
+                return "verifysolution(data, solution);"; // Using snake_case typically used in C
+
+            case "javascript":
+                return "verifysolution(data, solution);"; // Using camelCase typically used in JavaScript
+
+            case "php":
+                return "verifysolution($data, $solution);"; // Using camelCase typically used in PHP, with $ for variables
+
+            case "java":
+                return "verifysolution(data, solution);"; // Using camelCase typically used in Java
+
             default:
-                return null ;
+                return null;
         }
     }
+
 }

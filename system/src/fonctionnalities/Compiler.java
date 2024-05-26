@@ -25,10 +25,10 @@ public abstract class Compiler {
      * @param srcFilePath Le chemin vers le fichier source à compiler.
      * @param outFilename Le nom du fichier de sortie après la compilation.
      */
-    public static String compile(Language language, String srcFilePath, String outFilename){
+    public static String compile(Language language, String srcFilePath, String outFilename , String argv){
         System.out.println("compiling ....");
         String compileCmd = getCompileCommand(language, srcFilePath, outFilename);
-        String runCmd = getRunCommand(language, outFilename);
+        String runCmd = getRunCommand(language, outFilename , argv);
 
         try {
             Process compileProcess = Runtime.getRuntime().exec(compileCmd);
@@ -67,9 +67,7 @@ public abstract class Compiler {
      * @param filePath Le chemin du fichier source à compiler.
      */
     public static String Run(Language language, String filePath) {
-        System.out.println("running...");
         String runCmd = language.getRunTag()  + filePath;
-        System.out.println(runCmd);
 
         try {
             Process runProcess = Runtime.getRuntime().exec(runCmd);
@@ -78,10 +76,8 @@ public abstract class Compiler {
             int runStatus = runProcess.waitFor();
             //deleteFile(filePath) ;
             if (runStatus == 0){
-                System.out.println("Sortie: " + runOutput);
                 return  runOutput ;
             } else {
-                System.out.println("Erreur de compilation: " + runError);
                 return  runError ;
 
             }
@@ -91,42 +87,7 @@ public abstract class Compiler {
             return e.getMessage() ;
         }
 
-        //System.out.println("running...");
-//
-        //// Use the absolute path for the file
-        //File file = new File(filePath);
-        //String absoluteFilePath = file.getAbsolutePath();
-//
-        //// Provide the full path to the node executable
-        //String nodePath = "/home/mohamed/.nvm/versions/node/v21.5.0/bin/node";
-        //String runCmd = nodePath + " " + absoluteFilePath;
-        //System.out.println(runCmd);
-//
-        //try {
-        //    // Set the working directory if needed
-        //    File workingDir = file.getParentFile();
-        //    Process runProcess = Runtime.getRuntime().exec(runCmd, null, workingDir);
-//
-        //    // Capture error stream for debugging
-        //    String runError = readProcessOutput(runProcess.getErrorStream());
-        //    // Capture output stream
-        //    String runOutput = readProcessOutput(runProcess.getInputStream());
-//
-        //    // Wait for the process to complete
-        //    int runStatus = runProcess.waitFor();
-//
-        //    // Return output or error based on the process exit status
-        //    if (runStatus == 0) {
-        //        System.out.println("Output: " + runOutput);
-        //        return runOutput;
-        //    } else {
-        //        System.out.println("Error: " + runError);
-        //        return runError;
-        //    }
-        //} catch (IOException | InterruptedException e) {
-        //    e.printStackTrace();
-        //    return e.getMessage();
-        //}
+
     }
 
 
@@ -147,9 +108,15 @@ public abstract class Compiler {
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         String line;
         while ((line = reader.readLine()) != null) {
-            output.append(line).append("\n");
+            if(!line.contains("{"))
+                output.append(line).append("\n");
+            else{
+                output.append(line);
+            }
+
         }
         return output.toString();
+
     }
 
 

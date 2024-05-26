@@ -43,7 +43,7 @@ public class DeuxiemeScene {
             Submission submission = new Submission(currentGame , code) ;
             String output = null;
             try {
-                output = submission.run();
+                output = submission.verifySolution();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

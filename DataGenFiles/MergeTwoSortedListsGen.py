@@ -20,6 +20,8 @@ def verifysolution(jsondata, resultdata):
         expected_merged = result['merged']
 
         merged = sorted(list1 + list2)
+        print("merged =" , merged)
+        print("expected_merged =" , expected_merged)
 
         return merged == expected_merged
     except Exception as e:
@@ -42,4 +44,5 @@ if __name__ == "__main__":
             print("Solution is incorrect.")
     else:
         print("Error: Incorrect arguments or number of arguments.")
+        print(sys.argv)
         print("Usage: python script.py gen OR python script.py verify <jsondata> <resultdata>")

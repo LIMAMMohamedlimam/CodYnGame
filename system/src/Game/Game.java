@@ -52,11 +52,11 @@ public class Game {
         if (this.selectedMode.equals("Mode Include")) {
             this.defaultCode = this.selectedLanguage.getCommentTag() + " Create a function named '"
                     + this.selectedProblem.getTitle().replaceAll(" ", "").replaceAll("\n" , "")
-                    + "(args)' with arguments 'args'\n" + Commandes.getIncludeTag(selectedLanguage , getModeIncludeFileName()) + "\n"+"\n"+
-                    Commandes.getverifFunc(selectedLanguage ,
-                            this.selectedProblem.getTitle().replaceAll(" ", "").replaceAll("\n" , "") );
+                    + "(args)' with arguments 'args'\n" + Commandes.getIncludeTag(selectedLanguage ,
+                    getModeIncludeFileName()) + "\n"+this.selectedLanguage.getCommentTag()+"write your code here" +
+                    "\n\n\n"+"\n"+ Commandes.getverifFunc(selectedLanguage)  ;
         } else if (this.selectedMode.equals("Mode Input Output")) {
-            this.defaultCode = selectedLanguage.getCommentTag() +" don't forget to print your Program result on output stream as a json " ;
+            this.defaultCode = setDefaultCodeInputOutput(); ;
         }
         return null ;
     }
@@ -65,6 +65,29 @@ public class Game {
 
     public String getDefaultCode() {
         return defaultCode;
+    }
+
+    public String setDefaultCodeInputOutput(){
+        String query = "select code from default_code where problem_id="+"'"+selectedProblem.getId() +
+                "'" +" and language = '"+ selectedLanguage.getName().toLowerCase() +"' ;" ;
+
+        DatabaseManager dbManager = new DatabaseManager();
+
+        System.out.println(query);
+        List<String> defaultCodes = dbManager.executeQuery(query, resultSet -> {
+            try {
+                return resultSet.getString("code");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        });
+        if (defaultCodes != null && !defaultCodes.isEmpty()) {
+            return defaultCodes.get(0); // Assuming titles are unique, return the first match.
+        } else {
+            System.out.println("no default code for : " + this.getSelectedProblem().getTitle());
+        }
+        return null ;
     }
 
     public String getModeIncludeFileName()  {
@@ -89,6 +112,9 @@ public class Game {
         }
         return null ;
     }
+
+
+
 
 
 }
