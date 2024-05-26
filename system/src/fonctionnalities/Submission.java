@@ -4,10 +4,13 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 import Game.Game;
 import Other.Language;
 import constants.Commandes;
+import database.DatabaseManager;
 
 /**
  * Représente une soumission dans un système de gestion de soumissions.
@@ -20,7 +23,7 @@ public class Submission {
      * Constructeur pour créer une soumission avec la langue et le fichier spécifiés.
      *
      * @param currentGame La langue de programmation de la soumission.
-     * @param code Le code source de la soumission.
+     * @param code        Le code source de la soumission.
      */
     public Submission(Game currentGame, String code) {
         this.currentGame = currentGame;
@@ -84,10 +87,10 @@ public class Submission {
     }
 
 
-    public File fromCodeFile(String code){
+    public File fromCodeFile(String code) {
 
-        String directoryPath = "CodYngame_exec";
-        String fileName = "" + this.currentGame.getSelectedLanguage().getName() + Commandes.getFiletag(this.currentGame.getSelectedLanguage());
+        String directoryPath = "modeInclude";
+        String fileName = this.currentGame.getSelectedUser().getUsername().replaceAll(" ", "") + Commandes.getFiletag(this.currentGame.getSelectedLanguage());
 
         File directory = new File(directoryPath);
         if (!directory.exists()) {
@@ -112,13 +115,40 @@ public class Submission {
         return file;
     }
 
-    public String run(){
-        if(currentGame.getSelectedLanguage().getName().equalsIgnoreCase("c") ||
-                currentGame.getSelectedLanguage().getName().equalsIgnoreCase("java")){
-            Compiler.compile(currentGame.getSelectedLanguage(), this.file.getPath(),  "userOutputFile");
-            return Compiler.Run(currentGame.getSelectedLanguage() , "userOutputFile") ;
-        }else{
-            return Compiler.Run(currentGame.getSelectedLanguage() , this.file.getPath() ) ;
+    public String run() throws SQLException {
+        //if (currentGame.getSelectedMode().equals("Mode Include")) {
+        //    IncludeUserFunction(currentGame.getSelectedProblem().getModeIncludeFile(currentGame), this.file.getPath(), currentGame.getSelectedUser().getUsername());
+        //}
+
+        if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("c")) {
+            return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "output.out");
+        } else if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("java")) {
+            String classpath = this.file.getPath().replace(this.file.getName(), "");
+            String program = this.file.getName().replace(".java", " ");
+            return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "-classpath" + " " + classpath + " " + program);
+        } else {
+
+            return Compiler.Run(this.currentGame.getSelectedLanguage(), this.file.getPath());
         }
     }
+
+
+    public String run(String filePath) {
+
+        if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("c")) {
+            return Compiler.compile(this.currentGame.getSelectedLanguage(), filePath, "output.out");
+        } else if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("java")) {
+            String classpath = filePath.replace(this.file.getName(), "");
+            String program = this.file.getName().replace(".java", " ");
+            return Compiler.compile(this.currentGame.getSelectedLanguage(), filePath, "-classpath" + " " + classpath + " " + program);
+        } else {
+
+            return Compiler.Run(this.currentGame.getSelectedLanguage(), filePath);
+        }
+    }
+
+
+
+
 }
+

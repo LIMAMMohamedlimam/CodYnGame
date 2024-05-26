@@ -12,6 +12,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import Game.Game ;
 
+import java.sql.SQLException;
+
 import static fonctionnalities.Compiler.Run;
 
 public class DeuxiemeScene {
@@ -39,7 +41,12 @@ public class DeuxiemeScene {
         executeButton.setOnAction(event -> {
             String code = codeTextArea.getText() ;
             Submission submission = new Submission(currentGame , code) ;
-            String output = submission.run() ;
+            String output = null;
+            try {
+                output = submission.run();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             //String output = Run(submission.getLanguage(), submission.getFile().getPath());
             //ProblemManager.verifyCode(currentGame.getSelectedProblem(), output);
             outputTextArea.setText(output);

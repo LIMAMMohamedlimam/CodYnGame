@@ -1,12 +1,9 @@
 package fonctionnalities;
+import java.io.*;
 import java.lang.Runtime ;
 import static constants.Commandes.getCompileCommand;
 import static constants.Commandes.getRunCommand;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -38,6 +35,8 @@ public abstract class Compiler {
             String compileError = readProcessOutput(compileProcess.getErrorStream());
             int compileStatus = compileProcess.waitFor();
             if (compileStatus != 0){
+                System.out.println("compiling error");
+                System.out.println(compileError);
                 return compileError ;
             }
         } catch (InterruptedException | IOException e) {
@@ -70,18 +69,19 @@ public abstract class Compiler {
     public static String Run(Language language, String filePath) {
         System.out.println("running...");
         String runCmd = language.getRunTag()  + filePath;
+        System.out.println(runCmd);
+
         try {
             Process runProcess = Runtime.getRuntime().exec(runCmd);
             String runError = readProcessOutput(runProcess.getErrorStream());
             String runOutput = readProcessOutput(runProcess.getInputStream());
             int runStatus = runProcess.waitFor();
+            //deleteFile(filePath) ;
             if (runStatus == 0){
-//                System.out.println("Sortie: " + runOutput);
-                deleteFile(filePath) ;
+                System.out.println("Sortie: " + runOutput);
                 return  runOutput ;
             } else {
-//                System.out.println("Erreur de compilation: " + runError);
-                deleteFile(filePath) ;
+                System.out.println("Erreur de compilation: " + runError);
                 return  runError ;
 
             }
@@ -90,7 +90,45 @@ public abstract class Compiler {
             e.printStackTrace();
             return e.getMessage() ;
         }
+
+        //System.out.println("running...");
+//
+        //// Use the absolute path for the file
+        //File file = new File(filePath);
+        //String absoluteFilePath = file.getAbsolutePath();
+//
+        //// Provide the full path to the node executable
+        //String nodePath = "/home/mohamed/.nvm/versions/node/v21.5.0/bin/node";
+        //String runCmd = nodePath + " " + absoluteFilePath;
+        //System.out.println(runCmd);
+//
+        //try {
+        //    // Set the working directory if needed
+        //    File workingDir = file.getParentFile();
+        //    Process runProcess = Runtime.getRuntime().exec(runCmd, null, workingDir);
+//
+        //    // Capture error stream for debugging
+        //    String runError = readProcessOutput(runProcess.getErrorStream());
+        //    // Capture output stream
+        //    String runOutput = readProcessOutput(runProcess.getInputStream());
+//
+        //    // Wait for the process to complete
+        //    int runStatus = runProcess.waitFor();
+//
+        //    // Return output or error based on the process exit status
+        //    if (runStatus == 0) {
+        //        System.out.println("Output: " + runOutput);
+        //        return runOutput;
+        //    } else {
+        //        System.out.println("Error: " + runError);
+        //        return runError;
+        //    }
+        //} catch (IOException | InterruptedException e) {
+        //    e.printStackTrace();
+        //    return e.getMessage();
+        //}
     }
+
 
     private static void deleteFile(String filePath) {
             executeCommand("rm "+filePath);

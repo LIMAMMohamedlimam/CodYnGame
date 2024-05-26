@@ -50,6 +50,10 @@ public abstract class Commandes {
                 return ".java";
             case "python":
                 return ".py";
+            case "php" :
+                return ".php" ;
+            case "javascript" :
+                return ".js" ;
             default:
                 return null;
         }
@@ -57,8 +61,10 @@ public abstract class Commandes {
 
 
     public static String getCompileCommand(Language language , String filePath ,String outputFilePath) {
-        if (language.getName().equalsIgnoreCase("c"))
+        if (language.getName().equalsIgnoreCase("c")) {
+            System.out.println(compileC + " " + filePath + " -o " + outputFilePath);
             return compileC + " " + filePath + " -o " + outputFilePath;
+        }
         else if (language.getName().equalsIgnoreCase("java"))
             return compileJAVA + " " + filePath ;
         return null;
@@ -66,9 +72,9 @@ public abstract class Commandes {
 
 
     public static String getCompileCommand (Language language , String filePath) {
-        if (language.getName().toLowerCase().equals("java"))
+        if (language.getName().equalsIgnoreCase("java"))
             return compileJAVA + " " + filePath;
-        if (language.getName().toLowerCase().equals("python"))
+        if (language.getName().equalsIgnoreCase("python"))
             return compilePYTHON + " " + filePath;
         return null;
     }
@@ -84,5 +90,22 @@ public abstract class Commandes {
     }
 
 
+    public static String getIncludeTag(Language selectedLanguage, String modeIncludeFileName) {
+        switch (selectedLanguage.getName().toLowerCase()) {
+            case "c":
+                return "#include \"" + modeIncludeFileName + "\"";
+            case "java":
+                return "import com.modeInclude." + modeIncludeFileName.replaceAll(".java", "") + ";";
+            case "javascript":
+                return "const " + modeIncludeFileName.replaceAll(".js" ,"") + " = require('./" +
+                        modeIncludeFileName.replaceAll(".js" ,"") + "');";
+            case "python":
+                return "import " + modeIncludeFileName.replaceAll(".py" , "");
+            case "php":
+                return "include '" + modeIncludeFileName + ";";
+            default:
+                throw new IllegalArgumentException("Unsupported language: " + selectedLanguage.getName());
+        }
+    }
 
 }

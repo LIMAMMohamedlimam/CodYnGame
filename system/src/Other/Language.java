@@ -24,7 +24,7 @@ public class Language {
 
     public String getRunTag(){
         if(this.getName().equalsIgnoreCase("c"))
-            return "./ ";
+            return "./";
         else if (this.getName().equalsIgnoreCase("java")) {
             return "java " ;
         }
@@ -36,6 +36,7 @@ public class Language {
     public String getDefaultCode() {
         return defaultCode;
     }
+
 
 
 }

@@ -75,72 +75,217 @@ CREATE TABLE modeInclude (
     FOREIGN KEY (probId) REFERENCES Problem(id)
 );
 
-INSERT INTO modeInclude (probId ,probtitle, filepath, language) VALUES
-(1,'Two Sum', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Two Sum.c', 'C'),
-(1,'Two Sum', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Two Sum.py', 'Python'),
-(1,'Two Sum', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Two Sum.js', 'JavaScript'),
-(1,'Two Sum', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Two Sum.php', 'PHP'),
-(1,'Two Sum', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Two Sum.java', 'Java'),
+---INSERT INTO modeInclude (probId ,probtitle, filepath, language) VALUES
+---(1,'Two Sum', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Two Sum.c', 'C'),
+---(1,'Two Sum', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Two Sum.py', 'Python'),
+---(1,'Two Sum', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Two Sum.js', 'JavaScript'),
+---(1,'Two Sum', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Two Sum.php', 'PHP'),
+---(1,'Two Sum', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Two Sum.java', 'Java'),
+---
+---(2,'Longest Substring Without Repeating Characters', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Substring Without Repeating Characters.c', 'C'),
+---(2,'Longest Substring Without Repeating Characters', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Substring Without Repeating Characters.py', 'Python'),
+---(2,'Longest Substring Without Repeating Characters', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Substring Without Repeating Characters.js', 'JavaScript'),
+---(2,'Longest Substring Without Repeating Characters', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Substring Without Repeating Characters.php', 'PHP'),
+---(2,'Longest Substring Without Repeating Characters', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Substring Without Repeating Characters.java', 'Java'),
+---
+---(3,'Calculate the multiplication and sum of two numbers', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Calculate the multiplication and sum of two numbers.c', 'C'),
+---(3,'Calculate the multiplication and sum of two numbers', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Calculate the multiplication and sum of two numbers.py', 'Python'),
+---(3,'Calculate the multiplication and sum of two numbers', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Calculate the multiplication and sum of two numbers.js', 'JavaScript'),
+---(3,'Calculate the multiplication and sum of two numbers', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Calculate the multiplication and sum of two numbers.php', 'PHP'),
+---(3,'Calculate the multiplication and sum of two numbers', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Calculate the multiplication and sum of two numbers.java', 'Java'),
+---
+---(4,'Reverse Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Reverse Integer.c', 'C'),
+---(4,'Reverse Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Reverse Integer.py', 'Python'),
+---(4,'Reverse Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Reverse Integer.js', 'JavaScript'),
+---(4,'Reverse Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Reverse Integer.php', 'PHP'),
+---(4,'Reverse Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Reverse Integer.java', 'Java'),
+---
+---(5,'Palindrome Number', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Palindrome Number.c', 'C'),
+---(5,'Palindrome Number', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Palindrome Number.py', 'Python'),
+---(5,'Palindrome Number', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Palindrome Number.js', 'JavaScript'),
+---(5,'Palindrome Number', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Palindrome Number.php', 'PHP'),
+---(5,'Palindrome Number', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Palindrome Number.java', 'Java'),
+---
+---(6,'Roman to Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Roman to Integer.c', 'C'),
+---(6,'Roman to Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Roman to Integer.py', 'Python'),
+---(6,'Roman to Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Roman to Integer.js', 'JavaScript'),
+---(6,'Roman to Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Roman to Integer.php', 'PHP'),
+---(6,'Roman to Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Roman to Integer.java', 'Java'),
+---
+---(7,'Valid Parentheses', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Parentheses.c', 'C'),
+---(7,'Valid Parentheses', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Parentheses.py', 'Python'),
+---(7,'Valid Parentheses', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Parentheses.js', 'JavaScript'),
+---(7,'Valid Parentheses', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Parentheses.php', 'PHP'),
+---(7,'Valid Parentheses', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Parentheses.java', 'Java'),
+---
+---(8,'Container With Most Water', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Container With Most Water.c', 'C'),
+---(8,'Container With Most Water', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Container With Most Water.py', 'Python'),
+---(8,'Container With Most Water', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Container With Most Water.js', 'JavaScript'),
+---(8,'Container With Most Water', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Container With Most Water.php', 'PHP'),
+---(8,'Container With Most Water', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Container With Most Water.java', 'Java'),
+---
+---(9,'Merge Two Sorted Lists', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Merge Two Sorted Lists.c', 'C'),
+---(9,'Merge Two Sorted Lists', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Merge Two Sorted Lists.py', 'Python'),
+---(9,'Merge Two Sorted Lists', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Merge Two Sorted Lists.js', 'JavaScript'),
+---(9,'Merge Two Sorted Lists', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Merge Two Sorted Lists.php', 'PHP'),
+---(9,'Merge Two Sorted Lists', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Merge Two Sorted Lists.java', 'Java'),
+---
+---(10,'Longest Common Prefix', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Common Prefix.c', 'C'),
+---(10,'Longest Common Prefix', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Common Prefix.py', 'Python'),
+---(10,'Longest Common Prefix', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Common Prefix.js', 'JavaScript'),
+---(10,'Longest Common Prefix', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Common Prefix.php', 'PHP'),
+---(10,'Longest Common Prefix', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Common Prefix.java', 'Java'),
+---
+---(11,'Valid Sudoku', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Sudoku.c', 'C'),
+---(11,'Valid Sudoku', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Sudoku.py', 'Python'),
+---(11,'Valid Sudoku', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Sudoku.js', 'JavaScript'),
+---(11,'Valid Sudoku', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Sudoku.php','PHP'),
+---(11,'Valid Sudoku', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Sudoku.java','Java') ;*
+---
+---
+---/*INSERT INTO modeInclude (probId ,probtitle, filepath, language) VALUES
+---(1,'Two Sum', 'Two Sum.c', 'C'),
+---(1,'Two Sum', 'Two Sum.py', 'Python'),
+---(1,'Two Sum', 'Two Sum.js', 'JavaScript'),
+---(1,'Two Sum', 'Two Sum.php', 'PHP'),
+---(1,'Two Sum', 'Two Sum.java', 'Java'),
+---
+---(2,'Longest Substring Without Repeating Characters', 'Longest Substring Without Repeating Characters.c', 'C'),
+---(2,'Longest Substring Without Repeating Characters', 'Longest Substring Without Repeating Characters.py', 'Python'),
+---(2,'Longest Substring Without Repeating Characters', 'Longest Substring Without Repeating Characters.js', 'JavaScript'),
+---(2,'Longest Substring Without Repeating Characters', 'Longest Substring Without Repeating Characters.php', 'PHP'),
+---(2,'Longest Substring Without Repeating Characters', 'Longest Substring Without Repeating Characters.java', 'Java'),
+---
+---(3,'Calculate the multiplication and sum of two numbers', 'Calculate the multiplication and sum of two numbers.c', 'C'),
+---(3,'Calculate the multiplication and sum of two numbers', 'Calculate the multiplication and sum of two numbers.py', 'Python'),
+---(3,'Calculate the multiplication and sum of two numbers', 'Calculate the multiplication and sum of two numbers.js', 'JavaScript'),
+---(3,'Calculate the multiplication and sum of two numbers', 'Calculate the multiplication and sum of two numbers.php', 'PHP'),
+---(3,'Calculate the multiplication and sum of two numbers', 'Calculate the multiplication and sum of two numbers.java', 'Java'),
+---
+---(4,'Reverse Integer', 'Reverse Integer.c', 'C'),
+---(4,'Reverse Integer', 'Reverse Integer.py', 'Python'),
+---(4,'Reverse Integer', 'Reverse Integer.js', 'JavaScript'),
+---(4,'Reverse Integer', 'Reverse Integer.php', 'PHP'),
+---(4,'Reverse Integer', 'Reverse Integer.java', 'Java'),
+---
+---(5,'Palindrome Number', 'Palindrome Number.c', 'C'),
+---(5,'Palindrome Number', 'Palindrome Number.py', 'Python'),
+---(5,'Palindrome Number', 'Palindrome Number.js', 'JavaScript'),
+---(5,'Palindrome Number', 'Palindrome Number.php', 'PHP'),
+---(5,'Palindrome Number', 'Palindrome Number.java', 'Java'),
+---
+---(6,'Roman to Integer', 'Roman to Integer.c', 'C'),
+---(6,'Roman to Integer', 'Roman to Integer.py', 'Python'),
+---(6,'Roman to Integer', 'Roman to Integer.js', 'JavaScript'),
+---(6,'Roman to Integer', 'Roman to Integer.php', 'PHP'),
+---(6,'Roman to Integer', 'Roman to Integer.java', 'Java'),
+---
+---(7,'Valid Parentheses', 'Valid Parentheses.c', 'C'),
+---(7,'Valid Parentheses', 'Valid Parentheses.py', 'Python'),
+---(7,'Valid Parentheses', 'Valid Parentheses.js', 'JavaScript'),
+---(7,'Valid Parentheses', 'Valid Parentheses.php', 'PHP'),
+---(7,'Valid Parentheses', 'Valid Parentheses.java', 'Java'),
+---
+---(8,'Container With Most Water', 'Container With Most Water.c', 'C'),
+---(8,'Container With Most Water', 'Container With Most Water.py', 'Python'),
+---(8,'Container With Most Water', 'Container With Most Water.js', 'JavaScript'),
+---(8,'Container With Most Water', 'Container With Most Water.php', 'PHP'),
+---(8,'Container With Most Water', 'Container With Most Water.java', 'Java'),
+---
+---(9,'Merge Two Sorted Lists', 'Merge Two Sorted Lists.c', 'C'),
+---(9,'Merge Two Sorted Lists', 'Merge Two Sorted Lists.py', 'Python'),
+---(9,'Merge Two Sorted Lists', 'Merge Two Sorted Lists.js', 'JavaScript'),
+---(9,'Merge Two Sorted Lists', 'Merge Two Sorted Lists.php', 'PHP'),
+---(9,'Merge Two Sorted Lists', 'Merge Two Sorted Lists.java', 'Java'),
+---
+---(10,'Longest Common Prefix', 'Longest Common Prefix.c', 'C'),
+---(10,'Longest Common Prefix', 'Longest Common Prefix.py', 'Python'),
+---(10,'Longest Common Prefix', 'Longest Common Prefix.js', 'JavaScript'),
+---(10,'Longest Common Prefix', 'Longest Common Prefix.php', 'PHP'),
+---(10,'Longest Common Prefix', 'Longest Common Prefix.java', 'Java'),
+---
+---(11,'Valid Sudoku', 'Valid Sudoku.c', 'C'),
+---(11,'Valid Sudoku', 'Valid Sudoku.py', 'Python'),
+---(11,'Valid Sudoku', 'Valid Sudoku.js', 'JavaScript'),
+---(11,'Valid Sudoku', 'Valid Sudoku.php','PHP'),
+---(11,'Valid Sudoku', 'Valid Sudoku.java','Java') ;
 
-(2,'Longest Substring Without Repeating Characters', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Substring Without Repeating Characters.c', 'C'),
-(2,'Longest Substring Without Repeating Characters', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Substring Without Repeating Characters.py', 'Python'),
-(2,'Longest Substring Without Repeating Characters', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Substring Without Repeating Characters.js', 'JavaScript'),
-(2,'Longest Substring Without Repeating Characters', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Substring Without Repeating Characters.php', 'PHP'),
-(2,'Longest Substring Without Repeating Characters', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Substring Without Repeating Characters.java', 'Java'),
 
-(3,'Calculate the multiplication and sum of two numbers', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Calculate the multiplication and sum of two numbers.c', 'C'),
-(3,'Calculate the multiplication and sum of two numbers', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Calculate the multiplication and sum of two numbers.py', 'Python'),
-(3,'Calculate the multiplication and sum of two numbers', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Calculate the multiplication and sum of two numbers.js', 'JavaScript'),
-(3,'Calculate the multiplication and sum of two numbers', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Calculate the multiplication and sum of two numbers.php', 'PHP'),
-(3,'Calculate the multiplication and sum of two numbers', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Calculate the multiplication and sum of two numbers.java', 'Java'),
 
-(4,'Reverse Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Reverse Integer.c', 'C'),
-(4,'Reverse Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Reverse Integer.py', 'Python'),
-(4,'Reverse Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Reverse Integer.js', 'JavaScript'),
-(4,'Reverse Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Reverse Integer.php', 'PHP'),
-(4,'Reverse Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Reverse Integer.java', 'Java'),
 
-(5,'Palindrome Number', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Palindrome Number.c', 'C'),
-(5,'Palindrome Number', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Palindrome Number.py', 'Python'),
-(5,'Palindrome Number', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Palindrome Number.js', 'JavaScript'),
-(5,'Palindrome Number', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Palindrome Number.php', 'PHP'),
-(5,'Palindrome Number', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Palindrome Number.java', 'Java'),
+INSERT INTO modeInclude (probId, probtitle, filepath, language) VALUES
+(1, 'TwoSum', 'TwoSum.h', 'c'),
+(1, 'TwoSum', 'TwoSum.py', 'python'),
+(1, 'TwoSum', 'TwoSum.js', 'javascript'),
+(1, 'TwoSum', 'TwoSum.php', 'php'),
+(1, 'TwoSum', 'TwoSum.java', 'java'),
 
-(6,'Roman to Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Roman to Integer.c', 'C'),
-(6,'Roman to Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Roman to Integer.py', 'Python'),
-(6,'Roman to Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Roman to Integer.js', 'JavaScript'),
-(6,'Roman to Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Roman to Integer.php', 'PHP'),
-(6,'Roman to Integer', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Roman to Integer.java', 'Java'),
+(2, 'LongestSubstringWithoutRepeatingCharacters', 'LongestSubstringWithoutRepeatingCharacters.h', 'c'),
+(2, 'LongestSubstringWithoutRepeatingCharacters', 'LongestSubstringWithoutRepeatingCharacters.py', 'python'),
+(2, 'LongestSubstringWithoutRepeatingCharacters', 'LongestSubstringWithoutRepeatingCharacters.js', 'javascript'),
+(2, 'LongestSubstringWithoutRepeatingCharacters', 'LongestSubstringWithoutRepeatingCharacters.php', 'php'),
+(2, 'LongestSubstringWithoutRepeatingCharacters', 'LongestSubstringWithoutRepeatingCharacters.java', 'java'),
 
-(7,'Valid Parentheses', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Parentheses.c', 'C'),
-(7,'Valid Parentheses', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Parentheses.py', 'Python'),
-(7,'Valid Parentheses', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Parentheses.js', 'JavaScript'),
-(7,'Valid Parentheses', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Parentheses.php', 'PHP'),
-(7,'Valid Parentheses', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Parentheses.java', 'Java'),
+(3, 'Calculatethemultiplicationandsumoftwonumbers', 'Calculatethemultiplicationandsumoftwonumbers.h', 'c'),
+(3, 'Calculatethemultiplicationandsumoftwonumbers', 'Calculatethemultiplicationandsumoftwonumbers.py', 'python'),
+(3, 'Calculatethemultiplicationandsumoftwonumbers', 'Calculatethemultiplicationandsumoftwonumbers.js', 'javascript'),
+(3, 'Calculatethemultiplicationandsumoftwonumbers', 'Calculatethemultiplicationandsumoftwonumbers.php', 'php'),
+(3, 'Calculatethemultiplicationandsumoftwonumbers', 'Calculatethemultiplicationandsumoftwonumbers.java', 'java'),
 
-(8,'Container With Most Water', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Container With Most Water.c', 'C'),
-(8,'Container With Most Water', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Container With Most Water.py', 'Python'),
-(8,'Container With Most Water', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Container With Most Water.js', 'JavaScript'),
-(8,'Container With Most Water', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Container With Most Water.php', 'PHP'),
-(8,'Container With Most Water', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Container With Most Water.java', 'Java'),
+(4, 'ReverseInteger', 'ReverseInteger.h', 'c'),
+(4, 'ReverseInteger', 'ReverseInteger.py', 'python'),
+(4, 'ReverseInteger', 'ReverseInteger.js', 'javascript'),
+(4, 'ReverseInteger', 'ReverseInteger.php', 'php'),
+(4, 'ReverseInteger', 'ReverseInteger.java', 'java'),
 
-(9,'Merge Two Sorted Lists', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Merge Two Sorted Lists.c', 'C'),
-(9,'Merge Two Sorted Lists', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Merge Two Sorted Lists.py', 'Python'),
-(9,'Merge Two Sorted Lists', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Merge Two Sorted Lists.js', 'JavaScript'),
-(9,'Merge Two Sorted Lists', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Merge Two Sorted Lists.php', 'PHP'),
-(9,'Merge Two Sorted Lists', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Merge Two Sorted Lists.java', 'Java'),
+(5, 'PalindromeNumber', 'PalindromeNumber.h', 'c'),
+(5, 'PalindromeNumber', 'PalindromeNumber.py', 'python'),
+(5, 'PalindromeNumber', 'PalindromeNumber.js', 'javascript'),
+(5, 'PalindromeNumber', 'PalindromeNumber.php', 'php'),
+(5, 'PalindromeNumber', 'PalindromeNumber.java', 'java'),
 
-(10,'Longest Common Prefix', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Common Prefix.c', 'C'),
-(10,'Longest Common Prefix', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Common Prefix.py', 'Python'),
-(10,'Longest Common Prefix', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Common Prefix.js', 'JavaScript'),
-(10,'Longest Common Prefix', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Common Prefix.php', 'PHP'),
-(10,'Longest Common Prefix', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Longest Common Prefix.java', 'Java'),
+(6, 'RomantoInteger', 'RomantoInteger.h', 'c'),
+(6, 'RomantoInteger', 'RomantoInteger.py', 'python'),
+(6, 'RomantoInteger', 'RomantoInteger.js', 'javascript'),
+(6, 'RomantoInteger', 'RomantoInteger.php', 'php'),
+(6, 'RomantoInteger', 'RomantoInteger.java', 'java'),
 
-(11,'Valid Sudoku', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Sudoku.c', 'C'),
-(11,'Valid Sudoku', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Sudoku.py', 'Python'),
-(11,'Valid Sudoku', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Sudoku.js', 'JavaScript'),
-(11,'Valid Sudoku', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Sudoku.php','PHP'),
-(11,'Valid Sudoku', '/home/mohamed/Java_IHM/CodYnGame/modeInclude/Valid Sudoku.java','Java') ;
+(7, 'ValidParentheses', 'ValidParentheses.h', 'c'),
+(7, 'ValidParentheses', 'ValidParentheses.py', 'python'),
+(7, 'ValidParentheses', 'ValidParentheses.js', 'javascript'),
+(7, 'ValidParentheses', 'ValidParentheses.php', 'php'),
+(7, 'ValidParentheses', 'ValidParentheses.java', 'java'),
+
+(8, 'ContainerWithMostWater', 'ContainerWithMostWater.h', 'c'),
+(8, 'ContainerWithMostWater', 'ContainerWithMostWater.py', 'python'),
+(8, 'ContainerWithMostWater', 'ContainerWithMostWater.js', 'javascript'),
+(8, 'ContainerWithMostWater', 'ContainerWithMostWater.php', 'php'),
+(8, 'ContainerWithMostWater', 'ContainerWithMostWater.java', 'java'),
+
+(9, 'MergeTwoSortedLists', 'MergeTwoSortedLists.h', 'c'),
+(9, 'MergeTwoSortedLists', 'MergeTwoSortedLists.py', 'python'),
+(9, 'MergeTwoSortedLists', 'MergeTwoSortedLists.js', 'javascript'),
+(9, 'MergeTwoSortedLists', 'MergeTwoSortedLists.php', 'php'),
+(9, 'MergeTwoSortedLists', 'MergeTwoSortedLists.java', 'java'),
+
+(10, 'LongestCommonPrefix', 'LongestCommonPrefix.h', 'c'),
+(10, 'LongestCommonPrefix', 'LongestCommonPrefix.py', 'python'),
+(10, 'LongestCommonPrefix', 'LongestCommonPrefix.js', 'javascript'),
+(10, 'LongestCommonPrefix', 'LongestCommonPrefix.php', 'php'),
+(10, 'LongestCommonPrefix', 'LongestCommonPrefix.java', 'java'),
+
+(11, 'ValidSudoku', 'ValidSudoku.h', 'c'),
+(11, 'ValidSudoku', 'ValidSudoku.py', 'python'),
+(11, 'ValidSudoku', 'ValidSudoku.js', 'javascript'),
+(11, 'ValidSudoku', 'ValidSudoku.php', 'php'),
+(11, 'ValidSudoku', 'ValidSudoku.java', 'java');
+
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

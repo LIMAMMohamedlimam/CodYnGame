@@ -1,5 +1,6 @@
 package Problems;
 
+import Game.Game;
 import Other.Language;
 import database.DatabaseManager;
 import fonctionnalities.Compiler;
@@ -20,8 +21,7 @@ public class Problem {
     private  String solutionFile;
 
     private String data ;
-
-
+    private String modeIncludeFile;
 
 
     public Problem(String title){
@@ -120,6 +120,7 @@ public class Problem {
         }
         return null;
     }
+
 
 
 

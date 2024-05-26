@@ -2,7 +2,12 @@ package Game;
 
 import Other.Language;
 import Problems.Problem;
+import constants.Commandes;
+import database.DatabaseManager;
 import utilisateur.User;
+
+import java.sql.SQLException;
+import java.util.List;
 
 public class Game {
 
@@ -43,20 +48,46 @@ public class Game {
         this.selectedLanguage = selectedLanguage;
     }
 
-    public String setDefaultCode() {
+    public String setDefaultCode()  {
         if (this.selectedMode.equals("Mode Include")) {
             this.defaultCode = this.selectedLanguage.getCommentTag() + " Create a function named '"
                     + this.selectedProblem.getTitle().replaceAll(" ", "").replaceAll("\n" , "")
-                    + "(args)' with arguments 'args'\n";
+                    + "(args)' with arguments 'args'\n" + Commandes.getIncludeTag(selectedLanguage , getModeIncludeFileName()) ;
         } else if (this.selectedMode.equals("Mode Input Output")) {
-            // add logic later boyyy!!!
+            this.defaultCode = selectedLanguage.getCommentTag() +" don't forget to print your Program result on output stream as a json " ;
         }
         return null ;
     }
 
+
+
     public String getDefaultCode() {
         return defaultCode;
     }
+
+    public String getModeIncludeFileName()  {
+        String query = "select filepath from modeInclude where probId=" + this.getSelectedProblem().getId() +
+                " and language = " + "'"+selectedLanguage.getName().toLowerCase() + "'";
+        DatabaseManager dbManager = new DatabaseManager();
+
+        System.out.println(query);
+        List<String> filepaths = dbManager.executeQuery(query, resultSet -> {
+            try {
+                return resultSet.getString("filepath");
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
+        });
+
+        if (filepaths != null && !filepaths.isEmpty()) {
+            return filepaths.get(0); // Assuming titles are unique, return the first match.
+        } else {
+            System.out.println("mode include file non trouver : " + this.getSelectedProblem().getTitle());
+        }
+        return null ;
+    }
+
 
 }
 

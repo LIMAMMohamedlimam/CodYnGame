@@ -3,6 +3,7 @@ package Main;
 import Game.Game;
 import Other.Language;
 import Problems.Problem;
+import fonctionnalities.Compiler;
 import javafx.application.Application;
 import ui.PremiereScene;
 import utilisateur.User;
@@ -93,7 +94,7 @@ public class Main {
                // User user = new User(id,"rayane","saighi","rayane.saighi123@gmail.com");
                // um.getUserDetails("rayane");
 
-        Application.launch(PremiereScene.class, args);
+        //Application.launch(PremiereScene.class, args);
 
 
         // testing the datageneration
@@ -108,6 +109,9 @@ public class Main {
         //System.out.println(test.getSelectedLanguage().getName());
         //test.setDefaultCode() ;
         //System.out.println(test.getDefaultCode() );
+
+        System.out.println(Compiler.Run(new Language("javascript") , "CodYngame_exec/User2.js") );
+
 
 
     }
