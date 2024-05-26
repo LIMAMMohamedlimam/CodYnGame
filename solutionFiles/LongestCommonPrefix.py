@@ -7,7 +7,7 @@ def longest_common_prefix(strs):
     shortest = strs[0]
     longest = strs[-1]
 
-    
+
     for i in range(len(shortest)):
         if shortest[i] != longest[i]:
             return shortest[:i]
