@@ -9,6 +9,6 @@ length = random.randint(1, 20)
 s = generate(length)
 
 data = {"s": s}
-
+print(data)
 with open("longest_substring_input.json", "w") as json_file:
     json.dump(data, json_file)

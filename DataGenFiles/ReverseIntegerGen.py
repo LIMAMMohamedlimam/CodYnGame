@@ -5,5 +5,6 @@ x = random.randint(-2**31, 2**31 - 1)
 
 data = {"x": x}
 
+print(data)
 with open("reverse_integer_input.json", "w") as json_file:
     json.dump(data, json_file)

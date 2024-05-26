@@ -9,6 +9,6 @@ def generate_numbers():
 number1, number2 = generate_numbers()
 
 data = {"number1": number1, "number2": number2}
-print(data)  # Ajout de cette ligne pour afficher les données générées
+print(data)
 with open("product_or_sum_input.json", "w") as json_file:
     json.dump(data, json_file)

@@ -13,6 +13,6 @@ def generate_board():
 board = generate_board()
 
 data = {"board": board}
-
+print(data)
 with open("valid_sudoku_input.json", "w") as json_file:
     json.dump(data, json_file)
