@@ -11,20 +11,19 @@ def generate_lists():
 
 def verifysolution(jsondata, resultdata):
     try:
-        with open(jsondata, 'r') as f:
-            data = json.load(f)
-        with open(resultdata, 'r') as f:
-            result = json.load(f)
+        data = json.loads(jsondata)
+        result = json.loads(resultdata)
         list1 = data['list1']
         list2 = data['list2']
-        expected_merged = result['merged']
+        expected_merged = result["result"]
 
         merged = sorted(list1 + list2)
-        print("merged =" , merged)
-        print("expected_merged =" , expected_merged)
+        print("merged =", merged)
+        print("expected_merged =", expected_merged)
 
         return merged == expected_merged
     except Exception as e:
+        print("Error:", e)
         return False
 
 if __name__ == "__main__":
@@ -38,11 +37,13 @@ if __name__ == "__main__":
     elif sys.argv[1] == "verify" and len(sys.argv) == 4:
         jsondata = sys.argv[2]
         resultdata = sys.argv[3]
+        print(jsondata , resultdata)
+
         if verifysolution(jsondata, resultdata):
-            print("Solution is correct.")
+                print("Solution is correct.")
         else:
-            print("Solution is incorrect.")
+                print("Solution is incorrect.")
     else:
-        print("Error: Incorrect arguments or number of arguments.")
-        print(sys.argv)
-        print("Usage: python script.py gen OR python script.py verify <jsondata> <resultdata>")
+            print("Error: Incorrect arguments or number of arguments.")
+            print(sys.argv)
+            print("Usage: python script.py gen OR python script.py verify <jsondata> <resultdata>")

@@ -5,12 +5,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 import Game.Game;
 import Other.Language;
 import constants.Commandes;
-import database.DatabaseManager;
 
 /**
  * Représente une soumission dans un système de gestion de soumissions.
@@ -171,11 +169,12 @@ public class Submission {
 
 
     public String verifySolution() throws SQLException {
+        System.out.println(currentGame.getSelectedProblem().getData());
         this.setUserResult();
         System.out.println("this is the usroutput" + userResult);
         if(!this.userResult.contains("Traceback")) {
             String output = Compiler.Run(new Language("python"), currentGame.getSelectedProblem().getSolutionFile()
-                    + " verify " +  currentGame.getSelectedProblem().getData().replaceAll(" " , "") + " " + "{" + userResult.replaceAll(" " , ",")+"}");
+                    + " verify " +  currentGame.getSelectedProblem().getData().replaceAll(" " , "") + " "  + userResult.replaceAll(" " , ""));
             return output;
         }else{
             return "Error" ;

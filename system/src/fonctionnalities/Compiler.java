@@ -68,6 +68,7 @@ public abstract class Compiler {
      */
     public static String Run(Language language, String filePath) {
         String runCmd = language.getRunTag()  + filePath;
+        System.out.println(runCmd);
 
         try {
             Process runProcess = Runtime.getRuntime().exec(runCmd);

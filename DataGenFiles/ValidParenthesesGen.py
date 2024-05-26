@@ -10,10 +10,8 @@ def generate_string():
 
 def verifysolution(jsondata, resultdata):
     try:
-        with open(jsondata, 'r') as f:
-            data = json.load(f)
-        with open(resultdata, 'r') as f:
-            result = json.load(f)
+        data = json.loads(jsondata)
+        result = json.loads(resultdata)
         s = data['s']
         expected_is_valid = result['is_valid']
 
@@ -34,6 +32,7 @@ def verifysolution(jsondata, resultdata):
 
         return is_valid == expected_is_valid
     except Exception as e:
+        print("Error:", e)
         return False
 
 if __name__ == "__main__":

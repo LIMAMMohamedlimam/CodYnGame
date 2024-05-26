@@ -1,6 +1,6 @@
 import json
-import subprocess
 import sys
+
 def mergeTwoLists(l1, l2):
     # Dummy node to start the merged list
     dummy = {'val': 0, 'next': None}
@@ -22,28 +22,35 @@ def mergeTwoLists(l1, l2):
     # Return the next of dummy since dummy is a starting node
     return dummy['next']
 
-# Continue with your existing code to convert list inputs into linked lists and to invoke mergeTwoLists
+def list_to_linked_list(lst):
+    head = None
+    for val in reversed(lst):
+        node = {'val': val, 'next': head}
+        head = node
+    return head
 
+def linked_list_to_list(node):
+    result = []
+    while node:
+        result.append(node['val'])
+        node = node['next']
+    return result
 
-jsonData = sys.argv[1]
-data = json.loads(jsonData)
-list1 = data['list1']
-list2 = data['list2']
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python script.py '<json_data>'")
+        sys.exit(1)
 
-l1 = None
-for val in reversed(list1):
-    node = {'val': val, 'next': l1}
-    l1 = node
+    jsonData = sys.argv[1]
+    data = json.loads(jsonData)
+    list1 = data['list1']
+    list2 = data['list2']
 
-l2 = None
-for val in reversed(list2):
-    node = {'val': val, 'next': l2}
-    l2 = node
+    l1 = list_to_linked_list(list1)
+    l2 = list_to_linked_list(list2)
 
-mergedList = mergeTwoLists(l1, l2)
+    mergedList = mergeTwoLists(l1, l2)
+    mergedListAsList = linked_list_to_list(mergedList)
 
-current = mergedList
-while current:
-    print(current['val'], end=" ")
-    current = current['next']
-print()
+    result = {'result': mergedListAsList}
+    print(json.dumps(result))
