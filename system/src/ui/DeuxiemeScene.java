@@ -47,7 +47,7 @@ public class DeuxiemeScene {
         Button backButton = new Button("Back");
         backButton.setOnAction(event -> {
             PremiereScene premiereScene = new PremiereScene();
-            Scene scene = premiereScene.createSelectionScene(primaryStage, ProblemManager.retrieveTitles());
+            Scene scene = premiereScene.createSelectionScene(primaryStage, ProblemManager.retrieveTitlesWithDifficulty());
             primaryStage.setScene(scene);
         });
 
