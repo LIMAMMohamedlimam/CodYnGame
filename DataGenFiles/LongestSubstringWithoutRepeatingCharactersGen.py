@@ -25,7 +25,7 @@ def verifysolution(jsondata, resultdata):
         data = json.loads(jsondata)
         result = json.loads(resultdata)
         s = data['s']
-        expected_length = result['length']
+        expected_length = result['result']
 
         calculated_length = length_of_longest_substring(s)
         print("calculated_length =", calculated_length)

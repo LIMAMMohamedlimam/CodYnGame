@@ -36,7 +36,7 @@ def linked_list_to_list(node):
         node = node['next']
     return result
 
-if __name__ == "__main__":
+""" if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python script.py '<json_data>'")
         sys.exit(1)
@@ -54,3 +54,7 @@ if __name__ == "__main__":
 
     result = {'result': mergedListAsList}
     print(json.dumps(result))
+ """
+
+
+print(float("INF"))

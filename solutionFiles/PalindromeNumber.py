@@ -1,15 +1,29 @@
+import json
+import sys
+
 def is_palindrome(x):
-    # Convertir le nombre en chaîne de caractères
-    s = str(x)
-    
-    # Initialiser les indices pour pointer au début et à la fin de la chaîne
-    i, j = 0, len(s) - 1
-    
-    # Vérifier les caractères un à un de l'avant vers le centre et de l'arrière vers le centre
-    while i < j:
-        if s[i] != s[j]:
-            return False
-        i += 1
-        j -= 1
-    
-    return True
+    str_x = str(x)
+    return str_x == str_x[::-1]
+
+def main():
+    # Read input from program argument
+    if len(sys.argv) != 2:
+        print(json.dumps({"error": "Invalid input"}))
+        return
+
+    try:
+        input_json = sys.argv[1]
+        data = json.loads(input_json)
+        x = data["x"]
+
+        if not isinstance(x, int):
+            print(json.dumps({"error": "Value is not an integer"}))
+            return
+
+        result = is_palindrome(x)
+        print(json.dumps({"result": result}))
+    except (json.JSONDecodeError, KeyError):
+        print(json.dumps({"error": "Invalid JSON or missing key 'x'"}))
+
+if __name__ == "__main__":
+    main()

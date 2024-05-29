@@ -13,7 +13,7 @@ def verifysolution(jsondata, resultdata):
         data = json.loads(jsondata)
         result = json.loads(resultdata)
         s = data['s']
-        expected_is_valid = result['is_valid']
+        expected_is_valid = result['result']
 
         stack = []
         mapping = {")": "(", "}": "{", "]": "["}
@@ -29,6 +29,7 @@ def verifysolution(jsondata, resultdata):
                 stack.append(char)
 
         is_valid = is_valid and not stack
+        print(is_valid , "expected -->" , expected_is_valid)
 
         return is_valid == expected_is_valid
     except Exception as e:

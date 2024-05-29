@@ -1,23 +1,36 @@
-class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
-        seen = {}
-        l = 0
-        output = 0
-        for r in range(len(s)):
-            """
-            If s[r] not in seen, we can keep increasing the window size by moving right pointer
-            """
-            if s[r] not in seen:
-                output = max(output,r-l+1)
-            """
-            There are two cases if s[r] in seen:
-            case1: s[r] is inside the current window, we need to change the window by moving left pointer to seen[s[r]] + 1.
-            case2: s[r] is not inside the current window, we can keep increase the window
-            """
-            else:
-                if seen[s[r]] < l:
-                    output = max(output,r-l+1)
-                else:
-                    l = seen[s[r]] + 1
-            seen[s[r]] = r
-        return output
+import sys
+import json
+
+def length_of_longest_substring(s: str) -> int:
+    char_set = set()
+    left = 0
+    max_length = 0
+
+    for right in range(len(s)):
+        while s[right] in char_set:
+            char_set.remove(s[left])
+            left += 1
+        char_set.add(s[right])
+        max_length = max(max_length, right - left + 1)
+
+    return max_length
+
+def main():
+    if len(sys.argv) != 2:
+        print("Please provide a single JSON string argument.")
+        return
+
+    input_json = sys.argv[1]
+    try:
+        input_data = json.loads(input_json)
+        s = input_data.get("s", "")
+    except json.JSONDecodeError:
+        print("Invalid JSON input.")
+        return
+
+    result = length_of_longest_substring(s)
+    output = {"result": result}
+    print(json.dumps(output))
+
+if __name__ == "__main__":
+    main()

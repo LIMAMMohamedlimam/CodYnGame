@@ -3,6 +3,7 @@ import java.io.*;
 import java.lang.Runtime ;
 import static constants.Commandes.getCompileCommand;
 import static constants.Commandes.getRunCommand;
+import org.json.JSONObject ;
 
 import Other.Language;
 
@@ -23,7 +24,8 @@ public abstract class Compiler {
         System.out.println("compiling ....");
         String compileCmd = getCompileCommand(language, srcFilePath, outFilename);
         String runCmd = getRunCommand(language, outFilename , argv);
-
+        System.out.println(compileCmd);
+        System.out.println(runCmd);
         try {
             Process compileProcess = Runtime.getRuntime().exec(compileCmd);
             String compileError = readProcessOutput(compileProcess.getErrorStream());
@@ -60,8 +62,8 @@ public abstract class Compiler {
      * @param language Le langage de programmation du fichier.
      * @param filePath Le chemin du fichier source à compiler.
      */
-    public static String Run(Language language, String filePath) {
-        String runCmd = language.getRunTag()  + filePath;
+    public static String Run(Language language, String filePath , String argv) {
+        String runCmd = language.getRunTag()  + filePath +" " + argv;
         System.out.println(runCmd);
 
         try {
@@ -71,8 +73,10 @@ public abstract class Compiler {
             int runStatus = runProcess.waitFor();
             //deleteFile(filePath) ;
             if (runStatus == 0){
+                System.out.println(runOutput);
                 return  runOutput ;
             } else {
+                System.out.println(runError);
                 return  runError ;
 
             }
@@ -139,6 +143,37 @@ public abstract class Compiler {
             e.printStackTrace();
         }
     }
+
+
+
+
+    public static String transformStringToJson(String input) {
+        // Split the input string into key-value pairs
+        String[] pairs = input.split(",");
+
+        // Create a JSON object to hold the key-value pairs
+        JSONObject jsonObject = new JSONObject();
+
+        // Iterate through each pair and split into key and value
+        for (String pair : pairs) {
+            String[] parts = pair.split(":");
+            if (parts.length != 2) {
+                throw new IllegalArgumentException("Input string is not in the correct format");
+            }
+            String key = parts[0];
+            String value = parts[1];
+
+            // Add the key-value pair to the JSON object
+            jsonObject.put(key, value);
+        }
+
+        // Return the JSON object as a string
+        return jsonObject.toString();
+    }
+
+
+
+
 
 }
 

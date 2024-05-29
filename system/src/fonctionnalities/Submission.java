@@ -31,7 +31,7 @@ public class Submission {
     }
 
     public void setUserResult() throws SQLException {
-        this.userResult = this.run().trim() ;
+        this.userResult =  this.run().trim() ;//Compiler.transformStringToJson(this.run().trim()) ;
     }
 
     /**
@@ -79,7 +79,7 @@ public class Submission {
     public void runFile() {
         String languageName = this.currentGame.getSelectedLanguage().getName().toLowerCase();
         if (languageName.equals("python")) {
-            Compiler.Run(this.currentGame.getSelectedLanguage(), this.file.getPath());
+            Compiler.Run(this.currentGame.getSelectedLanguage(), this.file.getPath() ,"");
         } else if (languageName.equals("c")) {
             Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "output.out" , "");
         } else if (languageName.equals("java")) {
@@ -124,26 +124,26 @@ public class Submission {
         //}
         if (currentGame.getSelectedMode().equalsIgnoreCase("Mode Include")) {
             if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("c")) {
-                return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "output.out" , "");
+                return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "output.out" , "") ;
             } else if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("java")) {
                 String classpath = this.file.getPath().replace(this.file.getName(), "");
                 String program = this.file.getName().replace(".java", " ");
                 return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "-classpath" + " " + classpath + " " + program ,"");
             } else {
 
-                return Compiler.Run(this.currentGame.getSelectedLanguage(), this.file.getPath());
+                return Compiler.Run(this.currentGame.getSelectedLanguage(), this.file.getPath() , "");
             }
         }else if(currentGame.getSelectedMode().equalsIgnoreCase("Mode Input Output")){
             if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("c")) {
-                return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "output.out" , currentGame.getSelectedProblem().getData());
+                return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "output.out" , currentGame.getSelectedProblem().getData().replaceAll(" ",""));
             } else if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("java")) {
                 String classpath = this.file.getPath().replace(this.file.getName(), "");
                 String program = this.file.getName().replace(".java", " ");
-                return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "-classpath" + " " + classpath + " " + program , currentGame.getSelectedProblem().getData());
+                return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "-classpath" + " " + classpath + " " + program , currentGame.getSelectedProblem().getData().replaceAll(" " ,""));
             } else {
 
                 return Compiler.Run(this.currentGame.getSelectedLanguage(), this.file.getPath() + " "+
-                         currentGame.getSelectedProblem().getData().replaceAll(" ", "") );
+                         currentGame.getSelectedProblem().getData().replaceAll(" ", "") , "");
             }
         }
         return null ;
@@ -160,7 +160,7 @@ public class Submission {
             return Compiler.compile(this.currentGame.getSelectedLanguage(), filePath, "-classpath" + " " + classpath + " " + program , "");
         } else {
 
-            return Compiler.Run(this.currentGame.getSelectedLanguage(), filePath);
+            return Compiler.Run(this.currentGame.getSelectedLanguage(), filePath ,"");
         }
     }
 
@@ -171,14 +171,12 @@ public class Submission {
     public String verifySolution() throws SQLException {
         System.out.println(currentGame.getSelectedProblem().getData());
         this.setUserResult();
+
         System.out.println("this is the usroutput" + userResult);
-        if(!this.userResult.contains("Traceback")) {
-            String output = Compiler.Run(new Language("python"), currentGame.getSelectedProblem().getSolutionFile()
-                    + " verify " +  currentGame.getSelectedProblem().getData().replaceAll(" " , "") + " "  + userResult.replaceAll(" " , ""));
-            return output;
-        }else{
-            return "Error" ;
-        }
+        String output = Compiler.Run(new Language("python"), currentGame.getSelectedProblem().getSolutionFile()
+                + " verify " +  currentGame.getSelectedProblem().getData().replaceAll(" " , "") + " "  + userResult.replaceAll(" " , "") , "");
+        return output;
+
     }
 }
 

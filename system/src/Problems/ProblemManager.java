@@ -88,6 +88,24 @@ public abstract class ProblemManager {
 
     }
 
+    public static @Nullable Problem getProblem(int id) {
+        DatabaseManager dbManager = new DatabaseManager();
+        String query = "select id, title, description, solutionFile, difficulty, defaultCode " +
+                "from Problem " +
+                "WHERE id = " + id + ";" ;
+        try {
+            List<Problem> results = dbManager.executeQuery(query, Problem::fromResultSet);
+            if (results.isEmpty()) {
+                return null;
+            }
+            return results.get(0); // Get the first element from the list
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     public static String retrieveDifficultyLevel(String title) throws SQLException {
         String query = "SELECT difficulty FROM Problem WHERE title = ?";
         DatabaseManager dbManager = new DatabaseManager();
@@ -141,7 +159,7 @@ public abstract class ProblemManager {
 
     public static boolean verifyCode(Problem selectedProb ,String userOutput){
         String execFile = selectedProb.getSolutionFile()+" "+"verify"+ " "+selectedProb.getData() + " " +userOutput ;
-        String result = Compiler.Run(new Language("python") , execFile) ;
+        String result = Compiler.Run(new Language("python") , execFile , "") ;
         System.out.println(result);
         return false ;
     }

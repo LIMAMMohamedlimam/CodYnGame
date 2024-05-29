@@ -43,7 +43,7 @@ def verify_roman_to_int(jsondata, resultdata):
         data = json.loads(jsondata)
         result = json.loads(resultdata)
         roman = data['roman']
-        expected_integer = result['integer']
+        expected_integer = result['result']
 
         calculated_integer = romanToInt(roman)
         print("calculated_integer =", calculated_integer)
@@ -62,8 +62,8 @@ if __name__ == "__main__":
         roman, integer = generate_roman()
         data = {"roman": roman}
         result = {"integer": integer}
-        print("data:", json.dumps(data))
-        print("result:", json.dumps(result))
+        print(json.dumps(data))
+
     elif sys.argv[1] == "verify" and len(sys.argv) == 4:
         jsondata = sys.argv[2]
         resultdata = sys.argv[3]

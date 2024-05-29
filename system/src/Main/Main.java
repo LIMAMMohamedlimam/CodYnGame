@@ -4,6 +4,7 @@ import Game.Game;
 import Other.Language;
 import Problems.Problem;
 import fonctionnalities.Compiler;
+import fonctionnalities.Submission;
 import javafx.application.Application;
 import ui.PremiereScene;
 import utilisateur.User;
@@ -93,8 +94,7 @@ public class Main {
                // UserManager um = new UserManager();
                // User user = new User(id,"rayane","saighi","rayane.saighi123@gmail.com");
                // um.getUserDetails("rayane");
-
-        //Application.launch(PremiereScene.class, args);
+        Application.launch(PremiereScene.class, args);
 
 
         // testing the datageneration
@@ -104,13 +104,22 @@ public class Main {
         //System.out.println(p.getDefaultCode());
 
 
-        //Game test=  new Game(getProblem("Two Sum") , new Language("c"),
-        //        "Mode Include" ,new User("")) ;
-        //System.out.println(test.getSelectedLanguage().getName());
+        //Game test=  new Game(getProblem(8) , new Language("php"),
+        //        "Mode Input Output" ,new User("User1")) ;
+        //System.out.println(test.getSelectedProblem().getTitle());
         //test.setDefaultCode() ;
-        //System.out.println(test.getDefaultCode() );
+        ////System.out.println(test.getDefaultCode());
+        ////System.out.println(test.getDefaultCode() );
+        //String code =  "" ;
+        //String output = null ;
+        //try{
+        //     output = (new Submission(test, code)).verifySolution() ;
+        //}catch (Exception e){
+        //    e.printStackTrace();
+        //}
+//
+        //System.out.println(output);
 
-        System.out.println(Compiler.Run(new Language("javascript") , "CodYngame_exec/User2.js") );
 
 
 

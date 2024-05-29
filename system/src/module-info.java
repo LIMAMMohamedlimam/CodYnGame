@@ -5,6 +5,7 @@ module system{
     requires java.sql;
     requires org.jetbrains.annotations;
     requires mysql.connector.j;
+    requires org.json;
 
 
     opens ui ;

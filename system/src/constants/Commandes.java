@@ -62,8 +62,8 @@ public abstract class Commandes {
 
     public static String getCompileCommand(Language language , String filePath ,String outputFilePath) {
         if (language.getName().equalsIgnoreCase("c")) {
-            System.out.println(compileC + " " + filePath + " -o " + outputFilePath);
-            return compileC + " " + filePath + " -o " + outputFilePath;
+            System.out.println(compileC + " " + filePath + " -o " + outputFilePath + " -ljson-c");
+            return compileC + " " + filePath + " -o " + outputFilePath+ " -ljson-c";
         }
         else if (language.getName().equalsIgnoreCase("java"))
             return compileJAVA + " " + filePath ;

@@ -1,51 +1,34 @@
 import json
-import subprocess
+import sys
 
-def mergeTwoLists(l1, l2):
-    #your code here :
-    i, j = 0, 0  # Indices pour l1 et l2
-    merged_list = []
+def reverse(x):
+    # Determine the sign of x
+    sign = -1 if x < 0 else 1
+    # Reverse the digits of the absolute value of x
+    reversed_str = str(abs(x))[::-1]
+    reversed_int = int(reversed_str)
+    # Reapply the sign
+    reversed_int *= sign
+    # Handle 32-bit integer overflow
+    if reversed_int < -2**31 or reversed_int > 2**31 - 1:
+        return 0
+    return reversed_int
 
-    # Parcourir les deux listes jusqu'a ce que l'un des indices atteigne la fin de sa liste
-    while i < len(l1) and j < len(l2):
-        if l1[i] <= l2[j]:
-            merged_list.append(l1[i])
-            i += 1
-        else:
-            merged_list.append(l2[j])
-            j += 1
+if len(sys.argv) != 2:
+    print(f"Usage: {sys.argv[0]} '<json_string>'", file=sys.stderr)
+    sys.exit(1)
 
-    # Ajouter les elements restants de l1, si il y en a
-    while i < len(l1):
-        merged_list.append(l1[i])
-        i += 1
+json_string = sys.argv[1]
+try:
+    parsed_json = json.loads(json_string)
+except json.JSONDecodeError:
+    print("Error parsing JSON string.", file=sys.stderr)
+    sys.exit(1)
 
-    # Ajouter les elements restants de l2, si il y en a
-    while j < len(l2):
-        merged_list.append(l2[j])
-        j += 1
+if 'x' not in parsed_json:
+    print("Error extracting JSON data.", file=sys.stderr)
+    sys.exit(1)
 
-    return merged_list
-
-jsonData = sys.argv[1]
-data = json.loads(jsonData)
-list1 = data['list1']
-list2 = data['list2']
-
-l1 = None
-for val in reversed(list1):
-    node = {'val': val, 'next': l1}
-    l1 = node
-
-l2 = None
-for val in reversed(list2):
-    node = {'val': val, 'next': l2}
-    l2 = node
-
-mergedList = mergeTwoLists(l1, l2)
-
-current = mergedList
-while current:
-    print(current['val'], end=" ")
-    current = current['next']
-print()
+x = parsed_json['x']
+result = reverse(x)
+print(f"Reversed integer: {result}")

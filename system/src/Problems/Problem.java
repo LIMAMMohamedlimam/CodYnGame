@@ -33,7 +33,8 @@ public class Problem {
     }
 
     public void setData() {
-        this.data = Compiler.Run(new Language("python") , this.solutionFile + " gen") ;
+        this.data = Compiler.Run(new Language("python") , this.solutionFile + " gen" , "") ;
+        System.out.println("line 37 Problem.java"+ this.data);
     }
 
     /**
