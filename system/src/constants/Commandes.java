@@ -12,6 +12,11 @@ public abstract class Commandes {
     public static final String commentTagJAVA = "//";
     public static final String commentTagPYTHON = "#";
 
+    public static final String FunctionTagJAVA = "public static";
+    public static final String FunctionTagPYTHON = "def";
+    public static final String FunctionTagJAVASCRIPT = "function";
+    public static final String FunctionTagPHP = "function" ;
+
     public static String getCompileCommandtag(Language language) {
         switch (language.getName().toLowerCase()) {
             case "c":
@@ -125,6 +130,21 @@ public abstract class Commandes {
             case "java":
                 return "verifysolution(data, solution);"; // Using camelCase typically used in Java
 
+            default:
+                return null;
+        }
+    }
+
+    public static String getFunctionIdentifier(Language lang){
+        switch (lang.getName().toLowerCase()){
+            case "php":
+                return FunctionTagPHP ;
+            case "java":
+                return FunctionTagJAVA;
+            case "python":
+                return FunctionTagPYTHON;
+            case "javascript":
+                return FunctionTagJAVASCRIPT ;
             default:
                 return null;
         }

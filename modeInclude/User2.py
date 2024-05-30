@@ -1,29 +1,30 @@
-import json
 import sys
+import json
 
-def is_palindrome(x):
-    str_x = str(x)
-    return str_x == str_x[::-1]
+def two_sum(nums, target):
+    num_dict = {}
 
-def main():
-    # Read input from program argument
-    if len(sys.argv) != 2:
-        print(json.dumps({"error": "Invalid input"}))
-        return
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in num_dict:
+            result = [num_dict[complement], i]
+            return json.dumps(result)
+        num_dict[num] = i
 
-    try:
-        input_json = sys.argv[1]
-        data = json.loads(input_json)
-        x = data["x"]
-
-        if not isinstance(x, int):
-            print(json.dumps({"error": "Value is not an integer"}))
-            return
-
-        result = is_palindrome(x)
-        print(json.dumps({"result": result}))
-    except (json.JSONDecodeError, KeyError):
-        print(json.dumps({"error": "Invalid JSON or missing key 'x'"}))
+    return json.dumps([])  # In case no solution is found (though the problem guarantees a solution)
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) != 2:
+        print("Usage: python script.py '{\"nums\": [...], \"target\": ...}'")
+        sys.exit(1)
+
+    input_json = sys.argv[1]
+    try:
+        input_data = json.loads(input_json)
+        nums = input_data["nums"]
+        target = input_data["target"]
+        print(two_sum(nums, target))
+    except (json.JSONDecodeError, KeyError):
+        print("Invalid input format. Please provide a JSON string with 'nums' and 'target'.")
+
+

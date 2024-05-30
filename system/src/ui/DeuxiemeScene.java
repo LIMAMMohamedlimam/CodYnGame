@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import Game.Game ;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import static fonctionnalities.Compiler.Run;
@@ -52,6 +53,17 @@ public class DeuxiemeScene {
             outputTextArea.setText(output);
         });
 
+        Button solutionButton = new Button("Solve") ;
+        solutionButton.setOnAction(event -> {
+            if (currentGame.getSelectedMode().equals("Mode Input Output")){
+                try {
+                    codeTextArea.setText(currentGame.getSolution());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         Button backButton = new Button("Retour");
         backButton.setOnAction(event -> {
             PremiereScene premiereScene = new PremiereScene();
@@ -76,7 +88,8 @@ public class DeuxiemeScene {
                 executeButton,
                 new Label("Output:"),
                 outputTextArea,
-                backButton
+                backButton ,
+                solutionButton
         );
         root.setSpacing(10);
         root.setPadding(new Insets(10));

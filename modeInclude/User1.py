@@ -1,42 +1,30 @@
 import json
 import sys
 
-def max_area(height):
-    left, right = 0, len(height) - 1
-    max_area = 0
+def is_palindrome(x):
+    #write your code here
+    str_x = str(x)
+    return str_x == str_x[::-1]
 
-    while left < right:
-        width = right - left
-        h = min(height[left], height[right])
-        current_area = width * h
-        max_area = max(max_area, current_area)
+def main():
+    # Read input from program argument
+    if len(sys.argv) != 2:
+        print(json.dumps({"error": "Invalid input"}))
+        return
 
-        if height[left] < height[right]:
-            left += 1
-        else:
-            right -= 1
+    try:
+        input_json = sys.argv[1]
+        data = json.loads(input_json)
+        x = data["x"]
 
-    return max_area
+        if not isinstance(x, int):
+            print(json.dumps({"error": "Value is not an integer"}))
+            return
+
+        result = is_palindrome(x)
+        print(json.dumps({"result": result}))
+    except (json.JSONDecodeError, KeyError):
+        print(json.dumps({"error": "Invalid JSON or missing key 'x'"}))
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python script.py '<json_string>'")
-        sys.exit(1)
-
-    # Parse the JSON input
-    input_json = sys.argv[1]
-    try:
-        data = json.loads(input_json)
-        height = data["height"]
-    except (json.JSONDecodeError, KeyError):
-        print("Invalid JSON input")
-        sys.exit(1)
-
-    # Compute the maximum area
-    result = max_area(height)
-
-    # Convert result to JSON string with the specified format
-    output_json = json.dumps({"result": result})
-
-    # Print the JSON string
-    print(output_json)
+    main()

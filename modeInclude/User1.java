@@ -1,61 +1,52 @@
-import java.util.*;
-import java.util.regex.*;
+import java.util.HashSet;
+import java.util.Scanner;
 
 public class User1 {
-    
-    public static int maxArea(int[] height) {
-        int left = 0, right = height.length - 1;
-        int maxArea = 0;
 
-        while (left < right) {
-            int width = right - left;
-            int h = Math.min(height[left], height[right]);
-            int currentArea = width * h;
-            maxArea = Math.max(maxArea, currentArea);
+    public static int lengthOfLongestSubstring(String s) {
+        HashSet<Character> charSet = new HashSet<>();
+        int left = 0;
+        int maxLength = 0;
 
-            if (height[left] < height[right]) {
+        for (int right = 0; right < s.length(); right++) {
+            while (charSet.contains(s.charAt(right))) {
+                charSet.remove(s.charAt(left));
                 left++;
-            } else {
-                right--;
             }
+            charSet.add(s.charAt(right));
+            maxLength = Math.max(maxLength, right - left + 1);
         }
 
-        return maxArea;
+        return maxLength;
     }
 
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.out.println("Usage: java User1 '<json_string>'");
-            System.exit(1);
+            System.out.println("Please provide a single JSON string argument.");
+            return;
         }
 
-        String inputJson = args[0];
-        try {
-            // Extract the heights array from the JSON string
-            Pattern pattern = Pattern.compile("\"height\":\\[(.*?)\\]");
-            Matcher matcher = pattern.matcher(inputJson);
-            if (!matcher.find()) {
-                System.out.println("Invalid JSON input");
-                System.exit(1);
-            }
+        String input = args[0];
+        String s = extractValue(input, "s");
 
-            String heightStr = matcher.group(1);
-            String[] heightStrArray = heightStr.split(",");
-            int[] height = new int[heightStrArray.length];
-            for (int i = 0; i < heightStrArray.length; i++) {
-                height[i] = Integer.parseInt(heightStrArray[i].trim());
-            }
-
-            // Compute the maximum area
-            int result = maxArea(height);
-
-            // Create the result JSON string
-            String outputJson = String.format("{\"result\": %d}", result);
-            System.out.println(outputJson);
-
-        } catch (Exception e) {
-            System.out.println("Invalid JSON input");
-            System.exit(1);
+        if (s == null) {
+            System.out.println("Invalid JSON input.");
+            return;
         }
+
+        int result = lengthOfLongestSubstring(s);
+        System.out.println("{\"result\": " + result + "}");
+    }
+
+    private static String extractValue(String jsonString, String key) {
+        String pattern = "\"" + key + "\":\"";
+        int start = jsonString.indexOf(pattern);
+        if (start == -1) return null;
+
+        start += pattern.length();
+        int end = jsonString.indexOf("\"", start);
+        if (end == -1) return null;
+
+        return jsonString.substring(start, end);
     }
 }

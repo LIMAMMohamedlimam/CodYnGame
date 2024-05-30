@@ -1,6 +1,9 @@
 package fonctionnalities;
 import java.io.*;
 import java.lang.Runtime ;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import static constants.Commandes.getCompileCommand;
 import static constants.Commandes.getRunCommand;
 import org.json.JSONObject ;
@@ -171,7 +174,9 @@ public abstract class Compiler {
         return jsonObject.toString();
     }
 
-
+    public static String readFileContent(String filePath) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(filePath)));
+    }
 
 
 

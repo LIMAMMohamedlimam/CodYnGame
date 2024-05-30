@@ -24,7 +24,8 @@ def verifysolution(jsondata, resultdata):
         result = json.loads(resultdata)
 
         strs = data['strs']
-        expected_prefix = result['prefix']
+        expected_prefix = result['longest_common_prefix']
+        print(longest_common_prefix(strs), "--> expected: ",expected_prefix)
 
         return longest_common_prefix(strs) == expected_prefix
     except Exception as e:

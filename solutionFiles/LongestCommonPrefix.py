@@ -1,18 +1,31 @@
-def longestCommonPrefix(strs):
+import json
+import sys
+
+def longest_common_prefix(strs):
     if not strs:
         return ""
 
-   # Initialiser le préfixe avec la première chaîne du tableau
     prefix = strs[0]
-    
-    # Parcourir chaque chaîne dans le tableau à partir de la seconde
-    for s in strs[1:]:
-        # Réduire le préfixe jusqu'à ce qu'il soit commun avec s
-        while not s.startswith(prefix):
-            # Raccourcir le préfixe de un caractère à la fois
+    for string in strs[1:]:
+        while string[:len(prefix)] != prefix:
             prefix = prefix[:-1]
-            # Si le préfixe est vidé, aucun préfixe commun n'existe
             if not prefix:
                 return ""
-    
     return prefix
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print(json.dumps({"error": "No input provided"}))
+        sys.exit(1)
+
+    input_str = sys.argv[1]
+    try:
+        strs = json.loads(input_str)
+        if not isinstance(strs, list) or not all(isinstance(s, str) for s in strs):
+            raise ValueError
+    except ValueError:
+        print(json.dumps({"error": "Invalid input"}))
+        sys.exit(1)
+
+    result = longest_common_prefix(strs)
+    print(json.dumps({"result": result}))

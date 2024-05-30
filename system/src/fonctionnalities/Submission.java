@@ -92,9 +92,17 @@ public class Submission {
 
     public File fromCodeFile(String code) {
 
-        String directoryPath = "modeInclude";
-        String fileName = this.currentGame.getSelectedUser().getUsername().replaceAll(" ", "") + Commandes.getFiletag(this.currentGame.getSelectedLanguage());
-
+        String directoryPath = null ;
+        String fileName = null ;
+        if(!currentGame.getSelectedMode().equalsIgnoreCase("Mode Include")) {
+            System.out.println("ModeInputOutput");
+            directoryPath = "modeInclude" ;
+             fileName = this.currentGame.getSelectedUser().getUsername().replaceAll(" ", "") + Commandes.getFiletag(this.currentGame.getSelectedLanguage());
+        }else{
+            System.out.println("ModeInclude");
+            directoryPath = "DefaultCodeInputOutput" ;
+             fileName = "modeInclude"+Commandes.getFiletag(this.currentGame.getSelectedLanguage()) ;
+        }
         File directory = new File(directoryPath);
         if (!directory.exists()) {
             if (directory.mkdirs()) {
@@ -131,7 +139,8 @@ public class Submission {
                 return Compiler.compile(this.currentGame.getSelectedLanguage(), this.file.getPath(), "-classpath" + " " + classpath + " " + program ,"");
             } else {
 
-                return Compiler.Run(this.currentGame.getSelectedLanguage(), this.file.getPath() , "");
+                return Compiler.Run(this.currentGame.getSelectedLanguage(),
+                        "DefaultCodeInputOutput/" +currentGame.getSelectedProblem().getId()+Commandes.getFiletag(currentGame.getSelectedLanguage()) , currentGame.getSelectedProblem().getData().trim().replaceAll(" ",""));
             }
         }else if(currentGame.getSelectedMode().equalsIgnoreCase("Mode Input Output")){
             if (currentGame.getSelectedLanguage().getName().equalsIgnoreCase("c")) {

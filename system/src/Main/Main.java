@@ -94,7 +94,11 @@ public class Main {
                // UserManager um = new UserManager();
                // User user = new User(id,"rayane","saighi","rayane.saighi123@gmail.com");
                // um.getUserDetails("rayane");
-        Application.launch(PremiereScene.class, args);
+        //Application.launch(PremiereScene.class, args);
+        String projectPath = System.getProperty("user.dir");
+
+        // Print the project root path
+        System.out.println("Project Path: " + projectPath);
 
 
         // testing the datageneration
@@ -104,21 +108,75 @@ public class Main {
         //System.out.println(p.getDefaultCode());
 
 
-        //Game test=  new Game(getProblem(8) , new Language("php"),
-        //        "Mode Input Output" ,new User("User1")) ;
-        //System.out.println(test.getSelectedProblem().getTitle());
-        //test.setDefaultCode() ;
-        ////System.out.println(test.getDefaultCode());
-        ////System.out.println(test.getDefaultCode() );
-        //String code =  "" ;
-        //String output = null ;
-        //try{
-        //     output = (new Submission(test, code)).verifySolution() ;
-        //}catch (Exception e){
-        //    e.printStackTrace();
-        //}
-//
-        //System.out.println(output);
+        Game test=  new Game(getProblem(9) , new Language("php"),
+                "Mode Input Output" ,new User("User1")) ;
+        System.out.println(test.getSelectedProblem().getTitle());
+        test.setDefaultCode() ;
+        //System.out.println(test.getDefaultCode());
+        //System.out.println(test.getDefaultCode() );
+        String code =  "<?php\n" +
+                "\n" +
+                "function merge_two_sorted_lists($l1, $l2) {\n" +
+                "    $merged_list = [];\n" +
+                "    $i = $j = 0;\n" +
+                "\n" +
+                "    // Traverse both lists and append the smaller element to the merged list\n" +
+                "    while ($i < count($l1) && $j < count($l2)) {\n" +
+                "        if ($l1[$i] <= $l2[$j]) {\n" +
+                "            $merged_list[] = $l1[$i];\n" +
+                "            $i++;\n" +
+                "        } else {\n" +
+                "            $merged_list[] = $l2[$j];\n" +
+                "            $j++;\n" +
+                "        }\n" +
+                "    }\n" +
+                "\n" +
+                "    // Append remaining elements, if any\n" +
+                "    while ($i < count($l1)) {\n" +
+                "        $merged_list[] = $l1[$i];\n" +
+                "        $i++;\n" +
+                "    }\n" +
+                "\n" +
+                "    while ($j < count($l2)) {\n" +
+                "        $merged_list[] = $l2[$j];\n" +
+                "        $j++;\n" +
+                "    }\n" +
+                "\n" +
+                "    return $merged_list;\n" +
+                "}\n" +
+                "\n" +
+                "function main() {\n" +
+                "    // Assuming the input is passed as the first command line argument\n" +
+                "    global $argv;\n" +
+                "    $input_json = $argv[1];\n" +
+                "\n" +
+                "    // Parse the JSON input\n" +
+                "    $data = json_decode($input_json, true);\n" +
+                "    $l1 = isset($data['list1']) ? $data['list1'] : [];\n" +
+                "    $l2 = isset($data['list2']) ? $data['list2'] : [];\n" +
+                "\n" +
+                "    // Merge the two sorted lists\n" +
+                "    $merged_list = merge_two_sorted_lists($l1, $l2);\n" +
+                "\n" +
+                "    // Prepare the result in the desired format\n" +
+                "    $result = [\"result\" => $merged_list];\n" +
+                "\n" +
+                "    // Print the result as a JSON string\n" +
+                "    $output_json = json_encode($result);\n" +
+                "    echo $output_json;\n" +
+                "}\n" +
+                "\n" +
+                "main();\n" +
+                "\n" +
+                "?>\n" ;
+        String output = null ;
+        try{
+             output = (new Submission(test, code)).verifySolution() ;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        System.out.println(output);
 
 
 
